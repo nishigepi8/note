@@ -54,6 +54,7 @@ note/
 | [高并发缓存同步 RSC方案](/post/架构设计/高并发缓存同步%20RSC方案.md) | 借鉴 JVM Survivor 机制，组合 Redis+Kafka+MongoDB 实现百万设备状态同步 |
 | [GPS 轨迹存储方案分析](/post/架构设计/GPS%20轨迹存储方案分析.md) | PostGIS、MongoDB、Redis 方案对比，含性能优化实践 |
 | [自研 P2P 服务架构设计](/post/架构设计/自研%20P2P%20服务架构设计.md) | 基于 Pion 的 STUN/TURN/信令服务，支持 10 万并发 |
+| [StarRocks vs ClickHouse vs InfluxDB 选型对比](/post/架构设计/StarRocks%20vs%20ClickHouse%20vs%20InfluxDB%20选型对比.md) | 三大 OLAP 数据库架构、性能、场景全面对比，含选型决策树 |
 | Auth-Service 授权机制.pdf | 微服务授权架构设计 |
 | BMGuardr Kubernetes 架构.pdf | K8s 集群架构设计方案 |
 | CI 架构图.pdf | 持续集成流水线架构 |
