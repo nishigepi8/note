@@ -52,6 +52,7 @@ note/
 | 文章 | 简介 |
 |------|------|
 | [高并发缓存同步 RSC方案](/post/架构设计/高并发缓存同步%20RSC方案.md) | 借鉴 JVM Survivor 机制，组合 Redis+Kafka+MongoDB 实现百万设备状态同步 |
+| [Kafka Partition 规划与问题处理](/post/架构设计/Kafka%20Partition%20规划与问题处理.md) | Partition 数量规划、消费延迟、Rebalance 等常见问题的处理方案 |
 | [GPS 轨迹存储方案分析](/post/架构设计/GPS%20轨迹存储方案分析.md) | PostGIS、MongoDB、Redis 方案对比，含性能优化实践 |
 | [自研 P2P 服务架构设计](/post/架构设计/自研%20P2P%20服务架构设计.md) | 基于 Pion 的 STUN/TURN/信令服务，支持 10 万并发 |
 | [OLAP数据库选型对比](/post/架构设计/OLAP数据库选型对比.md) | StarRocks、ClickHouse、InfluxDB 三大数据库架构、性能、场景全面对比，含选型决策树 |
