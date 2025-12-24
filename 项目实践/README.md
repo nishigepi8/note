@@ -6,7 +6,7 @@
 
 | 文章 | 技术栈 | 亮点 |
 |------|--------|------|
-| [Python + MQTT 实时视频传输](./使用%20Python%20和%20MQTT%20实现简单实时视频传输系统.md) | Python、OpenCV、MQTT | 性能优化、架构简化、局限性分析 |
+| [Python MQTT 实时视频传输](/post/项目实践/Python%20MQTT%20实时视频传输.md) | Python、OpenCV、MQTT | 性能优化、架构简化、局限性分析 |
 
 ## 项目特点
 

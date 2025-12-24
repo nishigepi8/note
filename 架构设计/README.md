@@ -6,9 +6,9 @@
 
 | 文章 | 关键词 | 亮点 |
 |------|--------|------|
-| [高并发缓存同步：借鉴JVM Survivor机制的RSC方案](./高并发缓存同步：借鉴JVM%20Survivor机制的RSC方案.md) | Redis、Kafka、MongoDB、Survivor | 百万设备状态同步，数据库负载降 90% |
-| [GPS 轨迹存储方案深度分析](./GPS%20轨迹存储方案深度分析：从数据结构到存储选型.md) | PostGIS、MongoDB、时序数据库 | 从数据结构到存储选型的完整方案 |
-| [自研 P2P 服务架构设计](./自研%20P2P%20服务架构设计：从%20STUN-TURN%20到信令服务.md) | Pion、STUN、TURN、MQTT 信令 | 10 万级并发 P2P 连接架构 |
+| [高并发缓存同步 RSC方案](/post/架构设计/高并发缓存同步%20RSC方案.md) | Redis、Kafka、MongoDB、Survivor | 百万设备状态同步，数据库负载降 90% |
+| [GPS 轨迹存储方案分析](/post/架构设计/GPS%20轨迹存储方案分析.md) | PostGIS、MongoDB、时序数据库 | 从数据结构到存储选型的完整方案 |
+| [自研 P2P 服务架构设计](/post/架构设计/自研%20P2P%20服务架构设计.md) | Pion、STUN、TURN、MQTT 信令 | 10 万级并发 P2P 连接架构 |
 
 ## 资源列表
 

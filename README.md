@@ -22,17 +22,17 @@ note/
 
 | 文章 | 简介 |
 |------|------|
-| [P2P、SFU和MCU音视频通信架构](./音视频/P2P、SFU和MCU音视频通信架构.md) | 深入对比三种音视频架构的优缺点和适用场景 |
-| [RTP 实时传输协议](./音视频/RTP%20实时传输协议.md) | RTP 协议深度解析，包括协议头、时间戳同步、性能优化 |
-| [WebRTC 信令服务详解](./音视频/WebRTC%20信令服务详解：Offer、Answer%20与%20ICE%20Candidate.md) | Offer/Answer/ICE Candidate 详解，含代码示例和调试技巧 |
-| [基于Luckfox Pico Max的P2P视频直播](./音视频/基于Luckfox%20Pico%20Max的P2P视频直播解决方案.md) | 低成本嵌入式 P2P 视频直播，C + Golang 混合架构 |
+| [P2P、SFU和MCU音视频通信架构](/post/音视频/P2P、SFU和MCU音视频通信架构.md) | 深入对比三种音视频架构的优缺点和适用场景 |
+| [RTP 实时传输协议](/post/音视频/RTP%20实时传输协议.md) | RTP 协议深度解析，包括协议头、时间戳同步、性能优化 |
+| [WebRTC 信令服务详解](/post/音视频/WebRTC%20信令服务详解.md) | Offer/Answer/ICE Candidate 详解，含代码示例和调试技巧 |
+| [Luckfox Pico Max P2P直播方案](/post/音视频/Luckfox%20Pico%20Max%20P2P直播方案.md) | 低成本嵌入式 P2P 视频直播，C + Golang 混合架构 |
 
 ### ☸️ Kubernetes 容器编排
 
 | 文章 | 简介 |
 |------|------|
-| [Kubernetes 常用命令实战指南](./K8s/Kubernetes%20常用命令实战指南.md) | Kubernetes 日常运维命令实战指南 |
-| [Kubernetes 滚动更新实战指南](./K8s/Kubernetes%20滚动更新实战指南.md) | 滚动更新策略、配置和最佳实践 |
+| [Kubernetes 常用命令实战指南](/post/K8s/Kubernetes%20常用命令实战指南.md) | Kubernetes 日常运维命令实战指南 |
+| [Kubernetes 滚动更新实战指南](/post/K8s/Kubernetes%20滚动更新实战指南.md) | 滚动更新策略、配置和最佳实践 |
 
 ### 📡 物联网
 
@@ -45,15 +45,15 @@ note/
 
 | 文章 | 简介 |
 |------|------|
-| [Git 分支规则与 Commit 规范](./开发规范/水滴%20Git%20分支规则与%20Commit%20规范.md) | 中大型团队 GitFlow 实践，Conventional Commits 规范 |
+| [Git 分支与 Commit 规范](/post/开发规范/Git%20分支与%20Commit%20规范.md) | 中大型团队 GitFlow 实践，Conventional Commits 规范 |
 
 ### 🏗️ 架构设计
 
 | 文章 | 简介 |
 |------|------|
-| [高并发缓存同步：RSC 方案](./架构设计/高并发缓存同步：借鉴JVM%20Survivor机制的RSC方案.md) | 借鉴 JVM Survivor 机制，组合 Redis+Kafka+MongoDB 实现百万设备状态同步 |
-| [GPS 轨迹存储方案深度分析](./架构设计/GPS%20轨迹存储方案深度分析：从数据结构到存储选型.md) | PostGIS、MongoDB、Redis 方案对比，含性能优化实践 |
-| [自研 P2P 服务架构设计](./架构设计/自研%20P2P%20服务架构设计：从%20STUN-TURN%20到信令服务.md) | 基于 Pion 的 STUN/TURN/信令服务，支持 10 万并发 |
+| [高并发缓存同步 RSC方案](/post/架构设计/高并发缓存同步%20RSC方案.md) | 借鉴 JVM Survivor 机制，组合 Redis+Kafka+MongoDB 实现百万设备状态同步 |
+| [GPS 轨迹存储方案分析](/post/架构设计/GPS%20轨迹存储方案分析.md) | PostGIS、MongoDB、Redis 方案对比，含性能优化实践 |
+| [自研 P2P 服务架构设计](/post/架构设计/自研%20P2P%20服务架构设计.md) | 基于 Pion 的 STUN/TURN/信令服务，支持 10 万并发 |
 | Auth-Service 授权机制.pdf | 微服务授权架构设计 |
 | BMGuardr Kubernetes 架构.pdf | K8s 集群架构设计方案 |
 | CI 架构图.pdf | 持续集成流水线架构 |
@@ -62,13 +62,13 @@ note/
 
 | 文章 | 简介 |
 |------|------|
-| [Python + MQTT 实时视频传输](./项目实践/使用%20Python%20和%20MQTT%20实现简单实时视频传输系统.md) | MQTT 用于视频传输的实践、性能优化与局限性分析 |
+| [Python MQTT 实时视频传输](/post/项目实践/Python%20MQTT%20实时视频传输.md) | MQTT 用于视频传输的实践、性能优化与局限性分析 |
 
 ### 🛠️ 开发工具
 
 | 文章 | 简介 |
 |------|------|
-| [Mac 开发效率提升指南](./开发工具/Mac%20开发效率提升指南：从别名到工具链.md) | Alfred、iTerm2、Alias 系统，提效 10%+ |
+| [Mac 开发效率提升指南](/post/开发工具/Mac%20开发效率提升指南.md) | Alfred、iTerm2、Alias 系统，提效 10%+ |
 
 ## 技术栈
 

@@ -6,8 +6,8 @@
 
 | 文章 | 关键词 | 场景 |
 |------|--------|------|
-| [K8s常用命令](./K8s常用命令.md) | kubectl、Pod、Service、调试 | 日常运维 |
-| [Kubernetes滚动更新](./Kubernetes滚动更新.md) | Deployment、策略、回滚、健康检查 | 发布上线 |
+| [Kubernetes 常用命令实战指南](/post/K8s/Kubernetes%20常用命令实战指南.md) | kubectl、Pod、Service、调试 | 日常运维 |
+| [Kubernetes 滚动更新实战指南](/post/K8s/Kubernetes%20滚动更新实战指南.md) | Deployment、策略、回滚、健康检查 | 发布上线 |
 
 ## 核心概念
 

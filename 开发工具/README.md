@@ -6,7 +6,7 @@
 
 | 文章 | 关键词 | 适用人群 |
 |------|--------|----------|
-| [Mac 开发效率提升指南](./Mac%20开发效率提升指南：从别名到工具链.md) | Alfred、iTerm2、Alias、Zsh | macOS 开发者 |
+| [Mac 开发效率提升指南](/post/开发工具/Mac%20开发效率提升指南.md) | Alfred、iTerm2、Alias、Zsh | macOS 开发者 |
 
 ## 核心理念
 
