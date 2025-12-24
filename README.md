@@ -53,6 +53,7 @@ note/
 |------|------|
 | [高并发缓存同步：RSC 方案](./Architecture/高并发缓存同步：借鉴JVM%20Survivor机制的RSC方案.md) | 借鉴 JVM Survivor 机制，组合 Redis+Kafka+MongoDB 实现百万设备状态同步 |
 | [GPS 轨迹存储方案深度分析](./Architecture/GPS%20轨迹存储方案深度分析：从数据结构到存储选型.md) | PostGIS、MongoDB、Redis 方案对比，含性能优化实践 |
+| [自研 P2P 服务架构设计](./Architecture/自研%20P2P%20服务架构设计：从%20STUN-TURN%20到信令服务.md) | 基于 Pion 的 STUN/TURN/信令服务，支持 10 万并发 |
 | Auth-Service 授权机制.pdf | 微服务授权架构设计 |
 | BMGuardr Kubernetes 架构.pdf | K8s 集群架构设计方案 |
 | CI 架构图.pdf | 持续集成流水线架构 |
