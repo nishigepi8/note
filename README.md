@@ -6,49 +6,77 @@
 
 ```
 note/
-├── WebRTC/          # WebRTC 相关技术文章
-├── K8s/             # Kubernetes 运维和开发
-├── IDEA/            # 项目实践和技术想法
-├── Network/         # 网络协议和架构
-├── Embedded/        # 嵌入式开发
-├── Backend/         # 后端开发
-├── Frontend/        # 前端开发
-└── DevOps/          # DevOps 工具和实践
+├── WebRTC/          # 音视频技术：RTP、P2P、SFU/MCU 架构
+├── K8s/             # Kubernetes 容器编排与运维
+├── IoT/             # 物联网：Matter 协议、MQTT 安全架构
+├── DevOps/          # 开发规范：Git 分支、CI/CD
+├── Architecture/    # 架构设计：授权机制、K8s 架构图
+├── Projects/        # 项目实践：视频传输、嵌入式开发
+└── ABOUT.md         # 关于我
 ```
 
 ## 文章列表
 
-### WebRTC 音视频技术
+### 🎥 WebRTC 音视频技术
 
-- [P2P、SFU和MCU音视频通信架构](./WebRTC/P2P、SFU和MCU音视频通信架构.md) - 深入对比三种音视频架构的优缺点和适用场景
-- [RTP 实时传输协议](./WebRTC/RTP%20实时传输协议.md) - RTP 协议深度解析，包括协议头、时间戳同步、性能优化
-- [基于Luckfox Pico Max的P2P视频直播解决方案](./WebRTC/基于Luckfox%20Pico%20Max的P2P视频直播解决方案.md) - 低成本嵌入式 P2P 视频直播实现
+| 文章 | 简介 |
+|------|------|
+| [P2P、SFU和MCU音视频通信架构](./WebRTC/P2P、SFU和MCU音视频通信架构.md) | 深入对比三种音视频架构的优缺点和适用场景 |
+| [RTP 实时传输协议](./WebRTC/RTP%20实时传输协议.md) | RTP 协议深度解析，包括协议头、时间戳同步、性能优化 |
+| [基于Luckfox Pico Max的P2P视频直播](./WebRTC/基于Luckfox%20Pico%20Max的P2P视频直播解决方案.md) | 低成本嵌入式 P2P 视频直播，C + Golang 混合架构 |
 
-### Kubernetes 容器编排
+### ☸️ Kubernetes 容器编排
 
-- [K8s常用命令](./K8s/K8s常用命令.md) - Kubernetes 日常运维命令实战指南
-- [Kubernetes滚动更新](./K8s/Kubernetes滚动更新.md) - 滚动更新策略、配置和最佳实践
+| 文章 | 简介 |
+|------|------|
+| [K8s常用命令](./K8s/K8s常用命令.md) | Kubernetes 日常运维命令实战指南 |
+| [Kubernetes滚动更新](./K8s/Kubernetes滚动更新.md) | 滚动更新策略、配置和最佳实践 |
 
-### 项目实践
+### 📡 物联网 IoT
 
-- [使用 Python 和 MQTT 实现简单实时视频传输系统](./IDEA/使用%20Python%20和%20MQTT%20实现简单实时视频传输系统.md) - MQTT 用于视频传输的实践与优化
+| 资源 | 简介 |
+|------|------|
+| Matter 协议规范 | 包含 Matter 1.2 设备库规范、应用集群规范 |
+| 物联网 MQTTS 安全架构 | MQTT over TLS 安全传输架构设计 |
 
-## 写作风格
+### 🔧 DevOps 开发规范
 
-- **技术深度**：不仅介绍如何使用，更深入分析原理和设计思路
-- **实践经验**：分享实际项目中的问题和解决方案
-- **个人思考**：记录技术选型的权衡和决策过程
-- **持续优化**：根据新的理解和实践不断更新内容
+| 文章 | 简介 |
+|------|------|
+| [Git 分支规则与 Commit 规范](./DevOps/水滴%20git%20分支规则.md) | 中大型团队 GitFlow 实践，Conventional Commits 规范 |
+
+### 🏗️ 架构设计
+
+| 资源 | 简介 |
+|------|------|
+| Auth-Service 授权机制 | 微服务授权架构设计 |
+| BMGuardr Kubernetes 架构 | K8s 集群架构设计方案 |
+| CI 架构图 | 持续集成流水线架构 |
+
+### 💡 项目实践
+
+| 文章 | 简介 |
+|------|------|
+| [Python + MQTT 实时视频传输](./Projects/使用%20Python%20和%20MQTT%20实现简单实时视频传输系统.md) | MQTT 用于视频传输的实践、性能优化与局限性分析 |
+
+## 技术栈
+
+- **后端**：Java、Golang、Python
+- **物联网**：Matter、MQTT、嵌入式 Linux
+- **音视频**：WebRTC、RTP、H.264
+- **运维**：Kubernetes、Docker、CI/CD
+- **硬件**：PCB 设计、Luckfox、RV1106
 
 ## 更新日志
 
-- 2025-12-20：重构博客发布开源 [PowerWiki](https://github.com/steven-ld/PowerWiki.git)
+- 2025-12-24：重构目录结构，按技术领域分类整理
 - 2025-12-21：初始迁移，优化现有文档格式和内容
-- 持续更新中...
+- 2025-12-20：博客开源 [PowerWiki](https://github.com/steven-ld/PowerWiki.git)
 
 ## 关于
 
-这些文章最初发布在 [ga6666666.cn](https://ga6666666.cn)，现在迁移到本地 Markdown 格式，便于版本控制和持续优化。
+这些文章最初发布在 [ga666666.cn](https://ga666666.cn)，现在迁移到本地 Markdown 格式，便于版本控制和持续优化。
+
+更多关于我的信息，请查看 [ABOUT.md](./ABOUT.md)。
 
 如有问题或建议，欢迎交流讨论！
-
