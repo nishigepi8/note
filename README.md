@@ -23,6 +23,7 @@ note/
 |------|------|
 | [P2P、SFU和MCU音视频通信架构](./WebRTC/P2P、SFU和MCU音视频通信架构.md) | 深入对比三种音视频架构的优缺点和适用场景 |
 | [RTP 实时传输协议](./WebRTC/RTP%20实时传输协议.md) | RTP 协议深度解析，包括协议头、时间戳同步、性能优化 |
+| [WebRTC 信令服务详解](./WebRTC/WebRTC%20信令服务详解：Offer、Answer%20与%20ICE%20Candidate.md) | Offer/Answer/ICE Candidate 详解，含代码示例和调试技巧 |
 | [基于Luckfox Pico Max的P2P视频直播](./WebRTC/基于Luckfox%20Pico%20Max的P2P视频直播解决方案.md) | 低成本嵌入式 P2P 视频直播，C + Golang 混合架构 |
 
 ### ☸️ Kubernetes 容器编排

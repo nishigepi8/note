@@ -8,6 +8,7 @@
 |------|--------|------|
 | [P2P、SFU和MCU音视频通信架构](./P2P、SFU和MCU音视频通信架构.md) | 架构对比、扩展性、成本分析 | ⭐⭐⭐ |
 | [RTP 实时传输协议](./RTP%20实时传输协议.md) | 协议头、时间戳、序列号、RTCP | ⭐⭐⭐⭐ |
+| [WebRTC 信令服务详解](./WebRTC%20信令服务详解：Offer、Answer%20与%20ICE%20Candidate.md) | SDP、ICE、Offer/Answer、信令 | ⭐⭐⭐ |
 | [基于Luckfox Pico Max的P2P视频直播](./基于Luckfox%20Pico%20Max的P2P视频直播解决方案.md) | 嵌入式、H.264、NAT穿透、Pion | ⭐⭐⭐⭐ |
 
 ## 技术栈
