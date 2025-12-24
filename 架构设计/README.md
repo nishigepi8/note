@@ -6,6 +6,7 @@
 
 | 文章 | 关键词 | 亮点 |
 |------|--------|------|
+| [图片向量存储与相似性搜索方案](/post/架构设计/图片向量存储与相似性搜索方案.md) | Milvus、CLIP、向量数据库、相似性搜索 | AI 特征提取、颜色打标、类型分类、毫秒级搜索 |
 | [高并发缓存同步 RSC方案](/post/架构设计/高并发缓存同步%20RSC方案.md) | Redis、Kafka、MongoDB、Survivor | 百万设备状态同步，数据库负载降 90% |
 | [Kafka Partition 规划与问题处理](/post/架构设计/Kafka%20Partition%20规划与问题处理.md) | Kafka、Partition、Consumer、性能优化 | Partition 数量规划、消费延迟、Rebalance 问题处理 |
 | [GPS 轨迹存储方案分析](/post/架构设计/GPS%20轨迹存储方案分析.md) | PostGIS、MongoDB、时序数据库 | 从数据结构到存储选型的完整方案 |

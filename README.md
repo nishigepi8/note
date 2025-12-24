@@ -51,6 +51,7 @@ note/
 
 | 文章 | 简介 |
 |------|------|
+| [图片向量存储与相似性搜索方案](/post/架构设计/图片向量存储与相似性搜索方案.md) | 基于 CLIP + Milvus 的图片向量存储与相似性搜索，包含 AI 处理、颜色打标、类型分类 |
 | [高并发缓存同步 RSC方案](/post/架构设计/高并发缓存同步%20RSC方案.md) | 借鉴 JVM Survivor 机制，组合 Redis+Kafka+MongoDB 实现百万设备状态同步 |
 | [Kafka Partition 规划与问题处理](/post/架构设计/Kafka%20Partition%20规划与问题处理.md) | Partition 数量规划、消费延迟、Rebalance 等常见问题的处理方案 |
 | [GPS 轨迹存储方案分析](/post/架构设计/GPS%20轨迹存储方案分析.md) | PostGIS、MongoDB、Redis 方案对比，含性能优化实践 |

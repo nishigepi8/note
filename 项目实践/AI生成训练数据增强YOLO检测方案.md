@@ -63,6 +63,9 @@
 ┌─────────────────────────────────────────────────────────────┐
 │  3. AI 生成数据                                             │
 │     - 文本生成图像（Stable Diffusion / Midjourney）         │
+│     - 扩图（Outpainting）：扩展图像边界                      │
+│     - 改图（Inpainting）：替换背景、添加遮挡、改变光照       │
+│     - 蒙版替换（SAM + Inpaint）：真实场景精确替换            │
 │     - 3D 渲染（Blender / Unity）                            │
 │     - 数据增强（Mixup、Mosaic）                              │
 └──────────────────┬──────────────────────────────────────────┘
@@ -96,6 +99,8 @@
 | 组件 | 选型 | 用途 |
 |------|------|------|
 | **图像生成** | Stable Diffusion XL、Midjourney | 生成高质量训练图像 |
+| **图像编辑** | Stable Diffusion XL Inpaint、Outpaint | 扩图、改图、蒙版替换 |
+| **图像分割** | SAM (Segment Anything Model) | 自动生成精确蒙版 |
 | **3D 渲染** | Blender、Unity | 生成可控场景和角度 |
 | **目标检测** | YOLOv8、YOLOv9 | 最终训练模型 |
 | **自动标注** | SAM、GroundingDINO | 生成数据的自动标注 |
@@ -476,6 +481,536 @@ class RealDataAugmenter:
 - 只改变场景，降低偏差风险
 - 可以基于已有标注，减少标注成本
 
+### 策略 7：扩图、改图与蒙版替换（Outpainting & Inpainting）
+
+**核心思想**：在真实图像基础上，使用大模型的扩图（Outpainting）和改图（Inpainting）能力，生成更多样化的训练数据。这种方法比完全生成新图像更可靠，因为保留了真实场景的核心特征。
+
+#### 7.1 扩图（Outpainting）- 扩展图像边界
+
+**应用场景**：
+- 真实图像中目标被裁剪，需要扩展边界
+- 需要更多背景上下文信息
+- 改变图像宽高比，适配不同输入尺寸
+
+**实现方法**：
+
+```python
+from diffusers import StableDiffusionInpaintPipeline, StableDiffusionXLInpaintPipeline
+from PIL import Image
+import numpy as np
+import torch
+
+class OutpaintingAugmenter:
+    def __init__(self):
+        # 使用 SDXL Inpaint 模型，效果更好
+        self.pipe = StableDiffusionXLInpaintPipeline.from_pretrained(
+            "diffusers/stable-diffusion-xl-1.0-inpainting-0.1",
+            torch_dtype=torch.float16
+        )
+        self.pipe = self.pipe.to("cuda")
+    
+    def expand_image(self, image_path, expand_ratio=0.3, direction='all'):
+        """
+        扩展图像边界
+        
+        Args:
+            image_path: 原始图像路径
+            expand_ratio: 扩展比例（0.3 表示扩展 30%）
+            direction: 扩展方向 ('left', 'right', 'top', 'bottom', 'all')
+        """
+        image = Image.open(image_path)
+        original_width, original_height = image.size
+        
+        # 计算新尺寸
+        if direction == 'all':
+            new_width = int(original_width * (1 + expand_ratio * 2))
+            new_height = int(original_height * (1 + expand_ratio * 2))
+            # 创建扩展后的画布
+            expanded_image = Image.new('RGB', (new_width, new_height), color='white')
+            # 将原图放在中心
+            paste_x = int(original_width * expand_ratio)
+            paste_y = int(original_height * expand_ratio)
+            expanded_image.paste(image, (paste_x, paste_y))
+            
+            # 创建 mask：原图区域为 0（保留），扩展区域为 255（生成）
+            mask = Image.new('L', (new_width, new_height), color=0)
+            mask.paste(Image.new('L', (original_width, original_height), color=255), 
+                      (paste_x, paste_y))
+        else:
+            # 单方向扩展
+            if direction == 'right':
+                new_width = int(original_width * (1 + expand_ratio))
+                new_height = original_height
+                expanded_image = Image.new('RGB', (new_width, new_height), color='white')
+                expanded_image.paste(image, (0, 0))
+                mask = Image.new('L', (new_width, new_height), color=0)
+                mask.paste(Image.new('L', (int(original_width * expand_ratio), original_height), color=255),
+                          (original_width, 0))
+            # ... 其他方向类似
+        
+        # 生成扩展区域的提示词
+        prompt = self.generate_expansion_prompt(image_path, direction)
+        
+        # 使用 inpainting 生成扩展区域
+        result = self.pipe(
+            prompt=prompt,
+            image=expanded_image,
+            mask_image=mask,
+            num_inference_steps=50,
+            guidance_scale=7.5,
+            strength=0.8  # 控制生成强度
+        ).images[0]
+        
+        return result
+    
+    def generate_expansion_prompt(self, image_path, direction):
+        """
+        根据原图内容生成扩展提示词
+        """
+        # 可以用 CLIP 分析原图内容，生成相关提示词
+        # 简化版本：使用通用提示词
+        prompts = {
+            'all': "extend the background naturally, seamless continuation, realistic",
+            'right': "extend the right side background naturally, realistic",
+            'left': "extend the left side background naturally, realistic",
+            'top': "extend the top background naturally, realistic",
+            'bottom': "extend the bottom background naturally, realistic"
+        }
+        return prompts.get(direction, prompts['all'])
+
+# 使用示例
+augmenter = OutpaintingAugmenter()
+expanded_image = augmenter.expand_image("car_image.jpg", expand_ratio=0.3, direction='right')
+expanded_image.save("car_image_expanded.jpg")
+```
+
+**优势**：
+- ✅ 保留真实目标，只扩展背景
+- ✅ 可以改变图像尺寸，适配不同模型输入
+- ✅ 增加背景多样性，提升模型泛化能力
+
+#### 7.2 改图（Inpainting）- 替换指定区域
+
+**应用场景**：
+- 替换背景，保持目标不变
+- 添加遮挡物（如雨、雾、其他物体）
+- 修复图像缺陷
+- 改变光照条件
+
+**实现方法**：
+
+```python
+class InpaintingAugmenter:
+    def __init__(self):
+        self.pipe = StableDiffusionXLInpaintPipeline.from_pretrained(
+            "diffusers/stable-diffusion-xl-1.0-inpainting-0.1",
+            torch_dtype=torch.float16
+        )
+        self.pipe = self.pipe.to("cuda")
+    
+    def replace_background(self, image_path, mask_path, new_background_prompt):
+        """
+        替换背景，保持目标不变
+        
+        Args:
+            image_path: 原始图像
+            mask_path: 目标区域的 mask（目标区域为白色，背景为黑色）
+            new_background_prompt: 新背景的描述
+        """
+        image = Image.open(image_path)
+        mask = Image.open(mask_path).convert('L')
+        
+        # 反转 mask：inpainting 需要 mask 区域为白色（要替换的区域）
+        mask_array = np.array(mask)
+        mask_array = 255 - mask_array  # 反转
+        mask = Image.fromarray(mask_array)
+        
+        # 生成新背景
+        result = self.pipe(
+            prompt=new_background_prompt,
+            image=image,
+            mask_image=mask,
+            num_inference_steps=50,
+            guidance_scale=7.5,
+            strength=0.9  # 高强度替换
+        ).images[0]
+        
+        return result
+    
+    def add_occlusion(self, image_path, target_mask_path, occlusion_prompt):
+        """
+        添加遮挡物（如雨、雾、其他物体）
+        
+        Args:
+            image_path: 原始图像
+            target_mask_path: 目标区域的 mask（要添加遮挡的位置）
+            occlusion_prompt: 遮挡物的描述（如 "heavy rain", "fog", "another car"）
+        """
+        image = Image.open(image_path)
+        mask = Image.open(target_mask_path).convert('L')
+        
+        # 在目标区域添加遮挡
+        result = self.pipe(
+            prompt=occlusion_prompt,
+            image=image,
+            mask_image=mask,
+            num_inference_steps=50,
+            guidance_scale=7.5,
+            strength=0.7  # 中等强度，保持部分原图特征
+        ).images[0]
+        
+        return result
+    
+    def change_lighting(self, image_path, lighting_prompt):
+        """
+        改变光照条件（如从白天到夜晚，从晴天到雨天）
+        """
+        image = Image.open(image_path)
+        
+        # 创建全图 mask（替换整个图像的光照）
+        mask = Image.new('L', image.size, color=255)
+        
+        result = self.pipe(
+            prompt=lighting_prompt,
+            image=image,
+            mask_image=mask,
+            num_inference_steps=50,
+            guidance_scale=7.5,
+            strength=0.5  # 低强度，主要改变光照，保持细节
+        ).images[0]
+        
+        return result
+
+# 使用示例
+augmenter = InpaintingAugmenter()
+
+# 替换背景
+new_bg_image = augmenter.replace_background(
+    "car_image.jpg",
+    "car_mask.png",  # 汽车区域的 mask
+    "a car on a highway at sunset, realistic background"
+)
+
+# 添加雨天效果
+rainy_image = augmenter.add_occlusion(
+    "car_image.jpg",
+    "background_mask.png",  # 背景区域的 mask
+    "heavy rain, water droplets, realistic weather"
+)
+
+# 改变光照
+night_image = augmenter.change_lighting(
+    "car_image.jpg",
+    "night scene, street lights, dim lighting, realistic"
+)
+```
+
+**优势**：
+- ✅ 精确控制替换区域，保持目标不变
+- ✅ 可以生成多种场景变体（不同背景、天气、光照）
+- ✅ 基于真实图像，质量更可靠
+
+#### 7.3 真实场景蒙版替换（Real Scene Mask Replacement）
+
+**核心思想**：在真实场景图像中，使用 SAM（Segment Anything Model）自动生成蒙版，然后对指定区域进行替换或修改。
+
+**完整流程**：
+
+```python
+from segment_anything import sam_model_registry, SamPredictor
+import cv2
+import numpy as np
+
+class RealSceneMaskReplacer:
+    def __init__(self):
+        # 初始化 SAM 模型
+        sam_checkpoint = "sam_vit_h_4b8939.pth"
+        sam_model = sam_model_registry["vit_h"](checkpoint=sam_checkpoint)
+        self.sam_predictor = SamPredictor(sam_model)
+        
+        # 初始化 Inpainting 模型
+        self.inpaint_pipe = StableDiffusionXLInpaintPipeline.from_pretrained(
+            "diffusers/stable-diffusion-xl-1.0-inpaint-0.1",
+            torch_dtype=torch.float16
+        )
+        self.inpaint_pipe = self.inpaint_pipe.to("cuda")
+    
+    def auto_mask_and_replace(self, image_path, point_prompts, replace_prompt):
+        """
+        自动生成蒙版并替换
+        
+        Args:
+            image_path: 真实场景图像
+            point_prompts: 点提示 [(x, y, label), ...]，label=1 表示前景，0 表示背景
+            replace_prompt: 替换区域的描述
+        """
+        # 1. 读取图像
+        image = cv2.imread(image_path)
+        image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        
+        # 2. 使用 SAM 生成蒙版
+        self.sam_predictor.set_image(image_rgb)
+        
+        input_points = np.array([p[:2] for p in point_prompts])
+        input_labels = np.array([p[2] for p in point_prompts])
+        
+        masks, scores, logits = self.sam_predictor.predict(
+            point_coords=input_points,
+            point_labels=input_labels,
+            multimask_output=True
+        )
+        
+        # 选择最佳蒙版（分数最高）
+        best_mask_idx = np.argmax(scores)
+        mask = masks[best_mask_idx]
+        
+        # 3. 转换为 PIL Image 格式
+        mask_image = Image.fromarray((mask * 255).astype(np.uint8))
+        image_pil = Image.fromarray(image_rgb)
+        
+        # 4. 使用 Inpainting 替换蒙版区域
+        result = self.inpaint_pipe(
+            prompt=replace_prompt,
+            image=image_pil,
+            mask_image=mask_image,
+            num_inference_steps=50,
+            guidance_scale=7.5,
+            strength=0.8
+        ).images[0]
+        
+        return result, mask
+    
+    def replace_specific_object(self, image_path, bbox, replace_prompt):
+        """
+        基于边界框替换特定对象
+        
+        Args:
+            image_path: 真实场景图像
+            bbox: 边界框 [x1, y1, x2, y2]
+            replace_prompt: 替换对象的描述
+        """
+        # 1. 在边界框中心添加点提示
+        x1, y1, x2, y2 = bbox
+        center_x = (x1 + x2) // 2
+        center_y = (y1 + y2) // 2
+        
+        point_prompts = [(center_x, center_y, 1)]  # 前景点
+        
+        # 2. 调用自动蒙版和替换
+        return self.auto_mask_and_replace(image_path, point_prompts, replace_prompt)
+    
+    def batch_replace_from_yolo(self, image_path, yolo_results, replace_prompts):
+        """
+        基于 YOLO 检测结果批量替换
+        
+        Args:
+            image_path: 真实场景图像
+            yolo_results: YOLO 检测结果
+            replace_prompts: 每个检测框的替换提示词列表
+        """
+        results = []
+        
+        for i, box in enumerate(yolo_results.boxes):
+            bbox = box.xyxy[0].cpu().numpy().astype(int)
+            replace_prompt = replace_prompts[i] if i < len(replace_prompts) else "realistic background"
+            
+            result, mask = self.replace_specific_object(image_path, bbox, replace_prompt)
+            results.append((result, mask, bbox))
+        
+        return results
+
+# 使用示例
+replacer = RealSceneMaskReplacer()
+
+# 方法 1：手动指定点提示
+result, mask = replacer.auto_mask_and_replace(
+    "real_scene.jpg",
+    point_prompts=[(500, 300, 1)],  # 在 (500, 300) 位置的前景点
+    replace_prompt="a different car model, realistic, seamless"
+)
+
+# 方法 2：基于边界框
+result, mask = replacer.replace_specific_object(
+    "real_scene.jpg",
+    bbox=[100, 100, 400, 300],  # 边界框
+    replace_prompt="a truck instead of car, realistic"
+)
+
+# 方法 3：基于 YOLO 检测结果批量替换
+from ultralytics import YOLO
+yolo_model = YOLO('yolov8n.pt')
+yolo_results = yolo_model("real_scene.jpg")
+
+replace_prompts = [
+    "a different car model, realistic",
+    "a truck, realistic",
+    "a motorcycle, realistic"
+]
+
+results = replacer.batch_replace_from_yolo("real_scene.jpg", yolo_results[0], replace_prompts)
+```
+
+**应用场景**：
+
+1. **目标替换**：将真实场景中的汽车替换为不同型号，生成更多训练样本
+2. **背景替换**：保持目标不变，替换背景（如从城市街道到高速公路）
+3. **遮挡添加**：添加雨、雾、其他物体等遮挡，增加数据多样性
+4. **光照调整**：改变光照条件（白天/夜晚、晴天/雨天）
+
+**优势**：
+- ✅ **基于真实场景**：保留真实场景的核心特征，降低偏差风险
+- ✅ **精确控制**：可以精确控制替换区域，保持目标不变
+- ✅ **自动化**：使用 SAM 自动生成蒙版，减少人工成本
+- ✅ **多样性**：可以生成大量场景变体
+
+**注意事项**：
+- ⚠️ **蒙版质量**：确保 SAM 生成的蒙版准确，必要时人工修正
+- ⚠️ **边界融合**：注意替换区域与原始图像的边界融合，避免不自然
+- ⚠️ **标注更新**：替换后需要更新标注（如果目标被替换）
+
+#### 7.4 综合应用示例
+
+```python
+class ComprehensiveAugmenter:
+    """
+    综合使用扩图、改图和蒙版替换的数据增强器
+    """
+    def __init__(self):
+        self.outpainter = OutpaintingAugmenter()
+        self.inpainter = InpaintingAugmenter()
+        self.mask_replacer = RealSceneMaskReplacer()
+    
+    def augment_real_image(self, image_path, augmentation_type='background'):
+        """
+        对真实图像进行综合增强
+        
+        Args:
+            image_path: 真实图像路径
+            augmentation_type: 增强类型
+                - 'expand': 扩图
+                - 'background': 替换背景
+                - 'weather': 添加天气效果
+                - 'lighting': 改变光照
+                - 'replace_object': 替换目标对象
+        """
+        results = []
+        
+        if augmentation_type == 'expand':
+            # 扩图：扩展图像边界
+            for direction in ['left', 'right', 'top', 'bottom', 'all']:
+                expanded = self.outpainter.expand_image(
+                    image_path, expand_ratio=0.3, direction=direction
+                )
+                results.append(expanded)
+        
+        elif augmentation_type == 'background':
+            # 替换背景：多种背景场景
+            backgrounds = [
+                "highway road, realistic",
+                "city street, realistic",
+                "parking lot, realistic",
+                "residential area, realistic"
+            ]
+            # 需要先获取目标 mask（可以用 SAM 或已有标注）
+            mask_path = self.get_mask(image_path)
+            for bg_prompt in backgrounds:
+                replaced = self.inpainter.replace_background(
+                    image_path, mask_path, bg_prompt
+                )
+                results.append(replaced)
+        
+        elif augmentation_type == 'weather':
+            # 添加天气效果
+            weathers = [
+                "heavy rain, water droplets, realistic",
+                "foggy conditions, low visibility, realistic",
+                "snow falling, winter scene, realistic"
+            ]
+            mask_path = self.get_background_mask(image_path)
+            for weather_prompt in weathers:
+                weather_image = self.inpainter.add_occlusion(
+                    image_path, mask_path, weather_prompt
+                )
+                results.append(weather_image)
+        
+        elif augmentation_type == 'lighting':
+            # 改变光照
+            lightings = [
+                "night scene, street lights, dim lighting",
+                "sunset, golden hour, warm lighting",
+                "overcast sky, soft lighting"
+            ]
+            for lighting_prompt in lightings:
+                lit_image = self.inpainter.change_lighting(
+                    image_path, lighting_prompt
+                )
+                results.append(lit_image)
+        
+        elif augmentation_type == 'replace_object':
+            # 替换目标对象
+            # 先用 YOLO 检测目标
+            from ultralytics import YOLO
+            yolo_model = YOLO('yolov8n.pt')
+            yolo_results = yolo_model(image_path)
+            
+            replace_prompts = [
+                "a different car model, realistic",
+                "a truck, realistic",
+                "a van, realistic"
+            ]
+            
+            replaced_results = self.mask_replacer.batch_replace_from_yolo(
+                image_path, yolo_results[0], replace_prompts
+            )
+            results.extend([r[0] for r in replaced_results])
+        
+        return results
+    
+    def get_mask(self, image_path):
+        """获取目标 mask（简化示例）"""
+        # 实际应用中可以使用 SAM 或已有标注
+        # 这里返回假设的 mask 路径
+        return "mask.png"
+
+# 使用示例
+augmenter = ComprehensiveAugmenter()
+
+# 对一张真实图像进行多种增强
+image_path = "real_car_image.jpg"
+
+# 1. 扩图
+expanded_images = augmenter.augment_real_image(image_path, 'expand')
+
+# 2. 替换背景
+bg_replaced_images = augmenter.augment_real_image(image_path, 'background')
+
+# 3. 添加天气效果
+weather_images = augmenter.augment_real_image(image_path, 'weather')
+
+# 4. 改变光照
+lighting_images = augmenter.augment_real_image(image_path, 'lighting')
+
+# 5. 替换目标对象
+replaced_images = augmenter.augment_real_image(image_path, 'replace_object')
+
+# 从一张真实图像可以生成数十张增强图像
+```
+
+**数据增强效果对比**：
+
+| 方法 | 生成数量/张 | 质量 | 偏差风险 | 适用场景 |
+|------|------------|------|---------|---------|
+| **完全生成** | 1000+ | 中 | 高 | 长尾场景补充 |
+| **扩图** | 5-10 | 高 | 低 | 扩展边界、改变尺寸 |
+| **改图（背景替换）** | 10-20 | 高 | 低 | 场景多样性 |
+| **改图（天气/光照）** | 5-10 | 高 | 低 | 天气/光照变化 |
+| **蒙版替换** | 10-50 | 高 | 低 | 目标替换、遮挡添加 |
+
+**推荐策略**：
+- **主要使用**：扩图、改图、蒙版替换（基于真实图像）
+- **辅助使用**：完全生成（补充长尾场景）
+- **混合比例**：70% 真实增强 + 30% 完全生成
+
 ## 完整实现流程
 
 ### 1. 数据生成流程
@@ -759,10 +1294,13 @@ generator.generate_dataset('car', prompts=prompts, count=300)
 
 ### 1. 数据生成
 
+- ✅ **优先使用扩图/改图**：基于真实图像进行扩图、改图和蒙版替换，质量更高、偏差更小
 - ✅ **多样化提示词**：设计多个模板，覆盖不同场景
 - ✅ **质量控制**：使用 CLIP、FID 等指标筛选
 - ✅ **分布对齐**：确保生成数据分布与真实数据一致
+- ✅ **SAM 自动蒙版**：使用 SAM 自动生成精确蒙版，减少人工成本
 - ❌ **避免过度生成**：不要生成过多相似数据
+- ❌ **避免完全生成**：优先使用真实图像增强，而非完全生成新图像
 
 ### 2. 标注策略
 
@@ -825,10 +1363,18 @@ generator.generate_dataset('car', prompts=prompts, count=300)
 
 **关键成功因素**：
 
+- **优先使用扩图/改图**：基于真实图像的扩图、改图和蒙版替换，比完全生成更可靠
 - 多样化的提示词设计
 - 严格的质量筛选机制
 - 合理的混合训练策略
 - 持续的数据分布监控
+- SAM 自动蒙版生成，提高效率和精度
+
+**推荐数据生成优先级**：
+
+1. **第一优先级**：扩图、改图、蒙版替换（基于真实图像，质量高、偏差小）
+2. **第二优先级**：完全生成（补充长尾场景，需要严格质量控制）
+3. **第三优先级**：3D 渲染（可控性强，但成本高）
 
 只有在遵循这些原则的前提下，AI 生成的数据才能**真正提升模型性能**，而不是"带偏"模型。
 
