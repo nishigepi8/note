@@ -6,6 +6,7 @@
 
 | 文章 | 技术栈 | 亮点 |
 |------|--------|------|
+| [AI 生成训练数据增强 YOLO 检测方案](/post/项目实践/AI生成训练数据增强YOLO检测方案.md) | Stable Diffusion、YOLO、SAM、CLIP | 用 AI 训练 AI，避免数据偏差，混合训练策略 |
 | [OpenResty + Redis 短链接服务系统](/post/项目实践/OpenResty%20+%20Redis%20短链接服务系统.md) | OpenResty、Lua、Redis | 单机 10 万+ QPS，延迟 < 5ms，完整业务系统实现 |
 | [Python MQTT 实时视频传输](/post/项目实践/Python%20MQTT%20实时视频传输.md) | Python、OpenCV、MQTT | 性能优化、架构简化、局限性分析 |
 

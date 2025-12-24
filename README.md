@@ -64,6 +64,7 @@ note/
 
 | 文章 | 简介 |
 |------|------|
+| [AI 生成训练数据增强 YOLO 检测方案](/post/项目实践/AI生成训练数据增强YOLO检测方案.md) | 用 AI 训练 AI：使用 Stable Diffusion 生成训练数据，混合训练策略避免数据偏差 |
 | [OpenResty + Redis 短链接服务系统](/post/项目实践/OpenResty%20+%20Redis%20短链接服务系统.md) | 使用 OpenResty + Redis 构建完整业务系统，单机 10 万+ QPS，延迟 < 5ms |
 | [Python MQTT 实时视频传输](/post/项目实践/Python%20MQTT%20实时视频传输.md) | MQTT 用于视频传输的实践、性能优化与局限性分析 |
 
