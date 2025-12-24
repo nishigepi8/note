@@ -11,7 +11,9 @@
 
 
 
-> **硬件说明**：Luckfox Pico Max 实物图，带摄像头和网口的那款特别适合视频应用
+![Luckfox Pico Max 实物图](https://zfile.ga666666.cn/pd/1/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250906180523_80_53.jpg)
+
+> Luckfox Pico Max 实物图，带摄像头和网口的那款特别适合视频应用
 
 ## 核心技术背景
 
@@ -82,7 +84,9 @@ Luckfox Pico Max 的核心是 Rockchip RV1106：单核 ARM Cortex-A7 @1.2GHz + R
 
 实际运行截图（浏览器端接收）：
 
-> **测试效果**：实际运行截图（浏览器端接收），硬件实物 + 测试界面
+![测试效果截图](https://zfile.ga666666.cn/pd/1/screenshot-20250906-180313.png)
+
+> 实际运行截图：浏览器端接收 720p 视频流
 
 建议：
 - 先本地测试 ICE 连接。
