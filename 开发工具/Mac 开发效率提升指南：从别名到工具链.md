@@ -52,6 +52,8 @@
 └─────────────────────────────────────┘
 ```
 
+![Alfred 剪切板管理界面](https://zfile.ga666666.cn/pd/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/screenshot-20251224-172655.png)
+
 ### 2. Bob —— 快捷翻译
 
 选中文字后直接翻译，支持多种翻译引擎。
@@ -63,6 +65,8 @@
 - 响应速度快
 
 **使用技巧**：设置快捷键 `Option + D`，选中英文文档直接翻译。
+
+![Bob 翻译工具界面](https://zfile.ga666666.cn/pd/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/screenshot-20251224-172827.png)
 
 ### 3. iTerm2 —— 终端的终极形态
 
@@ -87,12 +91,16 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$
 ZSH_THEME="powerlevel10k/powerlevel10k"
 ```
 
+![iTerm2 终端界面](https://zfile.ga666666.cn/pd/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/screenshot-20251224-173327.png)
+
 ### 4. 超级右键 —— Finder 增强
 
 右键菜单增强工具，支持：
 - 在当前目录打开终端
 - 新建各种类型文件
 - 快速复制文件路径
+
+![超级右键功能展示](https://zfile.ga666666.cn/pd/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/screenshot-20251224-172917.png)
 
 ## 别名系统：效率提升的核心
 
