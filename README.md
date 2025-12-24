@@ -47,11 +47,12 @@ note/
 
 ### 🏗️ 架构设计
 
-| 资源 | 简介 |
+| 文章 | 简介 |
 |------|------|
-| Auth-Service 授权机制 | 微服务授权架构设计 |
-| BMGuardr Kubernetes 架构 | K8s 集群架构设计方案 |
-| CI 架构图 | 持续集成流水线架构 |
+| [高并发缓存同步：RSC 方案](./Architecture/高并发缓存同步：借鉴JVM%20Survivor机制的RSC方案.md) | 借鉴 JVM Survivor 机制，组合 Redis+Kafka+MongoDB 实现百万设备状态同步 |
+| Auth-Service 授权机制.pdf | 微服务授权架构设计 |
+| BMGuardr Kubernetes 架构.pdf | K8s 集群架构设计方案 |
+| CI 架构图.pdf | 持续集成流水线架构 |
 
 ### 💡 项目实践
 
