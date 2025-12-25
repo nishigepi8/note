@@ -48,9 +48,9 @@ PowerWiki 是一个开源的知识管理系统，主要解决传统博客和文�
 - 配置复杂，学习成本高
 
 **PowerWiki 的解决方案**：
-- 只需要 Git + 静态文件服务器
+- 基于 Node.js，轻量级服务端
+- 自动从 Git 仓库同步内容，无需手动部署
 - 配置简单，5 分钟上手
-- 无服务端依赖，部署简单
 
 ## PowerWiki 的设计理念
 
@@ -78,24 +78,25 @@ note/
 - ✅ **协作编辑**：多人可以同时编辑，通过 Pull Request 合并
 - ✅ **跨平台同步**：Git 仓库可以托管在 GitHub/Gitee，任何设备都能访问
 
-### 内容与展示分离
+### 自动同步机制
 
-PowerWiki 采用 **docsify** 作为前端渲染引擎，实现了内容与展示的完全分离：
+PowerWiki 的核心特性是**自动从 Git 仓库同步内容**：
 
 ```
-Markdown 文件（内容）
+Git 仓库（内容源）
     ↓
-Git 仓库（版本管理）
+PowerWiki 服务（自动拉取）
     ↓
-docsify（实时渲染）
+Markdown 解析（marked + highlight.js）
     ↓
-浏览器（展示）
+浏览器（Feishu 风格 UI）
 ```
 
 **核心优势**：
-- 修改 Markdown 文件后，刷新页面即可看到更新（无需重新编译）
-- 内容存储在 Git 中，展示层可以随时更换（docsify、VuePress、Docusaurus 等）
-- 一份内容，多种展示方式（网站、PDF、电子书）
+- ✅ **自动同步**：配置 Git 仓库地址后，自动定期拉取最新内容
+- ✅ **实时更新**：修改 Git 仓库后，PowerWiki 自动同步，无需手动部署
+- ✅ **版本追踪**：内容始终与 Git 仓库保持一致
+- ✅ **无需编译**：Markdown 实时渲染，修改即生效
 
 ## 与传统博客的对比
 
@@ -135,8 +136,8 @@ docsify（实时渲染）
 | **内容迁移** | 复杂 | ✅ Git 仓库直接迁移 |
 | **备份恢复** | 需要数据库备份 | ✅ Git 仓库即备份 |
 | **批量修改** | 困难 | ✅ Git 批量操作 |
-| **实时预览** | 需要编译 | ✅ docsify 实时渲染 |
-| **部署复杂度** | 中等 | ✅ 静态文件，简单 |
+| **自动更新** | 需要手动部署 | ✅ 自动从 Git 同步 |
+| **部署复杂度** | 中等 | ✅ Node.js 服务，简单 |
 
 ## PowerWiki 的核心价值
 
@@ -323,103 +324,118 @@ print(f"总字数：{total_words}")
 
 ### 4. 简洁性：极简配置，快速上手
 
-#### 极简架构
+#### 轻量级架构
 
-PowerWiki 的架构非常简单：
+PowerWiki 基于 Node.js + Express.js，架构简洁：
 
 ```
-Markdown 文件（内容）
+Git 仓库（内容源）
     ↓
-Git 仓库（版本管理 + 备份）
+PowerWiki 服务（Node.js + Express）
+    ├── 自动同步（simple-git）
+    ├── Markdown 解析（marked）
+    ├── 代码高亮（highlight.js）
+    └── PDF 渲染（pdfjs-dist）
     ↓
-docsify（实时渲染）
-    ↓
-静态文件服务（部署）
+浏览器（Feishu 风格 UI）
 ```
+
+**技术栈**：
+- ✅ Node.js + Express.js（轻量级服务端）
+- ✅ simple-git（Git 操作）
+- ✅ marked + highlight.js（Markdown 渲染）
+- ✅ Vanilla JavaScript（前端，无框架依赖）
 
 **不需要**：
-- ❌ 数据库
-- ❌ 服务端语言（PHP、Node.js、Go）
-- ❌ 构建工具（Webpack、Vite）
-- ❌ 复杂的配置文件
-
-**只需要**：
-- ✅ Git（版本控制）
-- ✅ Markdown（内容格式）
-- ✅ 静态文件服务器（部署）
+- ❌ 数据库（内容在 Git 仓库）
+- ❌ 复杂的构建工具
+- ❌ 前端框架（React、Vue）
 
 #### 5 分钟快速开始
 
 ```bash
-# 1. 克隆模板仓库
-git clone https://github.com/steven-ld/PowerWiki.git my-wiki
-cd my-wiki
+# 1. 克隆仓库
+git clone https://github.com/steven-ld/PowerWiki.git
+cd PowerWiki
 
-# 2. 安装 docsify（可选，也可以直接用 CDN）
-npm install -g docsify-cli
+# 2. 安装依赖
+npm install
 
-# 3. 启动本地服务
-docsify serve
+# 3. 创建配置文件
+cp config.example.json config.json
 
-# 4. 浏览器打开 http://localhost:3000
+# 4. 编辑配置文件，设置 Git 仓库地址
+vim config.json
+
+# 5. 启动服务
+npm start
 ```
 
-**就这么简单**，不需要复杂的配置。
+**就这么简单**，访问 `http://localhost:3000` 即可。
 
 #### 配置简单
 
-PowerWiki 的配置文件只有一个 `index.html`：
+PowerWiki 的配置文件 `config.json`：
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>我的知识库</title>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/vue.css">
-</head>
-<body>
-  <div id="app"></div>
-  <script>
-    window.$docsify = {
-      name: '我的知识库',
-      repo: 'https://github.com/username/note',
-      loadSidebar: true,
-    }
-  </script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-</body>
-</html>
+```json
+{
+  "gitRepo": "https://github.com/your-username/your-wiki-repo.git",
+  "repoBranch": "main",
+  "port": 3000,
+  "siteTitle": "我的知识库",
+  "siteDescription": "知识管理系统",
+  "autoSyncInterval": 180000,
+  "pages": {
+    "home": "README.md",
+    "about": "ABOUT.md"
+  }
+}
 ```
 
-**不到 20 行代码**，就能搭建一个完整的知识管理系统。
+**核心配置**：
+- `gitRepo`：你的 Git 仓库地址（内容源）
+- `autoSyncInterval`：自动同步间隔（默认 3 分钟）
+- `siteTitle`：网站标题
 
-#### 部署简单：静态文件即可
+配置好 Git 仓库地址后，PowerWiki 会自动拉取内容并渲染。
 
-#### 部署到 GitHub Pages
+#### 部署简单：Node.js 服务
+
+#### 部署到服务器
 
 ```bash
-# 1. 推送代码到 GitHub
-git push origin main
+# 1. 克隆 PowerWiki
+git clone https://github.com/steven-ld/PowerWiki.git
+cd PowerWiki
 
-# 2. 在 GitHub 设置中开启 Pages
-# Settings → Pages → Source: main branch
+# 2. 安装依赖
+npm install
 
-# 3. 访问 https://username.github.io/note
+# 3. 配置 config.json（设置 Git 仓库地址）
+
+# 4. 使用 PM2 启动（推荐）
+npm install -g pm2
+pm2 start server.js --name powerwiki
+
+# 5. 设置开机自启
+pm2 startup
+pm2 save
 ```
 
-无需服务器、无需数据库、无需运维。
+#### 部署到云平台
 
-#### 部署到其他平台
+PowerWiki 可以部署到任何支持 Node.js 的平台：
+- **Vercel**：支持 Node.js，自动部署
+- **Heroku**：一键部署
+- **Railway**：简单配置即可
+- **自己的服务器**：PM2 + Nginx 反向代理
 
-因为生成的是静态文件，可以部署到：
-- GitHub Pages
-- Gitee Pages
-- Vercel
-- Netlify
-- 自己的服务器（Nginx）
+#### 自动同步机制
 
-一份内容，多种部署方式。
+PowerWiki 的核心特性是**自动同步**：
+- 配置 `autoSyncInterval`（默认 3 分钟）
+- 服务会自动从 Git 仓库拉取最新内容
+- 无需手动部署，修改 Git 仓库后自动更新
 
 ## 实际使用场景
 
@@ -477,34 +493,18 @@ find . -name "*.md" -exec sed -i '1i\---\nlayout: post\n---\n' {} \;
 
 ## 技术架构
 
-### 前端：docsify
+### 技术架构
 
-docsify 是一个轻量级的文档网站生成器：
+#### 后端：Node.js + Express.js
 
-**特点**：
-- 无需构建，运行时渲染
-- 支持 Markdown 扩展语法
-- 插件生态丰富（搜索、代码高亮、目录等）
-- 响应式设计，移动端友好
+PowerWiki 基于 Express.js 构建轻量级服务端：
 
-**配置示例**：
-
-```javascript
-// index.html
-window.$docsify = {
-  name: '技术笔记',
-  repo: 'https://github.com/username/note',
-  loadSidebar: true,
-  subMaxLevel: 2,
-  search: {
-    maxAge: 86400000,
-    paths: 'auto',
-    placeholder: '搜索...',
-  }
-}
-```
-
-### 后端：Git + 静态文件服务
+**核心功能**：
+- Git 仓库自动同步（simple-git）
+- Markdown 文件解析（marked）
+- 代码语法高亮（highlight.js）
+- PDF 文件渲染（pdfjs-dist）
+- 访问统计（可选）
 
 **架构图**：
 
@@ -513,21 +513,39 @@ window.$docsify = {
   ↓
 编辑 Markdown 文件
   ↓
-Git 提交
+Git 提交并推送
   ↓
-推送到远程仓库（GitHub/Gitee）
+PowerWiki 服务（自动拉取）
+  ├── simple-git 拉取最新内容
+  ├── marked 解析 Markdown
+  ├── highlight.js 代码高亮
+  └── 渲染 HTML
   ↓
-静态文件服务（GitHub Pages/Nginx）
-  ↓
-docsify 渲染
-  ↓
-用户访问
+浏览器（Feishu 风格 UI）
 ```
 
 **优势**：
-- 无服务端逻辑，部署简单
+- 轻量级服务端，资源占用低
+- 自动同步，无需手动部署
 - 内容存储在 Git，版本可控
-- 静态文件，CDN 友好，性能好
+- 支持 PDF 渲染和访问统计
+
+#### 前端：Vanilla JavaScript
+
+PowerWiki 前端使用原生 JavaScript，无框架依赖：
+
+**特点**：
+- ✅ Feishu（飞书）风格的现代化 UI
+- ✅ 响应式设计，移动端友好
+- ✅ 自动生成目录（TOC）
+- ✅ 代码语法高亮
+- ✅ PDF 文件预览
+- ✅ 访问统计（可选）
+
+**无框架依赖**意味着：
+- 加载速度快
+- 兼容性好
+- 易于定制
 
 ## 迁移成本
 
@@ -638,8 +656,16 @@ PowerWiki 是一个专注于**数据迁移、备份、管理和简洁性**的开
 
 **相关链接**：
 - PowerWiki 项目：https://github.com/steven-ld/PowerWiki
-- docsify 文档：https://docsify.js.org
-- 示例站点：https://ga666666.cn
+- 在线演示：https://ga666666.cn
+- 技术栈：Node.js + Express.js + Vanilla JavaScript
+
+**核心特性**：
+- ✅ 自动从 Git 仓库同步内容
+- ✅ Feishu 风格的现代化 UI
+- ✅ 代码语法高亮（highlight.js）
+- ✅ PDF 文件渲染支持
+- ✅ 访问统计功能
+- ✅ 响应式设计，移动端友好
 
 **开源协议**：MIT License
 
