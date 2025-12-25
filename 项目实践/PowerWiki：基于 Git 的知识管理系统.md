@@ -1,15 +1,56 @@
 ## 为什么需要 PowerWiki
 
-作为一个技术写作者，我一直在寻找一种更好的方式来管理我的技术笔记和博客文章。传统的博客平台（如 WordPress、Hexo、Hugo）虽然功能强大，但都存在一个根本问题：**内容与版本控制分离**。
+PowerWiki 是一个开源的知识管理系统，主要解决传统博客和文档平台的四个核心痛点：
 
-当你想要：
-- 回看一篇文章的修改历史
-- 在不同设备间同步文章
-- 与其他人协作编辑
-- 批量修改多篇文章的格式
-- 备份和恢复内容
+### 痛点一：数据迁移困难
 
-传统博客平台要么不支持，要么操作繁琐。而这些问题，在软件开发中早已通过 Git 解决。
+**传统博客的问题**：
+- WordPress/Typecho：内容在数据库，导出格式复杂，导入容易丢失格式
+- Hexo/Hugo：源文件可以迁移，但配置、主题、插件需要重新配置
+- 第三方平台：数据被平台锁定，迁移成本高
+
+**PowerWiki 的解决方案**：
+- 所有内容都是 Markdown 文件，存储在 Git 仓库
+- 迁移 = 复制 Git 仓库，零成本
+- 不依赖数据库、不依赖特定平台
+
+### 痛点二：备份恢复复杂
+
+**传统博客的问题**：
+- 需要备份数据库 + 文件系统
+- 恢复需要数据库还原 + 文件恢复
+- 备份文件格式不通用，难以验证完整性
+
+**PowerWiki 的解决方案**：
+- Git 仓库即备份，`git clone` 即可恢复
+- 支持多平台备份（GitHub、Gitee、自建 Git 服务器）
+- 版本历史完整，可以恢复到任意时间点
+
+### 痛点三：内容管理不便
+
+**传统博客的问题**：
+- 批量修改需要逐篇编辑
+- 无法追踪修改历史
+- 多设备同步困难
+- 协作编辑需要复杂的权限管理
+
+**PowerWiki 的解决方案**：
+- Git 工作流：版本控制、分支管理、Pull Request
+- 批量操作：命令行工具批量处理
+- 多设备同步：`git pull/push` 即可
+- 协作编辑：Git 原生支持
+
+### 痛点四：系统复杂臃肿
+
+**传统博客的问题**：
+- WordPress：需要 PHP、MySQL、Apache/Nginx
+- Hexo/Hugo：需要 Node.js/Go、构建工具链
+- 配置复杂，学习成本高
+
+**PowerWiki 的解决方案**：
+- 只需要 Git + 静态文件服务器
+- 配置简单，5 分钟上手
+- 无服务端依赖，部署简单
 
 ## PowerWiki 的设计理念
 
@@ -97,9 +138,99 @@ docsify（实时渲染）
 | **实时预览** | 需要编译 | ✅ docsify 实时渲染 |
 | **部署复杂度** | 中等 | ✅ 静态文件，简单 |
 
-## PowerWiki 的核心优势
+## PowerWiki 的核心价值
 
-### 1. Git 工作流：像管理代码一样管理文章
+### 1. 数据迁移：零成本迁移
+
+#### 从任何平台迁移到 PowerWiki
+
+**从 WordPress 迁移**：
+```bash
+# 1. 导出文章为 Markdown（使用工具或脚本）
+# 2. 整理到 Git 仓库
+git init
+git add .
+git commit -m "迁移 WordPress 文章"
+
+# 3. 推送到远程仓库
+git remote add origin https://github.com/username/note.git
+git push -u origin main
+```
+
+**从 Hexo/Hugo 迁移**：
+```bash
+# 直接复制源文件
+cp -r hexo/source/_posts/* note/项目实践/
+git add .
+git commit -m "迁移 Hexo 文章"
+```
+
+**从第三方平台迁移**：
+- 导出 Markdown 文件
+- 推送到 Git 仓库
+- 完成迁移
+
+#### 从 PowerWiki 迁移到其他平台
+
+因为内容是标准 Markdown，可以轻松迁移到：
+- 任何支持 Markdown 的平台
+- 任何静态博客生成器
+- 任何文档系统
+
+**数据不被锁定**，这是 PowerWiki 的核心承诺。
+
+### 2. 备份管理：Git 仓库即备份
+
+#### 多平台备份
+
+```bash
+# 备份到 GitHub
+git remote add github https://github.com/username/note.git
+git push github main
+
+# 备份到 Gitee
+git remote add gitee https://gitee.com/username/note.git
+git push gitee main
+
+# 备份到本地
+git clone https://github.com/username/note.git backup/note
+```
+
+**一份内容，多处备份**，数据安全有保障。
+
+#### 版本历史即备份
+
+每次修改都有完整的 Git 历史：
+
+```bash
+# 查看修改历史
+git log --oneline
+
+# 恢复到任意版本
+git checkout <commit-hash>
+
+# 查看文件变更
+git diff HEAD~1 架构设计/物模型.md
+```
+
+**不需要额外的备份工具**，Git 本身就是最好的备份系统。
+
+#### 恢复简单
+
+```bash
+# 完全恢复（假设仓库丢失）
+git clone https://github.com/username/note.git
+
+# 恢复到特定时间点
+git checkout <commit-hash>
+
+# 恢复单个文件
+git checkout <commit-hash> -- 架构设计/物模型.md
+```
+
+### 3. 内容管理：Git 工作流
+
+#### 版本控制：完整的修改历史
 
 #### 版本历史追踪
 
@@ -190,48 +321,80 @@ for root, dirs, files in os.walk('note'):
 print(f"总字数：{total_words}")
 ```
 
-### 3. 实时渲染：docsify 的优势
+### 4. 简洁性：极简配置，快速上手
 
-#### 无需编译
+#### 极简架构
 
-传统静态博客需要：
+PowerWiki 的架构非常简单：
 
-```bash
-# Hexo
-hexo generate  # 生成静态文件
-hexo deploy    # 部署
-
-# Hugo
-hugo           # 编译
-hugo deploy    # 部署
+```
+Markdown 文件（内容）
+    ↓
+Git 仓库（版本管理 + 备份）
+    ↓
+docsify（实时渲染）
+    ↓
+静态文件服务（部署）
 ```
 
-PowerWiki 只需要：
+**不需要**：
+- ❌ 数据库
+- ❌ 服务端语言（PHP、Node.js、Go）
+- ❌ 构建工具（Webpack、Vite）
+- ❌ 复杂的配置文件
+
+**只需要**：
+- ✅ Git（版本控制）
+- ✅ Markdown（内容格式）
+- ✅ 静态文件服务器（部署）
+
+#### 5 分钟快速开始
 
 ```bash
-# 修改 Markdown 文件
-vim 架构设计/物模型.md
+# 1. 克隆模板仓库
+git clone https://github.com/steven-ld/PowerWiki.git my-wiki
+cd my-wiki
 
-# 刷新浏览器即可看到更新
+# 2. 安装 docsify（可选，也可以直接用 CDN）
+npm install -g docsify-cli
+
+# 3. 启动本地服务
+docsify serve
+
+# 4. 浏览器打开 http://localhost:3000
 ```
 
-docsify 在浏览器端实时渲染 Markdown，无需服务端编译。
+**就这么简单**，不需要复杂的配置。
 
-#### 开发体验
+#### 配置简单
 
-本地开发时：
+PowerWiki 的配置文件只有一个 `index.html`：
 
-```bash
-# 启动 docsify 服务
-docsify serve note
-
-# 浏览器打开 http://localhost:3000
-# 修改文件后，刷新即可看到更新
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>我的知识库</title>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/vue.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: '我的知识库',
+      repo: 'https://github.com/username/note',
+      loadSidebar: true,
+    }
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+</body>
+</html>
 ```
 
-比传统静态博客的"修改 → 编译 → 预览"流程快得多。
+**不到 20 行代码**，就能搭建一个完整的知识管理系统。
 
-### 4. 部署简单：静态文件即可
+#### 部署简单：静态文件即可
 
 #### 部署到 GitHub Pages
 
@@ -437,32 +600,39 @@ PowerWiki 不是万能的，也有局限性：
 
 ## 总结
 
-PowerWiki 的核心价值在于：**用 Git 管理文章，就像管理代码一样**。
+PowerWiki 是一个专注于**数据迁移、备份、管理和简洁性**的开源知识管理系统。
 
-### 核心优势
+### 核心价值
 
-1. ✅ **版本控制**：完整的修改历史，随时回退
-2. ✅ **协作编辑**：Git 工作流，多人协作
-3. ✅ **内容迁移**：Git 仓库即备份，迁移简单
-4. ✅ **实时预览**：docsify 实时渲染，无需编译
-5. ✅ **部署简单**：静态文件，CDN 友好
+1. ✅ **数据迁移**：零成本迁移，数据不被锁定
+2. ✅ **备份管理**：Git 仓库即备份，多平台备份，版本历史完整
+3. ✅ **内容管理**：Git 工作流，版本控制、批量操作、协作编辑
+4. ✅ **简洁性**：极简架构，5 分钟上手，配置简单
 
-### 适用人群
+### 适用场景
 
-- ✅ 技术写作者（需要版本控制和协作）
-- ✅ 知识管理需求（需要结构化组织）
-- ✅ 开源项目文档（需要 Git 工作流）
-- ✅ 个人博客（追求简单和可控）
+- ✅ **个人博客**：追求数据可控，迁移简单
+- ✅ **技术文档**：需要版本控制和协作
+- ✅ **知识管理**：需要结构化组织和备份
+- ✅ **团队 Wiki**：需要 Git 工作流和权限管理
 
-### 不适合的人群
+### 不适合的场景
 
-- ❌ 需要复杂交互功能
-- ❌ 需要可视化编辑器
-- ❌ 不熟悉 Git 的用户
+- ❌ 需要复杂交互功能（评论、用户系统）
+- ❌ 需要可视化编辑器（必须会 Markdown）
+- ❌ 不熟悉 Git 的用户（需要学习 Git 基础）
 
-如果你是一个技术写作者，希望用更专业的方式管理你的文章，PowerWiki 值得尝试。
+### 为什么选择 PowerWiki
 
-**一次配置，终身受益**——这就是 PowerWiki 的魅力所在。
+如果你：
+- 担心数据被平台锁定
+- 需要频繁备份和恢复
+- 希望用专业工具管理内容
+- 追求简单和可控
+
+那么 PowerWiki 就是为你设计的。
+
+**数据是你的，永远是你的**——这就是 PowerWiki 的承诺。
 
 ---
 
@@ -470,4 +640,8 @@ PowerWiki 的核心价值在于：**用 Git 管理文章，就像管理代码一
 - PowerWiki 项目：https://github.com/steven-ld/PowerWiki
 - docsify 文档：https://docsify.js.org
 - 示例站点：https://ga666666.cn
+
+**开源协议**：MIT License
+
+欢迎 Star、Fork、Issue 和 PR！
 
