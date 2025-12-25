@@ -21,6 +21,8 @@
 
 每个点记录了某一时刻你在地球上的位置。把这些点用线连起来，就是你看到的轨迹。
 
+![GPS 轨迹示例](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/screenshot-20251225-144234.png)
+
 ### 1.2 单个 GPS 点的数据结构
 
 ```javascript
