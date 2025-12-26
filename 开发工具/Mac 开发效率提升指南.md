@@ -93,7 +93,62 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 ![iTerm2 终端界面](https://zfile.ga666666.cn/pd/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/screenshot-20251224-173327.png)
 
-### 4. 超级右键 —— Finder 增强
+### 4. Kiro CLI —— AI 驱动的终端助手
+
+**强烈推荐**！这是我用了两年的 AI 开发助手，原来叫 Amazon Q CLI，今年改名为 Kiro CLI，但功能和使用体验完全一样。
+
+**核心优势**：
+- **智能代码生成**：直接在终端中生成代码片段
+- **命令行助手**：自然语言转换为复杂的 shell 命令
+- **多模型支持**：可以选择不同的 AI 模型进行对话
+- **与 iTerm2 完美配合**：无缝集成到终端工作流
+
+**安装和配置**：
+
+```bash
+# 安装 Kiro CLI
+npm install -g @aws/kiro-cli
+
+# 初始化配置
+kiro-cli configure
+```
+
+**使用场景**：
+- 忘记复杂的 Git 命令？直接问 Kiro
+- 需要写一个快速脚本？让 Kiro 帮你生成
+- 调试 Docker 容器？Kiro 给出最佳实践命令
+
+![Kiro CLI 官网](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/kiro%E7%BD%91%E7%AB%99.png)
+
+![Kiro CLI 软件主页](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/kiro-cli%E8%BD%AF%E4%BB%B6%E4%B8%BB%E9%A1%B5.png)
+
+**权限设置**：
+首次使用需要开启必要权限：
+
+![开启权限](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/%E5%BC%80%E5%90%AF%E6%9D%83%E9%99%90.png)
+
+**启用命令提示**：
+配置后可以获得智能的命令建议：
+
+![启用命令提示](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/%E5%90%AF%E7%94%A8%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA.png)
+
+**实际使用效果**：
+
+![CD命令提示](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/cd%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA.png)
+
+![Git命令提示](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/git%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA.png)
+
+**模型选择**：
+可以根据不同任务选择合适的 AI 模型：
+
+![聊天写代码选模型](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/%E8%81%8A%E5%A4%A9%E5%86%99%E4%BB%A3%E7%A0%81%E9%80%89%E6%A8%A1%E5%9E%8B.png)
+
+**使用技巧**：
+- 设置快捷键快速呼出 Kiro
+- 结合 iTerm2 的分屏功能，一边写代码一边咨询 AI
+- 利用 Kiro 的代码生成功能快速创建模板文件
+
+### 5. 超级右键 —— Finder 增强
 
 右键菜单增强工具，支持：
 - 在当前目录打开终端
@@ -294,11 +349,12 @@ source ~/.aliases_projects
 回顾这些技巧，效率提升的本质是：
 
 1. **减少重复输入**：别名把长命令缩短为几个字母
-2. **减少记忆负担**：常用命令不用每次回忆完整写法
+2. **减少记忆负担**：常用命令不用每次回忆完整写法，Kiro CLI 更是让自然语言直接转换为命令
 3. **减少切换成本**：快捷键、目录别名减少鼠标操作
 4. **减少等待时间**：代理下载、并行操作
+5. **AI 辅助决策**：Kiro CLI 提供智能建议，减少查文档的时间
 
-**量变引起质变**：单个别名节省的时间微乎其微，但当你有 50+ 个别名，每天使用上百次时，累积效果非常显著。
+**量变引起质变**：单个别名节省的时间微乎其微，但当你有 50+ 个别名，每天使用上百次时，累积效果非常显著。加上 Kiro CLI 的 AI 助手功能，效率提升更加明显。
 
 ## 进阶技巧
 
@@ -351,14 +407,18 @@ z cloud    # 跳转到 cloud-xxx 项目目录
 2. **逐步积累**：每周添加 1-2 个别名，逐渐形成自己的工具库
 3. **定期回顾**：清理不再使用的别名，保持配置简洁
 4. **备份配置**：把 dotfiles 放到 Git 仓库，换电脑时一键恢复
+5. **拥抱 AI**：像 Kiro CLI 这样的 AI 工具正在改变开发方式，早用早受益
 
 记住：**最好的工具是你用得顺手的工具**。不必追求最新最炫，适合自己的才是最好的。
+
+特别推荐 Kiro CLI + iTerm2 的组合，这套工具链我已经用了两年，从 Amazon Q CLI 到现在的 Kiro CLI，体验一直很棒。AI 助手让很多原本需要查文档或搜索的问题都能在终端中直接解决。
 
 希望这些技巧能帮助你提升开发效率。如果你有更好的提效技巧，欢迎交流！
 
 ---
 
 **相关资源**：
+- [Kiro CLI](https://kiro.aws/) - AI 驱动的终端助手
 - [Oh My Zsh](https://ohmyz.sh/)
 - [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
 - [Alfred](https://www.alfredapp.com/)
