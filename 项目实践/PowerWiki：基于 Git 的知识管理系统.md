@@ -1,3 +1,5 @@
+# PowerWiki：基于 Git 的知识管理
+
 ## 为什么需要 PowerWiki
 
 PowerWiki 是一个开源的知识管理系统，主要解决传统博客和文档平台的四个核心痛点：
