@@ -1,5 +1,3 @@
-# Spring Boot 3.x + JDK 21 升级实战指南
-
 ## 概述
 
 本文档记录了从 Spring Boot 2.x + JDK 11/17 升级到 Spring Boot 3.x + JDK 21 的完整过程，涵盖自动化工具使用、依赖升级、代码迁移、常见问题解决等各个方面。
