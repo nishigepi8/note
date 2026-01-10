@@ -1,3 +1,14 @@
+---
+title: DevOps 开发规范
+description: 本目录包含团队开发规范和最佳实践。
+author: ga666666
+date: 2026-01-10
+updated: 2026-01-10
+keywords: DevOps, 开发规范, 文章列表, Git, 规范要点, 工作流要点, 推荐工具, 分支对比
+tags: []
+---
+
+
 # DevOps 开发规范
 
 本目录包含团队开发规范和最佳实践。

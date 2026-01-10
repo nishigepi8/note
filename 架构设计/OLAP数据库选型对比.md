@@ -1,3 +1,14 @@
+---
+title: 三大 OLAP 数据库深度对比
+description: 在构建数据分析系统时，选择合适的数据库是架构设计的核心决策之一。面对 OLAP（在线分析处理）场景，StarRocks、ClickHouse 和 InfluxDB 是三个热门选择，但它们的设计理念和适用场景截然不同。
+author: ga666666
+date: 2026-01-10
+updated: 2026-01-10
+keywords: 三大, OLAP, 数据库深度对, 前言, 数据库定位与核心, 特性, 架构设计对比, 性能对比
+tags: []
+---
+
+
 # 三大 OLAP 数据库深度对比
 
 ## 前言

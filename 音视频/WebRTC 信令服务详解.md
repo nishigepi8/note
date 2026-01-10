@@ -1,3 +1,14 @@
+---
+title: WebRTC 信令：连接的"媒人"
+description: WebRTC 是一项强大的技术，可以实现浏览器和设备之间的点对点实时通信。但很多人在入门时都会遇到一个困惑：WebRTC 不是说好的 P2P 吗，为什么还需要服务器？
+author: ga666666
+date: 2026-01-10
+updated: 2026-01-10
+keywords: WebRTC, 信令, 连接的, 媒人, 前言, 信令的作用, SDP, Offer
+tags: []
+---
+
+
 # WebRTC 信令：连接的"媒人"
 
 ## 前言

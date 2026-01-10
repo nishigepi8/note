@@ -1,3 +1,14 @@
+---
+title: RTP：实时传输的核心协议
+description: 在音视频传输领域，RTP（Real-time Transport Protocol）是一个绕不开的核心协议。无论是 WebRTC、RTSP 还是 SIP，底层都依赖 RTP 来传输媒体数据。本文将从协议设计、实际应用和性能优化三个维度，深入解析 RTP 的工作原理和最佳实践。
+author: ga666666
+date: 2026-01-10
+updated: 2026-01-10
+keywords: RTP, 实时传输的核, 心协议, 前言, 概述, 历史, 应用场景, 报头格式
+tags: []
+---
+
+
 # RTP：实时传输的核心协议
 
 ## 前言

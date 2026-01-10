@@ -1,3 +1,14 @@
+---
+title: kubectl 命令速查手册
+description: Kubernetes 作为容器编排的事实标准，其命令行工具 kubectl 是日常运维和开发中最重要的工具。本文整理了我在实际工作中最常用的 kubectl 命令，并附上使用场景和最佳实践，希望能帮助大家提高工作效率。
+author: ga666666
+date: 2026-01-10
+updated: 2026-01-10
+keywords: 命令速查手册, 前言, 基础概念回顾, Pod, 操作命令, Service, Deployment, Ingress
+tags: []
+---
+
+
 # kubectl 命令速查手册
 
 ## 前言

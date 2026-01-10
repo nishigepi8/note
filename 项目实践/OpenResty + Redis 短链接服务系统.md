@@ -1,3 +1,14 @@
+---
+title: 10 万 QPS 短链接服务实战
+description: 基于 OpenResty + Redis 构建极简高性能短链接服务，毫秒级响应，支持 10 万 QPS 高并发访问
+author: ga666666
+date: 2026-01-10
+updated: 2026-01-10
+keywords: OpenResty, Redis, 短链接, 高并发, 性能优化, Nginx, Lua, QPS
+tags: [项目实践, 性能优化, 高并发]
+---
+
+
 # 10 万 QPS 短链接服务实战
 
 ## 前言

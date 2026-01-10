@@ -1,3 +1,14 @@
+---
+title: Spring Boot 3 现代化升级之路
+description: 本文档记录了从 Spring Boot 2.x + JDK 11/17 升级到 Spring Boot 3.x + JDK 21 的完整过程，涵盖自动化工具使用、依赖升级、代码迁移、常见问题解决等各个方面。
+author: ga666666
+date: 2026-01-10
+updated: 2026-01-10
+keywords: Spring, Boot, 现代化升级之, 概述, 升级前准备, 使用, OpenRewrite, 自动化升级
+tags: []
+---
+
+
 # Spring Boot 3 现代化升级之路
 
 ## 概述

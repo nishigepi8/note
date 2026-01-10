@@ -1,3 +1,14 @@
+---
+title: Kafka Partition 规划实战
+description: 在使用 Kafka 构建高并发消息系统时，partition 数量的设置是一个关键决策点。设置不当会导致性能瓶颈、资源浪费或消费延迟等问题。
+author: ga666666
+date: 2026-01-10
+updated: 2026-01-10
+keywords: Kafka, Partition, 规划实战, 前言, 核心概念, 数量与性能关系, 实际问题与处理方, 数量规划最佳实践
+tags: []
+---
+
+
 # Kafka Partition 规划实战
 
 ## 前言
