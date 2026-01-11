@@ -23,6 +23,7 @@ tags: []
 | [GPS 轨迹存储方案分析](/post/架构设计/GPS%20轨迹存储方案分析.md) | PostGIS、MongoDB、时序数据库 | 从数据结构到存储选型的完整方案 |
 | [自研 P2P 服务架构设计](/post/架构设计/自研%20P2P%20服务架构设计.md) | Pion、STUN、TURN、MQTT 信令 | 10 万级并发 P2P 连接架构 |
 | [OLAP数据库选型对比](/post/架构设计/OLAP数据库选型对比.md) | StarRocks、ClickHouse、InfluxDB | 三大数据库架构、性能、场景全面对比 |
+| [NAT类型详解](/post/架构设计/NAT类型详解.md) | NAT类型、P2P通信、STUN、TURN、ICE | 从Full Cone到Symmetric的NAT类型详解，P2P穿透技术实践 |
 
 ## 资源列表
 
