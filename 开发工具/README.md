@@ -3,7 +3,7 @@ title: 开发工具与效率
 description: 本目录包含开发工具、效率提升相关的文章。
 author: ga666666
 date: 2026-01-10
-updated: 2026-01-10
+updated: 2026-01-12
 keywords: 开发工具与效, 文章列表, 核心理念, 推荐工具, 减少重复输入, 减少记忆负担, 减少切换成本, 减少等待时间
 tags: []
 ---
@@ -18,6 +18,7 @@ tags: []
 | 文章 | 关键词 | 适用人群 |
 |------|--------|----------|
 | [Mac 开发效率提升指南](/post/开发工具/Mac%20开发效率提升指南.md) | Alfred、iTerm2、Alias、Zsh | macOS 开发者 |
+| [Claude Code 后台重构实践报告](/post/开发工具/Claude%20Code%20后台重构实践报告.md) | AI辅助编程、代码重构、效率提升、成本优化 | 团队技术负责人、后端开发者 |
 
 ## 核心理念
 
@@ -53,6 +54,7 @@ tags: []
 | 工具 | 用途 |
 |------|------|
 | VS Code | 代码编辑器 |
+| Claude Code | AI 辅助编程、代码重构 |
 | Docker Desktop | 容器管理 |
 | Postman / Insomnia | API 调试 |
 | DBeaver | 数据库管理 |
