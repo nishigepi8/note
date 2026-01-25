@@ -1,6 +1,6 @@
 ---
 title: EMQX 消息丢失深度分析与解决方案
-description: 在生产环境中遇到 MQTT 指令丢失问题，通过深入分析 EMQX 配置、客户端代码、网络链路等多个维度，最终定位并解决了消息丢失的根本原因。本文详细记录了整个分析过程，包括问题现象、技术原理、性能测试和优化方案。
+description: 生产环境中遇到 MQTT 消息丢失问题，通过深入分析 EMQX 配置、MQTT 客户端代码、网络链路等多个维度，最终定位并解决了消息丢失的根本原因。本文详细记录了整个分析过程，包括问题现象、技术原理、性能测试和优化方案。
 author: ga666666
 date: 2026-01-25
 updated: 2026-01-25
@@ -16,12 +16,22 @@ tags: [MQTT, EMQX, 性能分析, 物联网]
 
 ## 问题背景
 
+### 系统架构说明
+
+本文涉及的系统架构如下：
+
+```
+设备 → EMQX Broker ← 消费端服务(MQTT客户端) → Kafka → 业务系统
+```
+
+**消费端服务**：通过 MQTT 协议连接到 EMQX Broker 的服务端应用，作为 MQTT 客户端订阅主题并消费设备上报的消息。该服务使用 Paho MQTT Java 客户端库实现。
+
 ### 初始现象
 
 生产环境出现消息丢失，通过 EMQX log trace 监控发现：
 
 - **消息到达 EMQX**：日志显示消息已接收
-- **消息未到达 cloud-mqtt**：cloud-mqtt 日志缺失对应消息
+- **消息未到达消费端**：消费端服务日志缺失对应消息
 - **峰值时段问题严重**：半点和整点流量峰值时断连频繁
 
 ### 初步排查与修复
@@ -44,11 +54,13 @@ tags: [MQTT, EMQX, 性能分析, 物联网]
 
 通过 EMQX Dashboard 监控发现，整点流量激增时 `dropped.queue_full` 数量显著增加。
 
-**初步猜测**：cloud-mqtt 消费能力不足导致 EMQX 队列满。
+**初步猜测**：消费端服务消费能力不足导致 EMQX 队列满。
 
 ### 客户端代码分析
 
 #### 断连原因分析
+
+消费端服务使用 Paho MQTT Java 客户端，断连日志如下：
 
 ```java
 2026-01-05 07:00:47.551 [MQTT Rec: SYS_99AA8C0D908D4E0A8208C9C143DA6F6F] INFO  c.d.cloud.mqtt.config.CloudMqttCallback - mqtt connectionLost cause:{}
@@ -72,7 +84,7 @@ DataInputStream.readByte() → socketInputStream.read() 返回 -1 (EOF)
 
 #### 消息处理流程
 
-**MQTT 回调处理**：
+**MQTT 客户端回调处理**：
 ```java
 @Override
 public void messageArrived(String topic, MqttMessage message) {
@@ -95,8 +107,8 @@ public void eventHandle(MqttMessageEvent event) {
 
 #### 关键问题
 
-1. **Spring 事件同步发布**：`publishEvent()` 同步操作阻塞回调线程
-2. **信号量阻塞**：信号量满时阻塞 MQTT 回调线程
+1. **Spring 事件同步发布**：`publishEvent()` 同步操作阻塞 MQTT 客户端回调线程
+2. **信号量阻塞**：信号量满时阻塞 MQTT 客户端回调线程
 3. **消费能力不足**：信号量限制并发消费能力
 
 ### EMQX 配置分析
@@ -141,16 +153,16 @@ public void eventHandle(MqttMessageEvent event) {
 - **11:45:58**：开始发送消息
 - **11:46:00**：TCP 连接状态变为 TIME_WAIT
 - **11:47:00**：连接完全关闭
-- **11:45:59**：cloud-mqtt 日志记录断连
+- **11:45:59**：消费端服务日志记录断连
 
 **关键发现**：断连不是因为心跳超时（心跳超时至少需要 60s），而是流量激增后立即断连（1-2s 内）。
 
 ### 连接分配问题
 
 **当前状况**：
-- cloud-mqtt：8 个节点
+- 消费端服务：8 个节点
 - EMQX：10 个节点
-- **实际连接**：cloud-mqtt 只连接了 5 个 EMQX 节点
+- **实际连接**：消费端服务只连接了 5 个 EMQX 节点
 
 **影响**：
 1. 50% 节点资源利用不足
@@ -164,11 +176,11 @@ public void eventHandle(MqttMessageEvent event) {
 
 #### 问题根因
 
-Spring 事件同步发布，当信号量满时阻塞回调线程，导致消息处理不及时。
+Spring 事件同步发布，当信号量满时阻塞 MQTT 客户端回调线程，导致消息处理不及时。
 
 #### 优化方案
 
-使用线程池 + Kafka 异步消费，完全解耦，避免阻塞消息回调线程。
+使用线程池 + Kafka 异步消费，完全解耦，避免阻塞 MQTT 客户端回调线程。
 
 ```java
 @Override
@@ -188,14 +200,14 @@ public void messageArrived(String topic, MqttMessage message) {
             );
         });
     } catch (Exception e) {
-        log.error("[CloudMqttCallback] mqttMessageArrived error, topic = {}", topic, e);
+        log.error("[MqttCallback] mqttMessageArrived error, topic = {}", topic, e);
     }
 }
 ```
 
 #### 优化效果
 
-1. 解耦消息处理，MQTT 回调线程不再阻塞
+1. 解耦消息处理，MQTT 客户端回调线程不再阻塞
 2. 通过 Kafka 异步消费，提高消费能力
 3. 避免队列满导致的断连，增强系统稳定性
 
@@ -238,16 +250,16 @@ for (int i = 0; i < connectionCount; i++) {
 ### 消息流程
 
 ```
-设备消息 → EMQX Broker → cloud-mqtt 客户端 → Kafka → 业务处理
-    ↓           ↓              ↓              ↓         ↓
-  QoS保证   队列管理      回调处理        异步消费   业务逻辑
+设备消息 → EMQX Broker → 消费端服务(MQTT客户端) → Kafka → 业务处理
+    ↓           ↓              ↓                    ↓         ↓
+  QoS保证   队列管理      回调处理              异步消费   业务逻辑
 ```
 
 ### 关键环节
 
 1. **EMQX 接收**：消息到达 Broker，根据 QoS 进行可靠性保证
 2. **队列管理**：根据 `max_mqueue_len` 配置管理离线消息
-3. **客户端回调**：`messageArrived` 回调处理消息
+3. **客户端回调**：MQTT 客户端 `messageArrived` 回调处理消息
 4. **异步消费**：通过 Kafka 异步消费，避免阻塞
 5. **业务处理**：最终的业务逻辑处理
 
@@ -255,7 +267,7 @@ for (int i = 0; i < connectionCount; i++) {
 
 ### 根本原因
 
-1. **客户端消费速度不足**：Spring 同步事件发布阻塞回调线程
+1. **客户端消费速度不足**：Spring 同步事件发布阻塞 MQTT 客户端回调线程
 2. **EMQX 配置不合理**：默认配置无法满足高并发场景
 3. **连接分配不均**：部分节点过载，部分节点空闲
 4. **队列满后直接丢包**：即使 QoS=1 也不会重发
