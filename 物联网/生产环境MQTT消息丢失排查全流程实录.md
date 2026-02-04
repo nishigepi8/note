@@ -1,14 +1,29 @@
 ---
-title: EMQX 消息丢失深度分析与解决方案
+title: 生产环境 MQTT 消息丢失排查全流程实录
 description: 生产环境中遇到 MQTT 消息丢失问题，通过深入分析 EMQX 配置、MQTT 客户端代码、网络链路等多个维度，最终定位并解决了消息丢失的根本原因。本文详细记录了整个分析过程，包括问题现象、技术原理、性能测试和优化方案。
 author: ga666666
 date: 2026-01-25
 updated: 2026-01-25
-keywords: EMQX, MQTT, 消息丢失, 性能优化, 高并发, 队列阻塞, 连接断开
+keywords: EMQX, MQTT, 消息丢失, 性能优化, 高并发, 队列阻塞, 连接断开, 排查, 故障
 tags: [MQTT, EMQX, 性能分析, 物联网]
 ---
 
 # EMQX 消息丢失深度分析与解决方案
+
+---
+
+## 快速排查 CheckList
+
+遇到 MQTT 消息丢失？按以下顺序排查：
+
+- [ ] **Step 1**: 检查 EMQX Dashboard `dropped.queue_full` 指标
+- [ ] **Step 2**: 检查 MQTT 客户端 `clean_session` 设置
+- [ ] **Step 3**: 检查 `max_inflight` 和 `max_mqueue_len` 配置
+- [ ] **Step 4**: 检查客户端回调是否存在同步阻塞
+- [ ] **Step 5**: 检查连接是否均匀分配到各节点
+- [ ] **Step 6**: 压测验证配置参数
+
+---
 
 ## 前言
 

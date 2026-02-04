@@ -4,7 +4,7 @@ description: 作为一个开发者，效率是我们一直追求的目标。为�
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: Mac, 开发者的效率, 工具箱, 前言, 为什么选择, 开发, 必备效率软件, 别名系统
+keywords: Mac, 开发效率, 效率工具, Alfred, iTerm2, Kiro CLI, zsh, 别名, fzf
 tags: []
 ---
 
@@ -426,7 +426,45 @@ z cloud    # 跳转到 cloud-xxx 项目目录
 
 特别推荐 Kiro CLI + iTerm2 的组合，这套工具链我已经用了两年，从 Amazon Q CLI 到现在的 Kiro CLI，体验一直很棒。AI 助手让很多原本需要查文档或搜索的问题都能在终端中直接解决。
 
-希望这些技巧能帮助你提升开发效率。如果你有更好的提效技巧，欢迎交流！
+---
+
+## 快速配置清单
+
+一键安装常用工具（macOS）：
+
+```bash
+# 1. 安装 Homebrew（如果没有）
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 2. 安装必备软件
+brew install --cask alfred
+brew install --cask iterm2
+brew install --cask bob
+brew install fzf
+brew install z
+
+# 3. 安装 Oh My Zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# 4. 安装 Kiro CLI
+npm install -g @aws/kiro-cli
+```
+
+**zshrc 配置速查**：
+
+```bash
+# ~/.zshrc 基础配置
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+plugins=(git docker kubectl zsh-autosuggestions zsh-syntax-highlighting)
+source $ZSH/oh-my-zsh.sh
+
+# 常用别名
+alias cl="clear"
+alias k="kubectl"
+alias gs="git status"
+alias dps="docker ps"
+```
 
 ---
 
@@ -436,4 +474,6 @@ z cloud    # 跳转到 cloud-xxx 项目目录
 - [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
 - [Alfred](https://www.alfredapp.com/)
 - [iTerm2](https://iterm2.com/)
+- [Bob 翻译](https://github.com/ripperhe/Bob)
+- [fzf 模糊搜索](https://github.com/junegunn/fzf)
 
