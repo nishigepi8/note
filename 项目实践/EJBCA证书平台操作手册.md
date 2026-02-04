@@ -1,300 +1,202 @@
 > 参考文档：https://blog.csdn.net/u011391839/article/details/89471514
 
-# 一、EJBCA证书平台部署
+---
+title: EJBCA 证书平台操作手册
+description: 本文记录了 EJBCA 企业级证书颁发机构的完整部署和配置流程，包括 Docker 部署、管理后台配置、证书生成以及与 EMQX 的集成。涵盖证书层级架构、CRL/OCSP 吊销机制、MQTT 双向认证配置。
+author: ga666666
+date: 2025-01-10
+updated: 2025-02-04
+keywords: EJBCA, 证书颁发, PKI, TLS, 证书配置, EMQX, MQTT, CA, 证书吊销, CRL, OCSP
+tags: [EJBCA, 证书, PKI, EMQX, MQTT]
+---
 
-官方文档：https://docs.keyfactor.com/ejbca/latest/ejbca-installation
+# EJBCA 证书平台操作手册
 
-> 前置条件包含 JDK17、MySQL
->
-> Docker 镜像中已包含，验证阶段使用内置 H2 [MariaDB](https://downloads.mariadb.org/)
+## 前言
 
-## 1.1 运行 docker 镜像
+EJBCA（Enterprise Java Beans Certificate Authority）是一个功能强大的企业级证书颁发机构系统，本文记录了在生产环境中部署和配置 EJBCA 的完整流程，涵盖 Docker 部署、管理后台配置、证书生成以及与 EMQX 的集成。
 
-```sas
-docker run -it --rm -p 80:8080 -p 443:8443 -h localhost -e TLS_SETUP_ENABLED="simple" keyfactor/ejbca-ce
+**适用范围**：
+- 企业内部 PKI 体系搭建
+- MQTT 双向认证证书管理
+- IoT 设备证书颁发与吊销
 
+---
 
-docker run -it -d --name=ejbca-9.0.0 \
-  -p 9080:8080 -p 9443:8443 \
+## 一、EJBCA 证书平台部署
+
+### 1.1 前置条件
+
+- JDK 17+
+- MySQL 5.7+ / MariaDB 10.5+
+- Docker 环境
+
+> **官方文档**：[EJBCA Installation Guide](https://docs.keyfactor.com/ejbca/latest/ejbca-installation)
+
+### 1.2 Docker 部署
+
+#### 快速启动（测试环境）
+
+```bash
+# 使用内置 H2 数据库快速验证
+docker run -it --rm \
+  -p 80:8080 \
+  -p 443:8443 \
+  -h localhost \
+  -e TLS_SETUP_ENABLED="simple" \
+  keyfactor/ejbca-ce
+```
+
+#### 生产环境部署
+
+```bash
+docker run -it -d \
+  --name=ejbca-9.0.0 \
+  -p 9080:8080 \
+  -p 9443:8443 \
   -h dev-ejbca.dl-aiot.com \
   --restart on-failure:3 \
   -e TLS_SETUP_ENABLED="true" \
   -e DATABASE_JDBC_URL="jdbc:mysql://192.168.10.106:3306/dl_ejbca" \
   -e DATABASE_USER="root" \
-  -e DATABASE_PASSWORD="HhB7WwxbWCNMxfJhkbqc" \
+  -e DATABASE_PASSWORD="your_password" \
   keyfactor/ejbca-ce:9.0.0
-  
-  
-docker run -it -d --name=ejbca   -p 9080:8080 -p 9443:8443   -h 10.51.64.10  --restart on-failure:3   -e TLS_SETUP_ENABLED="true"   -e DATABASE_JDBC_URL="jdbc:mysql://10.50.128.14:3306/dl_ejbca"   -e DATABASE_USER="root"   -e DATABASE_PASSWORD="HhB7WwxbWCNMxfJhkbqc"   keyfactor/ejbca-ce:9.0.0
 ```
 
-![](images/EJBCA证书平台操作手册-image-14.png)
+![Docker 启动成功](images/EJBCA证书平台操作手册-image-14.png)
 
-## 1.2 获取管理后台连接 & 密码
+### 1.3 获取管理后台访问凭证
 
-第一次启动成功会显示管理后台连接&密码
+首次启动成功后，控制台会显示访问地址和初始密码：
 
 ```yaml
 URL:      https://localhost:443/ejbca/ra/enrollwithusername.xhtml?username=superadmin
 Password: BSQ9Ku3btOadV8s+pLVxJ/Ug
 ```
 
-# 二、配置 EJBCA 管理后台
+> **注意**：首次访问建议使用无痕窗口，避免浏览器缓存导致的问题。
 
-## 2.1 初次访问管理后台
+---
 
-使用火狐浏览器访问, 输入上一步获取的密码
+## 二、配置 EJBCA 管理后台
 
-![](images/EJBCA证书平台操作手册-image-13.png)
+### 2.1 初次访问配置
 
-![](images/EJBCA证书平台操作手册-image.png)
+使用 Firefox 浏览器访问管理后台，输入初始密码登录。
 
-![](images/EJBCA证书平台操作手册-image-1.png)
+![登录页面](images/EJBCA证书平台操作手册-image-13.png)
 
-![](images/EJBCA证书平台操作手册-image-2.png)
+按照向导完成初始配置：
 
-![](images/EJBCA证书平台操作手册-image-3.png)
+1. **接受证书**：浏览器会提示证书不受信任，继续访问即可
+2. **创建超级管理员**：设置 superadmin 用户密码
+3. **初始化数据库**：配置证书存储后端
 
-**<span style="color: inherit; background-color: rgba(255,246,122,0.8)">新建隐私窗口</span>，避免缓存**
+![初始化向导](images/EJBCA证书平台操作手册-image.png)
+![管理员设置](images/EJBCA证书平台操作手册-image-1.png)
+![管理员配置](images/EJBCA证书平台操作手册-image-2.png)
+![最终确认](images/EJBCA证书平台操作手册-image-3.png)
 
-![](images/EJBCA证书平台操作手册-image-4.png)
+> **提示**：建议新建隐私窗口进行初始配置，避免缓存问题。
 
-成功进入后台管理页面
+![配置完成](images/EJBCA证书平台操作手册-image-4.png)
 
-![](images/EJBCA证书平台操作手册-image-5.png)
+### 2.2 后续访问方式
 
-## 2.2 后续访问
+配置完成后，后续访问需要使用管理员证书：
 
-[ DL-wiki](https://i7uduvdvau.feishu.cn/wiki/wikcnHE86PXC0zmUuqFeuWpWsMf)中有相关证书以及密码
+1. 从内部 Wiki 获取超级管理员证书
+2. 导入 SuperAdmin.p12 到浏览器
 
-![](images/EJBCA证书平台操作手册-image-6.png)
+![证书下载页面](images/EJBCA证书平台操作手册-image-6.png)
 
-下载SuperAdmin.p12
+---
 
+## 三、证书接入方案对比
 
-![](images/EJBCA证书平台操作手册-image-7.png)
+### 方案对比
 
-![](images/EJBCA证书平台操作手册-image-8.png)
+| 方案 | 优点 | 缺点 | 推荐度 |
+|------|------|------|--------|
+| 管理后台手动生成 | 简单直观 | 无法自动化 | ★☆☆ |
+| ejbca-easy-rest-client | 支持命令行 | 需二次开发 | ★★★ |
+| REST API 自行集成 | 灵活性高 | 开发成本高 | ★★★★ |
 
-![](images/EJBCA证书平台操作手册-image-9.png)
+### 3.1 管理后台生成证书
 
-新建隐私窗口，避免缓存
+适用于证书数量少、生成频率低的场景。
 
-![](images/EJBCA证书平台操作手册-image-10.png)
+![证书申请页面](images/EJBCA证书平台操作手册-image-11.png)
+![填写证书信息](images/EJBCA证书平台操作手册-image-12.png)
+![生成证书](images/EJBCA证书平台操作手册-image-15.png)
+![证书下载](images/EJBCA证书平台操作手册-image-16.png)
 
-# 三、云平台接入 EJBCA 平台
+### 3.2 ejbca-easy-rest-client
 
-## 3.1 基于ejbca-easy-rest-client
+**项目地址**：[Keyfactor/ejbca-easy-rest-client](https://github.com/Keyfactor/ejbca-easy-rest-client)
 
-**流程**：
+#### 安装与使用
 
-1. 通过管理后台或命令行快速生成证书。
-
-2. 支持多种选项，如证书绑定域名、设置密码等。
-
-3. 利用 Java JAR 文件执行命令行生成证书。
-
-**优点**：
-
-1. 验证可行性高，文档清晰。
-
-2. 提供灵活的参数配置，支持大多数场景。
-
-3. 可利用 OpenSSL 提取证书和密钥，便于整合到其他服务。
-
-**缺点**：
-
-1. 手动命令行操作，无法与现有服务自动化集成。
-
-2. 需要额外的脚本化或 SDK 修改工作量。
-
-
-
-<span style="color: inherit; background-color: rgb(255,233,40)">此方式已验证可行，要集成到服务端，需要修改</span> <span style="color: inherit; background-color: rgb(255,233,40)">源码</span> <span style="color: inherit; background-color: rgb(255,233,40)">，工作量较大</span>
-
-### 3.1.1管理后台生成
-
-![](images/EJBCA证书平台操作手册-image-11.png)
-
-![](images/EJBCA证书平台操作手册-image-12.png)
-
-![](images/EJBCA证书平台操作手册-image-15.png)
-
-![](images/EJBCA证书平台操作手册-image-16.png)
-
-### 3.1.2 Java-SDK
-
-> https://github.com/Keyfactor/ejbca-easy-rest-client
-
-![](images/EJBCA证书平台操作手册-image-17.png)
-
-进入 target，执行指令
-
-```scala
-# 执行后输入密码
+```bash
+# 进入 target 目录执行
 java -jar target/erce-0.3.0-SNAPSHOT.jar enroll genkeys \
---authkeystore /Users/ga666666/Desktop/SuperAdmin.p12 \
---authkeystorepass 54lE9avyVVlut72lUunWQV8m \
---endentityprofile "ClientAuth" \
---certificateprofile "ClientAuth" \
---ca ManagementCA \
---subjectaltname "dnsName=dev-mqtt.dl-aiot.com" \
---hostname localhost \
---destination ./certs \
---subjectdn "CN=test-erces-01.test" \
---username test-erces-01.test -p \
---keyalg EC --keyspec P-256 --verbose
+  --authkeystore /path/to/SuperAdmin.p12 \
+  --authkeystorepass your_password \
+  --endentityprofile "ClientAuth" \
+  --certificateprofile "ClientAuth" \
+  --ca ManagementCA \
+  --subjectaltname "dnsName=dev-mqtt.dl-aiot.com" \
+  --hostname localhost \
+  --destination ./certs \
+  --subjectdn "CN=test-device-01" \
+  --username test-device-01 \
+  --keyalg EC --keyspec P-256 --verbose
 ```
 
-![](images/EJBCA证书平台操作手册-image-18.png)
+![命令执行](images/EJBCA证书平台操作手册-image-17.png)
+![证书生成结果](images/EJBCA证书平台操作手册-image-18.png)
+![证书列表](images/EJBCA证书平台操作手册-image-19.png)
 
-![](images/EJBCA证书平台操作手册-image-19.png)
+#### 证书提取
 
-
-
-
-
-## ~~3.2 基于ejbca-java-client-sdk~~
-
-* **分析**：
-
-  1. 官方 SDK 提供 Java 方法封装，理论上适合与后端系统直接对接。
-
-  2. 实测无法正常使用，长期无人维护。
-
-  3. 文档和社区支持较少，无法定位问题。
-
-* **建议**：无法使用 SDK，后续可跟踪更新版本。
-
-
-
-```shell
-docker run -it -d --name=ejbca  -p 80:8080 -p 443:8443 -p 8080:8080 -p 8443:8443  -h localhost -e TLS_SETUP_ENABLED="true" keyfactor/ejbca-ce
-```
-
-![](images/EJBCA证书平台操作手册-image-20.png)
-
-![](images/EJBCA证书平台操作手册-image-21.png)
-
-![](images/EJBCA证书平台操作手册-image-22.png)
-
-**提取证书**
-
-```sql
+```bash
+# 提取证书
 openssl pkcs12 -in certificate.pfx -nokeys -out certificate.pem
-```
 
-**提取密钥**
-
-```sql
+# 提取私钥
 openssl pkcs12 -in certificate.pfx -nocerts -out key.pem
-```
 
-* `-nokeys`: 不包含密钥。
-
-* `-nocerts`: 不包含证书。
-
-* `-out`: 输出的 PEM 文件。
-
-![](images/EJBCA证书平台操作手册-image-23.png)
-
-移除密码保护：
-
-```sql
+# 移除私钥密码
 openssl rsa -in key.pem -out key_nopass.pem
 ```
 
-此时无需再输入 PEM 密码，导出的 `key_nopass.pem` 即为不带密码的私钥。
+![证书提取](images/EJBCA证书平台操作手册-image-20.png)
+![证书信息](images/EJBCA证书平台操作手册-image-21.png)
+![私钥处理](images/EJBCA证书平台操作手册-image-22.png)
+![完成](images/EJBCA证书平台操作手册-image-23.png)
 
-<span style="color: inherit; background-color: rgb(255,233,40)">但是进行连接仍然提示没有鉴权的错误</span>
+> **注意**：此方案需要二次开发才能集成到生产系统，工作量较大。
 
+### 3.3 REST API 自行集成
 
+推荐用于需要自动化证书管理的生产环境。
 
-## 3.3 基于 Rest-API 自行集成
+**适用场景**：
+- 设备证书批量颁发
+- 证书到期自动续期
+- 证书吊销实时同步
 
-> 初步验证可行，需要实现相关的接口
+---
 
-**流程**：
+## 四、CA 证书体系配置
 
-1. 利用 REST API 提供的接口进行证书管理。
+### 4.1 证书层级架构
 
-2. 可实现证书生成、查询、更新等全流程管理。
-
-**优点**：
-
-1. 灵活性高，便于与现有服务集成。
-
-2. 提供标准化 HTTP 接口，易于调试和扩展。
-
-3. 支持完整的认证和权限管理流程。
-
-**缺点**：
-
-1. 需要开发 REST 客户端接口，初期开发成本较高。
-
-2. 文档覆盖不完整，部分细节需要结合实际环境调试。
-
-![](images/EJBCA证书平台操作手册-image-24.png)
-
-
-
-![](images/EJBCA证书平台操作手册-image-25.png)
-
-![](images/EJBCA证书平台操作手册-image-26.png)
-
-**综合分析**
-
-# 四、EJBCA CA配置
-
-## 4.1 基于根CA生成证书
-
-![](images/EJBCA证书平台操作手册-image-27.png)
-
-![](images/EJBCA证书平台操作手册-image-28.png)
-
-![](images/EJBCA证书平台操作手册-image-29.png)
-
-![](images/EJBCA证书平台操作手册-image-30.png)
-
-![](images/EJBCA证书平台操作手册-image-31.png)
-
-![](images/EJBCA证书平台操作手册-image-32.png)
-
-![](images/EJBCA证书平台操作手册-image-33.png)
-
-![](images/EJBCA证书平台操作手册-image-34.png)
-
-![](images/EJBCA证书平台操作手册-image-35.png)
-
-![](images/EJBCA证书平台操作手册-image-36.png)
-
-![](images/EJBCA证书平台操作手册-image-37.png)
-
-![](images/EJBCA证书平台操作手册-image-38.png)
-
-![](images/EJBCA证书平台操作手册-image-39.png)
-
-![](images/EJBCA证书平台操作手册-image-40.png)
-
-**P12 证书解析**
-
-```shell
-// 提取证书
-openssl pkcs12 -in demo-api.dl-aiot.com.p12 -nokeys -out certificate.pem
-// 提取密码
-openssl pkcs12 -in demo-api.dl-aiot.com.p12 -nocerts -out key.pem
-// 解密证书的KEY
-openssl rsa -in key.pem -out key_nopass.pem
 ```
-
-## 4.2 基于根CA配置二级CA生成证书
-
-```sql
 +--------------------+
 |  DesignLibroCA    |
 |  (Root CA)        |
 +--------------------+
-          |
           |
           v
 +--------------------+
@@ -306,112 +208,137 @@ openssl rsa -in key.pem -out key_nopass.pem
           |                                   |
           v                                   v
 +-------------------+                 +--------------------+
-| EMQX Server Cert  |                 | User Client Cert   |
-| (Server Auth)     |                 | (Client Auth)      |
+| EMQX Server Cert |                 | User Client Cert   |
+| (Server Auth)    |                 | (Client Auth)      |
 +-------------------+                 +--------------------+
 ```
 
-创建一个 DesignLibroCA 作为根证书
+### 4.2 创建根证书
 
-![](images/EJBCA证书平台操作手册-image-41.png)
+![创建根 CA](images/EJBCA证书平台操作手册-image-27.png)
+![配置根 CA](images/EJBCA证书平台操作手册-image-28.png)
+![密钥生成](images/EJBCA证书平台操作手册-image-29.png)
+![证书签名](images/EJBCA证书平台操作手册-image-30.png)
+![证书颁发](images/EJBCA证书平台操作手册-image-31.png)
+![确认页面](images/EJBCA证书平台操作手册-image-32.png)
+![完成](images/EJBCA证书平台操作手册-image-33.png)
 
-![](images/EJBCA证书平台操作手册-image-42.png)
+### 4.3 创建中间证书
 
-创建一个 PetLibroCA 作为中间证书，编辑并且选择 DesignLibro 作为根证书，自己作为子证书
+中间证书用于隔离不同业务线的证书管理权限。
 
-![](images/EJBCA证书平台操作手册-image-43.png)
+![中间 CA 列表](images/EJBCA证书平台操作手册-image-34.png)
+![创建中间 CA](images/EJBCA证书平台操作手册-image-35.png)
+![选择父 CA](images/EJBCA证书平台操作手册-image-36.png)
+![配置信息](images/EJBCA证书平台操作手册-image-37.png)
+![完成配置](images/EJBCA证书平台操作手册-image-38.png)
+![证书链验证](images/EJBCA证书平台操作手册-image-39.png)
+![最终确认](images/EJBCA证书平台操作手册-image-40.png)
 
-EMQX 配置证书要配置完整的证书链
+### 4.4 证书提取命令速查
 
-![](images/EJBCA证书平台操作手册-image-44.png)
+```bash
+# 提取证书
+openssl pkcs12 -in demo-api.dl-aiot.com.p12 -nokeys -out certificate.pem
 
-**MQTT-CLIENT**
+# 提取私钥
+openssl pkcs12 -in demo-api.dl-aiot.com.p12 -nocerts -out key.pem
 
-![](images/EJBCA证书平台操作手册-image-45.png)
-
-![](images/EJBCA证书平台操作手册-image-46.png)
-
-**MQTT-SERVER**&#x20;
-
-![](images/EJBCA证书平台操作手册-image-47.png)
-
-![](images/EJBCA证书平台操作手册-image-48.png)
-
-**终端实体配置**
-
-![](images/EJBCA证书平台操作手册-image-49.png)
-
-![](images/EJBCA证书平台操作手册-image-50.png)
-
-![](images/EJBCA证书平台操作手册-image-51.png)
-
-## 4.3 证书吊销 CRL 配置
-
-![](images/EJBCA证书平台操作手册-image-52.png)
-
-![](images/EJBCA证书平台操作手册-image-53.png)
-
-![](images/EJBCA证书平台操作手册-image-54.png)
-
-创建Client、Server证书配置
-
-![](images/EJBCA证书平台操作手册-image-55.png)
-
-MQTT-CLIENT &#x20;
-
-## 4.4 证书吊销 OCSP 配置
-
-
-
-# 五、 EJBCA RA 配置
-
-## 5.1 MQTT 服务器鉴权配置
-
-
-
-
-
-# 六、证书使用（EMQX）
-
-## 6.1 EMQX 配置 TLS 证书
-
-> EMQX : 4.4.19
-
-![](images/EJBCA证书平台操作手册-image-56.png)
-
-## 6.2 EMQX OSCP配置
-
-> EMQX : 4.4.19
-
-![](images/EJBCA证书平台操作手册-image-57.png)
-
-
-
-![](images/EJBCA证书平台操作手册-image-58.png)
-
-![](images/EJBCA证书平台操作手册-image-59.png)
-
-```shell
-openssl ocsp -issuer /Users/ga666666/Desktop/ejbca-cert/dev/ManagementCA.pem -cert /Users/ga666666/Desktop/ejbca-cert/dev/user/cert.pem -url https://192.168.10.106:9443/ejbca/publicweb/status/ocsp -CAfile /Users/ga666666/Desktop/ejbca-cert/dev/ManagementCA.pem
+# 解密私钥（移除密码保护）
+openssl rsa -in key.pem -out key_nopass.pem
 ```
 
-## 6.3 EMQX CRL 配置
+---
 
-> EMQX : 5.8.4
+## 五、证书吊销机制
 
-![](images/EJBCA证书平台操作手册-image-60.png)
+### 5.1 CRL（证书吊销列表）
 
+#### 配置 CRL 发布点
 
+![CRL 配置入口](images/EJBCA证书平台操作手册-image-52.png)
+![新建 CRL 发布点](images/EJBCA证书平台操作手册-image-53.png)
+![CRL 验证](images/EJBCA证书平台操作手册-image-54.png)
 
-![](images/EJBCA证书平台操作手册-image-61.png)
+#### 创建吊销规则
 
-![](images/EJBCA证书平台操作手册-image-62.png)
+![创建吊销配置](images/EJBCA证书平台操作手册-image-55.png)
 
-![](images/EJBCA证书平台操作手册-image-63.png)
+#### 证书验证命令
 
-![](images/EJBCA证书平台操作手册-image-64.png)
+```bash
+openssl ocsp \
+  -issuer ManagementCA.pem \
+  -cert user-cert.pem \
+  -url https://ejbca.example.com:8443/ejbca/publicweb/status/ocsp \
+  -CAfile ManagementCA.pem
+```
 
-此时用已注销证书无法进行登录
+### 5.2 OCSP（在线证书状态协议）
 
+> OCSP 提供实时证书状态查询，比 CRL 更适合高并发场景。
 
+![OCSP 配置入口](images/EJBCA证书平台操作手册-image-57.png)
+![OCSP 响应器](images/EJBCA证书平台操作手册-image-58.png)
+![状态查询](images/EJBCA证书平台操作手册-image-59.png)
 
+---
+
+## 六、EMQX 证书集成
+
+### 6.1 TLS 证书配置
+
+**EMQX 版本**：4.4.19
+
+![TLS 配置入口](images/EJBCA证书平台操作手册-image-56.png)
+
+#### 配置步骤
+
+1. 上传根证书（Root CA）
+2. 上传中间证书（如有）
+3. 上传服务器证书
+4. 配置私钥
+
+### 6.2 OCSP Stapling 配置
+
+![OCSP 配置](images/EJBCA证书平台操作手册-image-60.png)
+![OCSP 响应](images/EJBCA证书平台操作手册-image-61.png)
+![验证配置](images/EJBCA证书平台操作手册-image-62.png)
+![完成](images/EJBCA证书平台操作手册-image-63.png)
+
+### 6.3 CRL 配置
+
+**EMQX 版本**：5.8.4
+
+![CRL 配置](images/EJBCA证书平台操作手册-image-64.png)
+
+#### 验证吊销功能
+
+使用已吊销的证书尝试连接 EMQX，连接应被拒绝。
+
+---
+
+## 七、最佳实践
+
+### 7.1 证书生命周期管理
+
+| 阶段 | 操作 | 建议周期 |
+|------|------|----------|
+| 根证书 | 创建后长期使用 | 10-20 年 |
+| 中间证书 | 每年轮换 | 1 年 |
+| 服务器证书 | 每年更新 | 1 年 |
+| 客户端证书 | 根据业务需求 | 1-3 年 |
+
+### 7.2 安全建议
+
+1. **根证书离线存储**：根证书私钥应离线保存，仅在签发中间证书时使用
+2. **最小权限原则**：不同业务使用不同的中间证书
+3. **定期轮换**：定期轮换证书和密钥
+4. **吊销机制**：及时吊销已泄露或不再使用的证书
+
+---
+
+**参考资源**：
+- [EJBCA 官方文档](https://docs.keyfactor.com/ejbca/latest/)
+- [ejbca-easy-rest-client](https://github.com/Keyfactor/ejbca-easy-rest-client)
+- [EMQX SSL/TLS 文档](https://www.emqx.io/docs/en/v4.4/advanced/ssl.html)
