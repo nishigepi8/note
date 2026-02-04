@@ -1,5 +1,3 @@
-> 参考文档：https://blog.csdn.net/u011391839/article/details/89471514
-
 ---
 title: EJBCA 证书平台操作手册
 description: 本文记录了 EJBCA 企业级证书颁发机构的完整部署和配置流程，包括 Docker 部署、管理后台配置、证书生成以及与 EMQX 的集成。涵盖证书层级架构、CRL/OCSP 吊销机制、MQTT 双向认证配置。
