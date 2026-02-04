@@ -63,7 +63,7 @@ docker run -it -d \
   keyfactor/ejbca-ce:9.0.0
 ```
 
-![Docker 启动成功](images/EJBCA证书平台操作手册-image-14.png)
+![Docker 启动成功](images/ejbca-guide-14.png)
 
 ### 1.3 获取管理后台访问凭证
 
@@ -84,7 +84,7 @@ Password: BSQ9Ku3btOadV8s+pLVxJ/Ug
 
 使用 Firefox 浏览器访问管理后台，输入初始密码登录。
 
-![登录页面](images/EJBCA证书平台操作手册-image-13.png)
+![登录页面](images/ejbca-guide-13.png)
 
 按照向导完成初始配置：
 
@@ -92,14 +92,14 @@ Password: BSQ9Ku3btOadV8s+pLVxJ/Ug
 2. **创建超级管理员**：设置 superadmin 用户密码
 3. **初始化数据库**：配置证书存储后端
 
-![初始化向导](images/EJBCA证书平台操作手册-image.png)
-![管理员设置](images/EJBCA证书平台操作手册-image-1.png)
-![管理员配置](images/EJBCA证书平台操作手册-image-2.png)
-![最终确认](images/EJBCA证书平台操作手册-image-3.png)
+![初始化向导](images/ejbca-guide-00.png)
+![管理员设置](images/ejbca-guide-1.png)
+![管理员配置](images/ejbca-guide-2.png)
+![最终确认](images/ejbca-guide-3.png)
 
 > **提示**：建议新建隐私窗口进行初始配置，避免缓存问题。
 
-![配置完成](images/EJBCA证书平台操作手册-image-4.png)
+![配置完成](images/ejbca-guide-4.png)
 
 ### 2.2 后续访问方式
 
@@ -108,7 +108,7 @@ Password: BSQ9Ku3btOadV8s+pLVxJ/Ug
 1. 从内部 Wiki 获取超级管理员证书
 2. 导入 SuperAdmin.p12 到浏览器
 
-![证书下载页面](images/EJBCA证书平台操作手册-image-6.png)
+![证书下载页面](images/ejbca-guide-6.png)
 
 ---
 
@@ -126,10 +126,10 @@ Password: BSQ9Ku3btOadV8s+pLVxJ/Ug
 
 适用于证书数量少、生成频率低的场景。
 
-![证书申请页面](images/EJBCA证书平台操作手册-image-11.png)
-![填写证书信息](images/EJBCA证书平台操作手册-image-12.png)
-![生成证书](images/EJBCA证书平台操作手册-image-15.png)
-![证书下载](images/EJBCA证书平台操作手册-image-16.png)
+![证书申请页面](images/ejbca-guide-11.png)
+![填写证书信息](images/ejbca-guide-12.png)
+![生成证书](images/ejbca-guide-15.png)
+![证书下载](images/ejbca-guide-16.png)
 
 ### 3.2 ejbca-easy-rest-client
 
@@ -153,9 +153,9 @@ java -jar target/erce-0.3.0-SNAPSHOT.jar enroll genkeys \
   --keyalg EC --keyspec P-256 --verbose
 ```
 
-![命令执行](images/EJBCA证书平台操作手册-image-17.png)
-![证书生成结果](images/EJBCA证书平台操作手册-image-18.png)
-![证书列表](images/EJBCA证书平台操作手册-image-19.png)
+![命令执行](images/ejbca-guide-17.png)
+![证书生成结果](images/ejbca-guide-18.png)
+![证书列表](images/ejbca-guide-19.png)
 
 #### 证书提取
 
@@ -170,10 +170,10 @@ openssl pkcs12 -in certificate.pfx -nocerts -out key.pem
 openssl rsa -in key.pem -out key_nopass.pem
 ```
 
-![证书提取](images/EJBCA证书平台操作手册-image-20.png)
-![证书信息](images/EJBCA证书平台操作手册-image-21.png)
-![私钥处理](images/EJBCA证书平台操作手册-image-22.png)
-![完成](images/EJBCA证书平台操作手册-image-23.png)
+![证书提取](images/ejbca-guide-20.png)
+![证书信息](images/ejbca-guide-21.png)
+![私钥处理](images/ejbca-guide-22.png)
+![完成](images/ejbca-guide-23.png)
 
 > **注意**：此方案需要二次开发才能集成到生产系统，工作量较大。
 
@@ -215,25 +215,25 @@ openssl rsa -in key.pem -out key_nopass.pem
 
 ### 4.2 创建根证书
 
-![创建根 CA](images/EJBCA证书平台操作手册-image-27.png)
-![配置根 CA](images/EJBCA证书平台操作手册-image-28.png)
-![密钥生成](images/EJBCA证书平台操作手册-image-29.png)
-![证书签名](images/EJBCA证书平台操作手册-image-30.png)
-![证书颁发](images/EJBCA证书平台操作手册-image-31.png)
-![确认页面](images/EJBCA证书平台操作手册-image-32.png)
-![完成](images/EJBCA证书平台操作手册-image-33.png)
+![创建根 CA](images/ejbca-guide-27.png)
+![配置根 CA](images/ejbca-guide-28.png)
+![密钥生成](images/ejbca-guide-29.png)
+![证书签名](images/ejbca-guide-30.png)
+![证书颁发](images/ejbca-guide-31.png)
+![确认页面](images/ejbca-guide-32.png)
+![完成](images/ejbca-guide-33.png)
 
 ### 4.3 创建中间证书
 
 中间证书用于隔离不同业务线的证书管理权限。
 
-![中间 CA 列表](images/EJBCA证书平台操作手册-image-34.png)
-![创建中间 CA](images/EJBCA证书平台操作手册-image-35.png)
-![选择父 CA](images/EJBCA证书平台操作手册-image-36.png)
-![配置信息](images/EJBCA证书平台操作手册-image-37.png)
-![完成配置](images/EJBCA证书平台操作手册-image-38.png)
-![证书链验证](images/EJBCA证书平台操作手册-image-39.png)
-![最终确认](images/EJBCA证书平台操作手册-image-40.png)
+![中间 CA 列表](images/ejbca-guide-34.png)
+![创建中间 CA](images/ejbca-guide-35.png)
+![选择父 CA](images/ejbca-guide-36.png)
+![配置信息](images/ejbca-guide-37.png)
+![完成配置](images/ejbca-guide-38.png)
+![证书链验证](images/ejbca-guide-39.png)
+![最终确认](images/ejbca-guide-40.png)
 
 ### 4.4 证书提取命令速查
 
@@ -256,13 +256,13 @@ openssl rsa -in key.pem -out key_nopass.pem
 
 #### 配置 CRL 发布点
 
-![CRL 配置入口](images/EJBCA证书平台操作手册-image-52.png)
-![新建 CRL 发布点](images/EJBCA证书平台操作手册-image-53.png)
-![CRL 验证](images/EJBCA证书平台操作手册-image-54.png)
+![CRL 配置入口](images/ejbca-guide-52.png)
+![新建 CRL 发布点](images/ejbca-guide-53.png)
+![CRL 验证](images/ejbca-guide-54.png)
 
 #### 创建吊销规则
 
-![创建吊销配置](images/EJBCA证书平台操作手册-image-55.png)
+![创建吊销配置](images/ejbca-guide-55.png)
 
 #### 证书验证命令
 
@@ -278,9 +278,9 @@ openssl ocsp \
 
 > OCSP 提供实时证书状态查询，比 CRL 更适合高并发场景。
 
-![OCSP 配置入口](images/EJBCA证书平台操作手册-image-57.png)
-![OCSP 响应器](images/EJBCA证书平台操作手册-image-58.png)
-![状态查询](images/EJBCA证书平台操作手册-image-59.png)
+![OCSP 配置入口](images/ejbca-guide-57.png)
+![OCSP 响应器](images/ejbca-guide-58.png)
+![状态查询](images/ejbca-guide-59.png)
 
 ---
 
@@ -290,7 +290,7 @@ openssl ocsp \
 
 **EMQX 版本**：4.4.19
 
-![TLS 配置入口](images/EJBCA证书平台操作手册-image-56.png)
+![TLS 配置入口](images/ejbca-guide-56.png)
 
 #### 配置步骤
 
@@ -301,16 +301,16 @@ openssl ocsp \
 
 ### 6.2 OCSP Stapling 配置
 
-![OCSP 配置](images/EJBCA证书平台操作手册-image-60.png)
-![OCSP 响应](images/EJBCA证书平台操作手册-image-61.png)
-![验证配置](images/EJBCA证书平台操作手册-image-62.png)
-![完成](images/EJBCA证书平台操作手册-image-63.png)
+![OCSP 配置](images/ejbca-guide-60.png)
+![OCSP 响应](images/ejbca-guide-61.png)
+![验证配置](images/ejbca-guide-62.png)
+![完成](images/ejbca-guide-63.png)
 
 ### 6.3 CRL 配置
 
 **EMQX 版本**：5.8.4
 
-![CRL 配置](images/EJBCA证书平台操作手册-image-64.png)
+![CRL 配置](images/ejbca-guide-64.png)
 
 #### 验证吊销功能
 
