@@ -191,13 +191,13 @@ openssl rsa -in key.pem -out key_nopass.pem
 
 ```
 +--------------------+
-|  DesignLibroCA    |
+|  DesignXXXXXCA    |
 |  (Root CA)        |
 +--------------------+
           |
           v
 +--------------------+
-|  PetlibroCA       |
+|  PetXXXXCA       |
 |  (Intermediate CA)|
 +--------------------+
           |
