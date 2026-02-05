@@ -90,7 +90,6 @@ Password: BSQ9Ku3btOadV8s+pLVxJ/Ug
 2. **创建超级管理员**：设置 superadmin 用户密码
 3. **初始化数据库**：配置证书存储后端
 
-![初始化向导](./images/ejbca-guide-00.png)
 ![管理员设置](./images/ejbca-guide-01.png)
 ![管理员配置](./images/ejbca-guide-02.png)
 ![最终确认](./images/ejbca-guide-03.png)
