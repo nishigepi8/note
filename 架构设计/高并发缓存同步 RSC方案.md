@@ -110,8 +110,8 @@ graph LR
 ```mermaid
 graph TB
     subgraph "RSC 缓存布局"
-        Active["活跃区域<br/>(接收新更新)"
-        Inactive["非活跃区域<br/>(正在同步)"
+        Active["活跃区域 (接收新更新)"]
+        Inactive["非活跃区域 (正在同步)"]
     end
 
     Active -->|"交替使用"| Inactive
@@ -129,23 +129,24 @@ graph TB
 ### 整体架构
 
 ```mermaid
-graph LR
-    Device["设备上报<br/>(高并发)"] --> Redis
+flowchart LR
+    Device["设备上报\n(高并发)"] --> RedisMain
 
-    subgraph "Redis"
-        S0["S0<br/>(活跃)"]
-        S1["S1<br/>(同步中)"]
+    subgraph Redis缓存区
+        S0["S0\n(活跃)"]
+        S1["S1\n(同步中)"]
         S0 <-->|"交替使用"| S1
     end
 
-    Redis --> MongoDB
+    RedisMain --> Redis缓存区
+    Redis缓存区 --> MongoDB["MongoDB\n(最终存储)"]
 
-    subgraph "Kafka"
-        KafkaMsg["任务分发<br/>(解耦同步处理)"]
+    subgraph Kafka任务队列
+        KafkaMsg["任务分发\n(解耦同步处理)"]
     end
 
-    KafkaMsg -.-> Redis
-    MongoDB <|. KafkaMsg
+    KafkaMsg -.->|"触发同步"| RedisMain
+    MongoDB -->|"变更监听 / CDC"| KafkaMsg
 ```
 
 ### 组件职责
