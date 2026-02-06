@@ -105,15 +105,16 @@ mqttClient.publish(topic, message.toString());
 
 物模型本质上是**设备与应用之间的契约**：
 
-```
-                    物模型（契约）
-                         ↓
-    ┌────────────────────┴────────────────────┐
-    │                                          │
-  设备端                                    应用端
- 遵守契约                                  遵守契约
-    │                                          │
-    └──────────── 自动验证 ────────────────────┘
+```mermaid
+graph LR
+    subgraph "物模型（契约）"
+        Contract["设备与应用之间的契约"]
+    end
+
+    Contract -->|"遵守契约"| Device["设备端"]
+    Contract -->|"遵守契约"| App["应用端"]
+
+    Device -.->|"自动验证"| App
 ```
 
 - **设备端**承诺：我能提供这些属性、服务、事件
@@ -128,14 +129,17 @@ mqttClient.publish(topic, message.toString());
 
 物模型是**模型驱动**：先定义模型，自动生成一切。
 
-```
-                物模型定义
-                    ↓
-        ┌───────────┼───────────┐
-        ↓           ↓           ↓
-     前端 SDK    后端 SDK    嵌入式 SDK
-        ↓           ↓           ↓
-     自动文档    测试用例    监控配置
+```mermaid
+graph TD
+    Model["物模型定义<br/>(唯一的真实来源)"]
+
+    Model -->|"生成"| FrontSDK["前端 SDK"]
+    Model -->|"生成"| BackSDK["后端 SDK"]
+    Model -->|"生成"| EmbedSDK["嵌入式 SDK"]
+
+    FrontSDK --> Docs["自动文档"]
+    BackSDK --> Tests["测试用例"]
+    EmbedSDK --> Monitor["监控配置"]
 ```
 
 模型是**唯一的真实来源**（Single Source of Truth），代码、文档、测试都从模型生成，永远保持一致。
@@ -144,15 +148,22 @@ mqttClient.publish(topic, message.toString());
 
 物模型的设计遵循**从具体到抽象**的分层原则：
 
-```
-第一层：物理设备层
-    └─ 具体硬件：RK3588 芯片、CMOS 传感器、步进电机...
+```mermaid
+graph TD
+    subgraph "第一层：物理设备层"
+        Hardware["具体硬件<br/>RK3588芯片、CMOS传感器、步进电机..."]
+    end
 
-第二层：能力抽象层 ← 物模型在这里
-    └─ 设备能力：视频流、云台控制、人脸识别...
+    subgraph "第二层：能力抽象层 ← 物模型在这里"
+        Capability["设备能力<br/>视频流、云台控制、人脸识别..."]
+    end
 
-第三层：业务逻辑层
-    └─ 应用场景：智慧安防、智能监控、访客管理...
+    subgraph "第三层：业务逻辑层"
+        Business["应用场景<br/>智慧安防、智能监控、访客管理..."]
+    end
+
+    Hardware -->|"屏蔽硬件差异"| Capability
+    Capability -->|"提供统一能力"| Business
 ```
 
 **物模型处于中间层**，向下屏蔽硬件差异，向上提供统一能力。这种分层让系统更灵活：
@@ -304,27 +315,17 @@ void handleVideoStream(camera_hardware_t* hw, video_config_t* config) {
 
 物模型将设备能力抽象为三个核心要素：
 
-```
-AI 智能摄像头物模型
-│
-├── 属性（Property）- 设备状态
-│   ├── 在线状态（只读）
-│   ├── 视频流地址（只读）
-│   ├── 云台角度（读写）
-│   └── AI 识别模式（读写）
-│
-├── 服务（Service）- 可执行操作
-│   ├── 云台控制（上下左右）
-│   ├── 开始录像
-│   ├── 停止录像
-│   ├── 抓拍图片
-│   └── 切换识别模式（人脸/车牌/行为）
-│
-└── 事件（Event）- 主动通知
-    ├── 人脸识别事件
-    ├── 车牌识别事件
-    ├── 异常行为告警
-    └── 设备故障通知
+```mermaid
+graph TD
+    subgraph "AI 智能摄像头物模型"
+        Property["属性（Property）<br/>设备状态"]
+        Service["服务（Service）<br/>可执行操作"]
+        Event["事件（Event）<br/>主动通知"]
+    end
+
+    Property -->|"在线状态(只读)"| P1["<b>属性详情</b><br/>在线状态(只读)<br/>视频流地址(只读)<br/>云台角度(读写)<br/>AI识别模式(读写)"]
+    Service -->|"云台控制"| S1["<b>服务详情</b><br/>云台控制(上下左右)<br/>开始录像<br/>停止录像<br/>抓拍图片<br/>切换识别模式"]
+    Event -->|"人脸识别"| E1["<b>事件详情</b><br/>人脸识别事件<br/>车牌识别事件<br/>异常行为告警<br/>设备故障通知"]
 ```
 
 #### 1. 属性（Property）：描述设备状态
@@ -502,27 +503,29 @@ AI 智能摄像头物模型
 
 #### 传统开发流程
 
-```
-产品需求 → 手写协议文档 → 前端开发 → 后端开发 → 嵌入式开发
-    ↓           ↓              ↓          ↓           ↓
-  耗时          手写          2周        2周         2周
-  1周          1周           联调       联调        联调
-                            文档       文档        文档
-                            不一致     不一致      不一致
-                            
-总耗时：8-10 周，且容易出错
+```mermaid
+graph LR
+    A["产品需求<br/>耗时: 1周"] -->|"手写协议文档<br/>耗时: 1周"| B["协议文档<br/>文档不一致"]
+    B -->|"前端开发<br/>2周 + 联调"| C["前端<br/>文档不一致"]
+    B -->|"后端开发<br/>2周 + 联调"| D["后端<br/>文档不一致"]
+    B -->|"嵌入式开发<br/>2周 + 联调"| E["嵌入式<br/>文档不一致"]
+
+    C ~~~ F["总耗时：8-10 周<br/>且容易出错"]
+    D ~~~ F
+    E ~~~ F
 ```
 
 #### 物模型开发流程
 
-```
-产品需求 → 定义物模型 → 自动生成 SDK → 各端使用 SDK 开发
-    ↓           ↓              ↓              ↓
-  耗时          半天          自动化         3天（前端）
-  1周                                       3天（后端）
-                                            3天（嵌入式）
-                                            
-总耗时：2-3 周，质量更高
+```mermaid
+graph LR
+    A["产品需求<br/>耗时: 1周"] -->|"定义物模型<br/>耗时: 半天"| B["物模型定义"]
+    B -->|"自动生成 SDK<br/>自动化"| C["SDK"]
+    C -->|"前端使用 SDK<br/>3天"| D["前端"]
+    C -->|"后端使用 SDK<br/>3天"| E["后端"]
+    C -->|"嵌入式使用 SDK<br/>3天"| F["嵌入式"]
+
+    G["总耗时：2-3 周<br/>质量更高"] ~~~ D
 ```
 
 ### 自动生成 APP SDK：让前端开发变简单
@@ -933,30 +936,62 @@ void ai_recognition_task() {
 
 有了物模型定义，整个工具链都可以自动化：
 
-```
-物模型定义 (ai_camera_v1.json / vehicle_terminal_v2.json)
-    │
-    ├──> 代码生成器
-    │    ├─> iOS SDK (Swift)
-    │    ├─> Android SDK (Kotlin)
-    │    ├─> Web SDK (TypeScript)
-    │    ├─> 后端 SDK (Java/Go/Python)
-    │    └─> 嵌入式 SDK (C/C++)
-    │
-    ├──> 文档生成器
-    │    ├─> API 文档 (Markdown/HTML)
-    │    ├─> 使用指南
-    │    └─> 代码示例
-    │
-    ├──> 测试生成器
-    │    ├─> 单元测试用例
-    │    ├─> 集成测试脚本
-    │    └─> Mock 数据
-    │
-    └──> 配置生成器
-         ├─> MQTT Topic 配置
-         ├─> 数据库 Schema
-         └─> 监控告警规则
+```mermaid
+graph TD
+    Model["物模型定义<br/>ai_camera_v1.json<br/>vehicle_terminal_v2.json"]
+
+    subgraph "代码生成器"
+        CodeGen["代码生成器"]
+        iOS["iOS SDK (Swift)"]
+        Android["Android SDK (Kotlin)"]
+        Web["Web SDK (TypeScript)"]
+        Backend["后端 SDK (Java/Go/Python)"]
+        Embed["嵌入式 SDK (C/C++)"]
+    end
+
+    subgraph "文档生成器"
+        Docs["文档生成器"]
+        APIDocs["API 文档"]
+        Guide["使用指南"]
+        Samples["代码示例"]
+    end
+
+    subgraph "测试生成器"
+        Tests["测试生成器"]
+        Unit["单元测试用例"]
+        Integration["集成测试脚本"]
+        Mock["Mock 数据"]
+    end
+
+    subgraph "配置生成器"
+        Config["配置生成器"]
+        MQTT["MQTT Topic 配置"]
+        DB["数据库 Schema"]
+        Alert["监控告警规则"]
+    end
+
+    Model --> CodeGen
+    Model --> Docs
+    Model --> Tests
+    Model --> Config
+
+    CodeGen --> iOS
+    CodeGen --> Android
+    CodeGen --> Web
+    CodeGen --> Backend
+    CodeGen --> Embed
+
+    Docs --> APIDocs
+    Docs --> Guide
+    Docs --> Samples
+
+    Tests --> Unit
+    Tests --> Integration
+    Tests --> Mock
+
+    Config --> MQTT
+    Config --> DB
+    Config --> Alert
 ```
 
 **实际效果**：

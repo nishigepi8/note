@@ -114,22 +114,20 @@ Jira: PROJ-456
 
 ### 3.2 分支关系图
 
-```
-+------------------+     +------------------+     +------------------+
-|     master       |     |     develop      |     |  feature/xxx     |
-|  (生产环境)       |     |  (测试环境)       |     |  (开发分支)       |
-+------------------+     +------------------+     +------------------+
-        ^                        ^                        |
-        |                        |                        |
-        |    <-- merge           |                        |
-        +------------------------+                        |
-                  |                                      |
-                  |         从 master 创建               |
-                  +--------------------------------------+
-                  |
-                  |         本地开发完成                 |
-                  +-------------------------------------->
-                            merge 到 develop
+```mermaid
+graph LR
+    subgraph "稳定分支"
+        master["master<br/>(生产环境)"]
+        develop["develop<br/>(测试环境)"]
+    end
+
+    subgraph "临时分支"
+        feature["feature/xxx<br/>(开发分支)"]
+    end
+
+    master <-.-|"merge"| develop
+    master <---|"从 master 创建"| feature
+    feature -.->|"merge 到 develop"| develop
 ```
 
 ### 3.3 核心操作规则

@@ -217,25 +217,24 @@ openssl rsa -in key.pem -out key_nopass.pem
 
 ### 4.1 证书层级架构
 
-```
-+--------------------+
-|  DesignXXXXXCA    |
-|  (Root CA)        |
-+--------------------+
-          |
-          v
-+--------------------+
-|  PetXXXXCA       |
-|  (Intermediate CA)|
-+--------------------+
-          |
-          +-----------------+-----------------+
-          |                                   |
-          v                                   v
-+-------------------+                 +--------------------+
-| EMQX Server Cert |                 | User Client Cert   |
-| (Server Auth)    |                 | (Client Auth)      |
-+-------------------+                 +--------------------+
+```mermaid
+graph TB
+    subgraph "根证书层级"
+        RootCA["DesignXXXXXCA<br/>(Root CA)"]
+    end
+
+    subgraph "中间证书层级"
+        IntCA["PetXXXXCA<br/>(Intermediate CA)"]
+    end
+
+    subgraph "终端证书"
+        ServerCert["EMQX Server Cert<br/>(Server Auth)"]
+        ClientCert["User Client Cert<br/>(Client Auth)"]
+    end
+
+    RootCA -->|"签名"| IntCA
+    IntCA -->|"签名"| ServerCert
+    IntCA -->|"签名"| ClientCert
 ```
 
 ### 4.2 创建根证书
