@@ -6,6 +6,7 @@ labels: enhancement
 assignees: ''
 ---
 
+```markdown
 ## 功能描述
 
 <!-- 简洁清晰地描述你希望添加的功能 -->
@@ -34,3 +35,4 @@ assignees: ''
 
 - [ ] 我已确认这确实是一个新功能请求
 - [ ] 我已搜索过类似功能，未找到重复的 Issue
+```

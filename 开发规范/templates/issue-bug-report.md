@@ -6,6 +6,7 @@ labels: bug
 assignees: ''
 ---
 
+```markdown
 ## Bug 描述
 
 <!-- 清晰简洁地描述这个 Bug -->
@@ -55,3 +56,4 @@ assignees: ''
 
 - [ ] 我已确认这是一个 Bug
 - [ ] 我已搜索过类似问题，未找到重复的 Issue
+```
