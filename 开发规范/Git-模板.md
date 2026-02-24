@@ -4,11 +4,11 @@
 
 ## 模板列表
 
-- [Issue 模板](./templates/issue-bug-report.md) - Bug 报告模板
-- [Issue 模板](./templates/issue-feature-request.md) - 功能请求模板
-- [PR/MR 模板](./templates/pull-request-template.md) - 代码合并请求模板
-- [Release 模板](./templates/release-template.md) - 发布说明模板
-- [回复模板](./templates/reply-templates.md) - 常用回复模板
+- [问题报告模板](./模板文件/问题报告模板.md) - Bug 报告模板
+- [功能请求模板](./模板文件/功能请求模板.md) - 功能请求模板
+- [合并请求模板](./模板文件/合并请求模板.md) - 代码合并请求模板
+- [发布说明模板](./模板文件/发布说明模板.md) - 发布说明模板
+- [回复模板](./模板文件/回复模板.md) - 常用回复模板
 
 ## 使用方式
 
