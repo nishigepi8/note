@@ -4,8 +4,8 @@ description: 打开 Keep、Strava、悦跑圈，你会看到漂亮的跑步轨�
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: 轨迹数据的存, 储之道, 前言, GPS, 轨迹数据的本质, 存储方案深度对比, 选型决策树, 性能优化实践
-tags: []
+keywords: GPS, 轨迹存储, 物联网, 时序数据库, GeoJSON, PostGIS, 数据存储, 位置服务
+tags: [架构设计, 数据库, 物联网, GPS]
 ---
 
 

@@ -4,8 +4,8 @@ description: 从基础概念到实际应用，深入理解网络地址转换（N
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: NAT类型, 网络地址转换, P2P通信, Full Cone NAT, Restricted Cone NAT, Port Restricted Cone NAT, Symmetric NAT, STUN, TURN
-tags: []
+keywords: NAT, NAT类型, 网络地址转换, P2P通信, STUN, TURN, ICE, NAT穿透, 网络协议
+tags: [架构设计, 网络协议, P2P, NAT]
 ---
 
 # NAT类型详解

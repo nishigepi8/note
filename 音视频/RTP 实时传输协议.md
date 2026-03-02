@@ -4,8 +4,8 @@ description: 在音视频传输领域，RTP（Real-time Transport Protocol）是
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: RTP, 实时传输的核, 心协议, 前言, 概述, 历史, 应用场景, 报头格式
-tags: []
+keywords: RTP, 实时传输协议, RTCP, 音视频传输, WebRTC, RTSP, 流媒体, 网络协议
+tags: [音视频, 网络协议, RTP, 流媒体]
 ---
 
 

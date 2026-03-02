@@ -4,8 +4,8 @@ description: WebRTC 是一项强大的技术，可以实现浏览器和设备之
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: WebRTC, 信令, 连接的, 媒人, 前言, 信令的作用, SDP, Offer
-tags: []
+keywords: WebRTC, 信令服务, SDP, ICE, STUN, TURN, P2P通信, 实时通信, NAT穿透
+tags: [音视频, WebRTC, 网络协议, P2P]
 ---
 
 

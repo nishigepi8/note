@@ -4,8 +4,8 @@ description: 在生产环境中，应用的更新是不可避免的。Kubernetes
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: 零停机更新策, 前言, 滚动更新原理, 配置示例, 更新策略详解, 执行滚动更新, 关键点, spec.replicas
-tags: []
+keywords: Kubernetes, 滚动更新, 零停机, Deployment, 容器编排, DevOps, 服务更新, K8s
+tags: [K8s, Kubernetes, DevOps, 容器]
 ---
 
 

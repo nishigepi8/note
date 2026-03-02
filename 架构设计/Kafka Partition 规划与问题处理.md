@@ -4,8 +4,8 @@ description: 在使用 Kafka 构建高并发消息系统时，partition 数量�
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: Kafka, Partition, 规划实战, 前言, 核心概念, 数量与性能关系, 实际问题与处理方, 数量规划最佳实践
-tags: []
+keywords: Kafka, Partition, 消息队列, 高并发, 性能优化, 消费者组, 分区策略, 消息顺序
+tags: [架构设计, Kafka, 消息队列, 高并发]
 ---
 
 

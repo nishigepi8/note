@@ -4,8 +4,8 @@ description: Kubernetes 作为容器编排的事实标准，其命令行工具 k
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: 命令速查手册, 前言, 基础概念回顾, Pod, 操作命令, Service, Deployment, Ingress
-tags: []
+keywords: Kubernetes, kubectl, Docker, 容器编排, Pod, Service, Deployment, Ingress, DevOps, 云原生
+tags: [K8s, Kubernetes, DevOps, 容器]
 ---
 
 

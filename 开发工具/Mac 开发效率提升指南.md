@@ -5,7 +5,7 @@ author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
 keywords: Mac, 开发效率, 效率工具, Alfred, iTerm2, Kiro CLI, zsh, 别名, fzf
-tags: []
+tags: [开发工具, Mac, 效率, 工具]
 ---
 
 

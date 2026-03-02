@@ -4,8 +4,8 @@ description: > 从信任模型到工程实践，理解 HTTPS 认证机制的本�
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: HTTPS, 单向认证与双, 向认证详解, 认证模式对比, 应用场景分析, 证书管理对比, 配置示例, 安全考量
-tags: []
+keywords: HTTPS, TLS, 单向认证, 双向认证, mTLS, SSL证书, 身份认证, 网络安全, 证书管理
+tags: [架构设计, 网络安全, HTTPS, 证书]
 ---
 
 

@@ -4,8 +4,8 @@ description: 在物联网平台开发中，我遇到了一个典型的高并发�
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: 借鉴, 思想的缓存同, 步方案, 前言, 问题分析, 传统方案的痛点, 灵感来源, JVM
-tags: []
+keywords: Redis, 缓存同步, 高并发, JVM, 物联网, MongoDB, Kafka, 分布式系统, 缓存策略
+tags: [架构设计, Redis, 高并发, 分布式系统]
 ---
 
 

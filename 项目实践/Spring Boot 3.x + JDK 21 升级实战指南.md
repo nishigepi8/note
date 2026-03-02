@@ -4,8 +4,8 @@ description: 本文档记录了从 Spring Boot 2.x + JDK 11/17 升级到 Spring 
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: Spring, Boot, 现代化升级之, 概述, 升级前准备, 使用, OpenRewrite, 自动化升级
-tags: []
+keywords: Spring Boot, JDK 21, 升级, Java, Spring Cloud, Jakarta EE, 版本迁移, 性能优化
+tags: [项目实践, Spring Boot, Java, 升级]
 ---
 
 

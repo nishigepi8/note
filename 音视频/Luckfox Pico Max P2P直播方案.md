@@ -4,8 +4,8 @@ description: 最近入手了 Luckfox Pico Max 这块小开发板，基于 Rockch
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: 嵌入式设备的, 直播实践, 前言, 核心技术背景, 我的实现架构, 为什么选择, Golang, 混合
-tags: []
+keywords: Luckfox Pico Max, P2P直播, RV1106, 嵌入式开发, 视频直播, 物联网, WebRTC
+tags: [音视频, 嵌入式, 物联网, P2P, RV1106]
 ---
 
 

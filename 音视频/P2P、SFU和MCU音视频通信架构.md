@@ -4,8 +4,8 @@ description: 在音视频通信系统的设计中，选择合适的架构至关�
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: 音视频架构三, 选一, SFU, MCU, 前言, P2P, Peer, 点对点
-tags: []
+keywords: P2P, SFU, MCU, 音视频架构, WebRTC, 实时通信, 视频会议, 架构选型
+tags: [音视频, WebRTC, 架构设计, 实时通信]
 ---
 
 
