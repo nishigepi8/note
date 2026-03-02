@@ -4,8 +4,8 @@ description: 在训练 YOLO 目标检测模型时，我们常常面临一个核�
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: 训练, 生成式数据增, 强实践, 前言, 核心挑战, 方案架构, 核心策略, 避免被
-tags: []
+keywords: YOLO, 目标检测, 数据, 深度增强, AI训练学习, 计算机视觉, 数据合成, 目标检测训练
+tags: [项目实践, AI, YOLO, 计算机视觉]
 ---
 
 

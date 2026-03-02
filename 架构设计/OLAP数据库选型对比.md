@@ -4,8 +4,8 @@ description: 在构建数据分析系统时，选择合适的数据库是架构�
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: 三大, OLAP, 数据库深度对, 前言, 数据库定位与核心, 特性, 架构设计对比, 性能对比
-tags: []
+keywords: OLAP, StarRocks, ClickHouse, InfluxDB, 数据库选型, 数据分析, 分布式数据库, 时序数据库
+tags: [架构设计, 数据库, OLAP, StarRocks, ClickHouse]
 ---
 
 
@@ -515,6 +515,19 @@ GROUP BY u.user_id, u.region;
 - **成本预算**：硬件和人力成本
 
 希望本文能帮助你在实际项目中做出正确的技术选型！
+
+## 总结
+
+本文对 StarRocks、ClickHouse 和 InfluxDB 三大 OLAP 数据库进行了全面对比：
+
+1. **StarRocks**：适合企业级数据仓库场景，支持复杂 JOIN，MySQL 兼容性 好，学习成本低
+2. **ClickHouse**：适合超大规模数据分析，单表查询性能极致，但运维复杂度较高
+3. **InfluxDB**：专为时序数据设计，与监控生态深度集成，适合 IoT 和 APM 场景**：
+- 没有
+
+**关键要点银弹，只有最适合的方案
+- 根据业务场景、技术团队、成本预算综合决策
+- 必要时可以采用混合架构，不同数据库服务不同场景
 
 ---
 

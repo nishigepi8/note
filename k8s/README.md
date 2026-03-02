@@ -5,7 +5,7 @@ author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
 keywords: Kubernetes, 容器编排, 文章列表, 核心概念, 学习路径, 推荐资源, Pod, Service
-tags: []
+tags: [K8s, Kubernetes, 容器]
 ---
 
 

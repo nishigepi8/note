@@ -4,8 +4,8 @@ description: 在物联网和实时通信领域，P2P（点对点）连接是实�
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: 自研, 服务的架构之, 前言, 技术背景与目标, 整体架构设计, STUN, 服务器设计, TURN
-tags: []
+keywords: P2P, 音视频, 架构设计, STUN, TURN, ICE, NAT穿透, 实时通信, WebRTC
+tags: [架构设计, P2P, 音视频, WebRTC]
 ---
 
 

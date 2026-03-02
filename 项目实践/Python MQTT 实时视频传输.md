@@ -4,8 +4,8 @@ description: 在探索物联网和实时通信的过程中，我尝试使用 MQT
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: MQTT, 视频传输的探, 索与优化, 前言, 项目背景, 原方案深度分析, 问题在哪里, 优化方案
-tags: []
+keywords: MQTT, Python, 视频传输, 物联网, 实时通信, 性能优化, EMQX
+tags: [项目实践, MQTT, Python, 物联网, 音视频]
 ---
 
 

@@ -4,8 +4,8 @@ description: 本目录包含物联网相关的技术资料，重点是 Matter �
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: 物联网, IoT, 资源列表, Matter, 协议简介, 技术栈, 推荐资源, 核心特点
-tags: []
+keywords: 物联网, IoT, Matter, MQTT, 嵌入式, 传感器, 智能家居
+tags: [物联网, IoT, MQTT]
 ---
 
 

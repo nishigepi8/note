@@ -4,8 +4,8 @@ description: > 从数学原理到工程实现，探索现代密码学在 TLS 中
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: TLS, 加密算法深度, 解析, 加密算法体系, 密钥交换算法, 数字签名算法, 认证加密, AEAD
-tags: []
+keywords: TLS, SSL, 加密算法, HTTPS, 密钥交换, 数字签名, AEAD, 网络安全, 密码学
+tags: [架构设计, 网络安全, TLS, 密码学]
 ---
 
 

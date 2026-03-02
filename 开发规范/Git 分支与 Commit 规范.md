@@ -4,8 +4,8 @@ description: 这是一份经过实际项目打磨、适合中大型研发团队�
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: 中大型团队的, Git, 实践, 前言, 分支命名规范, Commit, Message, 规范
-tags: []
+keywords: Git, 分支管理, Commit规范, 版本控制, GitFlow, 代码规范, 团队协作, CI/CD
+tags: [开发规范, Git, 团队协作, CI/CD]
 ---
 
 

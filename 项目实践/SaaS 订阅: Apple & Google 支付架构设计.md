@@ -4,8 +4,8 @@ description: 订阅系统的设计需要遵循以下核心原则：
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: 跨平台订阅支, 付架构设计, 订阅系统整体架构, 设计, 统一支付网关设计, Apple, 订阅机制详解, 账号关联与多账号
-tags: []
+keywords: SaaS, Apple, Google, 支付, 应用内购买, 订阅系统, 支付网关, 跨平台支付
+tags: [项目实践, 支付, SaaS, Apple, Google]
 ---
 
 

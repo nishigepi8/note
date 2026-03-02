@@ -4,8 +4,8 @@ description: PowerWiki 是一个开源的知识管理系统，主要解决传统
 author: ga666666
 date: 2026-01-10
 updated: 2026-01-10
-keywords: PowerWiki, 基于, Git, 的知识管理, 为什么需要, 的设计理念, 与传统博客的对比, 的核心价值
-tags: []
+keywords: PowerWiki, Git, 知识管理, 博客, Wiki, 版本控制, 知识库, 静态网站
+tags: [项目实践, Git, 知识管理, 博客]
 ---
 
 
