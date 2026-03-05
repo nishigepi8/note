@@ -18,8 +18,8 @@ OpenSpec 哲学：
 
 ```mermaid
 graph LR
-    A[/opsx:propose] --> B[/opsx:apply]
-    B --> C[/opsx:archive]
+    A["/opsx:propose"] --> B["/opsx:apply"]
+    B --> C["/opsx:archive"]
     C --> D[下一个功能]
 ```
 
@@ -27,25 +27,25 @@ graph LR
 
 ```mermaid
 graph TB
-    Start[需求讨论] --> Explore[/opsx:explore 探索]
-    Explore --> New[/opsx:new 创建变更]
-    New --> FF[/opsx:ff 生成规范]
-    
+    Start[需求讨论] --> Explore["/opsx:explore 探索"]
+    Explore --> New["/opsx:new 创建变更"]
+    New --> FF["/opsx:ff 生成规范"]
+
     FF --> ParallelDev{并行开发}
-    
+
     ParallelDev --> Backend[后端开发]
     ParallelDev --> Frontend[前端开发]
-    
-    Backend --> BackendApply[/opsx:apply 后端]
-    Frontend --> FrontendApply[/opsx:apply 前端]
-    
-    BackendApply --> Verify[/opsx:verify 验证]
+
+    Backend --> BackendApply["/opsx:apply 后端"]
+    Frontend --> FrontendApply["/opsx:apply 前端"]
+
+    BackendApply --> Verify["/opsx:verify 验证"]
     FrontendApply --> Verify
-    
-    Verify --> |通过| Sync[/opsx:sync 同步规范]
+
+    Verify --> |通过| Sync["/opsx:sync 同步规范"]
     Verify --> |问题| ParallelDev
-    
-    Sync --> Archive[/opsx:archive 归档]
+
+    Sync --> Archive["/opsx:archive 归档"]
     Archive --> E2E[E2E 测试]
     E2E --> |通过| Deploy[部署]
     E2E --> |失败| Debug[调试]
@@ -606,10 +606,10 @@ AI: ✓ 已归档所有变更
 
 ```mermaid
 graph LR
-    A[/opsx:propose] --> B[/opsx:apply 后端]
-    B --> C[/opsx:apply 前端]
-    C --> D[/opsx:verify]
-    D --> |通过| E[/opsx:archive]
+    A["/opsx:propose"] --> B["/opsx:apply 后端"]
+    B --> C["/opsx:apply 前端"]
+    C --> D["/opsx:verify"]
+    D --> |通过| E["/opsx:archive"]
     D --> |问题| B
     E --> F[下一个功能]
 ```
