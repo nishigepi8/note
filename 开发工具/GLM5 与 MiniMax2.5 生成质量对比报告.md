@@ -9,7 +9,7 @@ tags: [AI辅助编程, 开发工具]
 ---
 
 
-# Stripe 套餐升降级方案：GLM-5 与 MiniMax 2.5 生成质量对比报告
+# Stripe 套餐升降级中：GLM-5 与 MiniMax 2.5 生成质量对比
 
 > **提示词**：`/opsx:propose 新建一个分支，参考 [PRD]Stripe Checkout 2期(*******)-*月* 实现 stripe 的套餐升降级`
 
