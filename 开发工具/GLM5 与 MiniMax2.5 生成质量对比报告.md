@@ -1,17 +1,17 @@
 ---
-title: GLM-5 与 MiniMax 生成质量对比报告
+title: GLM-5 与 MiniMax2.5 生成质量对比报告
 description: 基于同一提示词（Stripe 套餐升降级方案）对比 GLM-5 与 MiniMax 2.5 的 proposal、design、tasks、spec 产出质量，并结合主流 AI 编程模型选型结论给出使用建议。
 author: ga666666
 date: 2026-03-04
 updated: 2026-03-04
-keywords: GLM-5, MiniMax, AI 编程, 生成质量, Stripe, 套餐升降级, OpenSpec, 模型对比
+keywords: GLM-5, MiniMax2.5, AI 编程, 生成质量, Stripe, 套餐升降级, OpenSpec, 模型对比
 tags: [AI辅助编程, 开发工具]
 ---
 
 
 # Stripe 套餐升降级方案：GLM-5 与 MiniMax 2.5 生成质量对比报告
 
-> **提示词**：`/opsx:propose 新建一个分支，主要是参考 [PRD]Stripe Checkout 2期(AI !VC!Care Paywall)-3月下 实现 stripe 的套餐升降级，目前是没有做这儿功能的`
+> **提示词**：`/opsx:propose 新建一个分支，参考 [PRD]Stripe Checkout 2期(*******)-*月* 实现 stripe 的套餐升降级`
 
 ---
 
@@ -163,4 +163,4 @@ tags: [AI辅助编程, 开发工具]
 
 ---
 
-*报告基于 OpenSpec 格式的 proposal、design、tasks、spec(s) 产出，并与 [主流 AI 编程模型对比](./主流%20AI%20编程模型对比（2026年3月）.md) 的模型定位结合。完整 OpenSpec 产出见本仓库 `openspec-glm5` 与 `openspec-minimax2.5` 目录。*
+*报告基于 OpenSpec 格式的 proposal、design、tasks、spec(s) 产出，并与 [主流 AI 编程模型对比] 的模型定位结合。完整 OpenSpec 产出见本仓库 `openspec-glm5` 与 `openspec-minimax2.5` 目录。*
