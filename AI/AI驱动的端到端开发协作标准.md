@@ -17,26 +17,26 @@
 
 ```mermaid
 graph TB
-    subgraph 上下文工程层
-        AGENTS[AGENTS.md<br/>项目 AI 协作指南]
-        RULES[.cursorrules<br/>编码规范与偏好]
-        SPEC[OpenSpec<br/>系统行为规范]
+    subgraph ctx["上下文工程层"]
+        AGENTS["AGENTS.md<br/>项目 AI 协作指南"]
+        RULES[".cursorrules<br/>编码规范与偏好"]
+        SPEC["OpenSpec<br/>系统行为规范"]
     end
 
-    subgraph AI Agent 层
-        CURSOR[Cursor Agent<br/>IDE 内自主开发]
-        CLAUDE[Claude Code<br/>终端自主开发]
-        BG[Background Agent<br/>异步后台开发]
+    subgraph agent["AI Agent 层"]
+        CURSOR["Cursor Agent<br/>IDE 内自主开发"]
+        CLAUDE["Claude Code<br/>终端自主开发"]
+        BG["Background Agent<br/>异步后台开发"]
     end
 
-    subgraph 工具连接层
-        MCP[MCP Server<br/>外部系统连接]
-        GIT[Git + GitHub<br/>版本控制与协作]
-        CI[CI/CD<br/>自动化流水线]
+    subgraph tools["工具连接层"]
+        MCP["MCP Server<br/>外部系统连接"]
+        GIT["Git + GitHub<br/>版本控制与协作"]
+        CI["CI/CD<br/>自动化流水线"]
     end
 
-    上下文工程层 -->|"提供上下文"| AI Agent 层
-    AI Agent 层 -->|"通过 MCP 访问"| 工具连接层
+    ctx -->|提供上下文| agent
+    agent -->|通过 MCP 访问| tools
 ```
 
 ## 上下文工程体系
