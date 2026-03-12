@@ -17,14 +17,14 @@ tags: [K8s, Kubernetes, 容器]
 
 ### 🚀 日常运维
 
-- [Kubernetes 常用命令实战指南](./Kubernetes%20常用命令实战指南.md)
+- [Kubernetes 常用命令实战指南](./Kubernetes 常用命令实战指南.md)
   - kubectl 常用命令
   - Pod、Service、Deployment 调试
   - 日常故障排查
 
 ### 📦 发布上线
 
-- [Kubernetes 滚动更新实战指南](./Kubernetes%20滚动更新实战指南.md)
+- [Kubernetes 滚动更新实战指南](./Kubernetes 滚动更新实战指南.md)
   - Deployment 滚动更新策略
   - 健康检查配置
   - 灰度发布与回滚
@@ -33,8 +33,8 @@ tags: [K8s, Kubernetes, 容器]
 
 | 文章 | 关键词 | 场景 |
 |------|--------|------|
-| [Kubernetes 常用命令实战指南](./Kubernetes%20常用命令实战指南.md) | kubectl、Pod、Service、调试 | 日常运维 |
-| [Kubernetes 滚动更新实战指南](./Kubernetes%20滚动更新实战指南.md) | Deployment、策略、回滚、健康检查 | 发布上线 |
+| [Kubernetes 常用命令实战指南](./Kubernetes 常用命令实战指南.md) | kubectl、Pod、Service、调试 | 日常运维 |
+| [Kubernetes 滚动更新实战指南](./Kubernetes 滚动更新实战指南.md) | Deployment、策略、回滚、健康检查 | 发布上线 |
 
 ## 核心概念
 
@@ -58,4 +58,3 @@ tags: [K8s, Kubernetes, 容器]
 - [Kubernetes 官方文档](https://kubernetes.io/zh-cn/docs/)
 - [Kubernetes Patterns](https://www.oreilly.com/library/view/kubernetes-patterns/9781492050278/)
 - [Kubernetes 最佳实践](https://kubernetes.io/zh-cn/docs/concepts/configuration/overview/)
-
