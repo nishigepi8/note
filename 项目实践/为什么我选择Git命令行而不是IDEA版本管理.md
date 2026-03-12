@@ -240,5 +240,4 @@ git log -p -S <function-name>
 ---
 
 **相关文章**：
-- [Git 分支与 Commit 规范](./开发规范/Git%20分支与%20Commit%20规范.md)
-
+- [Git 分支与 Commit 规范](../开发规范/Git 分支与 Commit 规范.md)

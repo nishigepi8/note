@@ -1394,11 +1394,10 @@ generator.generate_dataset('car', prompts=prompts, count=300)
 ---
 
 **相关文章**：
-- [高并发缓存同步 RSC方案](../架构设计/高并发缓存同步%20RSC方案.md)
-- [Kafka Partition 规划与问题处理](../架构设计/Kafka%20Partition%20规划与问题处理.md)
+- [高并发缓存同步 RSC方案](../架构设计/高并发缓存同步 RSC方案.md)
+- [Kafka Partition 规划与问题处理](../架构设计/Kafka Partition 规划与问题处理.md)
 
 **参考资料**：
 - [Stable Diffusion 官方文档](https://stability.ai/stable-diffusion)
 - [YOLOv8 官方文档](https://docs.ultralytics.com/)
 - [Segment Anything Model (SAM)](https://segment-anything.com/)
-

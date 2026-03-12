@@ -17,21 +17,18 @@ tags: [开发工具, 效率, Mac]
 
 ### 🖥️ macOS 开发环境
 
-- [Mac 开发效率提升指南](./Mac%20开发效率提升指南.md)
+- [Mac 开发效率提升指南](./Mac 开发效率提升指南.md)
   - Alfred、iTerm2、Zsh 配置
   - 快捷键、别名、自动补全
   - 分屏操作与快速导航
 
 ### 🤖 AI 辅助编程
 
-- [Claude Code 后台重构实践报告](./Claude%20Code%20后台重构实践报告.md)
+- [Claude Code 后台重构实践报告](../AI/Claude Code 后台重构实践报告.md)
   - AI 辅助代码重构的实战经验
   - 成本优化与效率提升
   - 团队协作最佳实践
-- [主流 AI 编程模型对比（2026年3月）](./主流%20AI%20编程模型对比（2026年3月）.md)
-  - Cursor / Continue 模型选型：速度与成本维度
-  - GLM-5、MiniMax、Claude Opus、DeepSeek 对比与混合使用建议
-- [GLM5 与 MiniMax 生成质量对比报告](./GLM5%20与%20MiniMax%20生成质量对比报告.md)
+- [GLM5 与 MiniMax2.5 生成质量对比报告](../AI/GLM5 与 MiniMax2.5 生成质量对比报告.md)
   - 同一提示词下 proposal / design / tasks / spec 产出质量对比
   - Stripe 套餐升降级方案双模型实测与落地建议
 
@@ -39,10 +36,9 @@ tags: [开发工具, 效率, Mac]
 
 | 文章 | 关键词 | 适用人群 |
 |------|--------|----------|
-| [Mac 开发效率提升指南](./Mac%20开发效率提升指南.md) | Alfred、iTerm2、Alias、Zsh | macOS 开发者 |
-| [Claude Code 后台重构实践报告](./Claude%20Code%20后台重构实践报告.md) | AI辅助编程、代码重构、效率提升、成本优化 | 团队技术负责人、后端开发者 |
-| [主流 AI 编程模型对比（2026年3月）](./主流%20AI%20编程模型对比（2026年3月）.md) | Cursor、GLM-5、MiniMax、模型选型、成本 | 使用 AI 编程工具的开发者、团队选型 |
-| [GLM5 与 MiniMax 生成质量对比报告](./GLM5%20与%20MiniMax%20生成质量对比报告.md) | GLM-5、MiniMax、生成质量、Stripe、OpenSpec | 关注 AI 方案产出的架构师、产品/研发 |
+| [Mac 开发效率提升指南](./Mac 开发效率提升指南.md) | Alfred、iTerm2、Alias、Zsh | macOS 开发者 |
+| [Claude Code 后台重构实践报告](../AI/Claude Code 后台重构实践报告.md) | AI辅助编程、代码重构、效率提升、成本优化 | 团队技术负责人、后端开发者 |
+| [GLM5 与 MiniMax2.5 生成质量对比报告](../AI/GLM5 与 MiniMax2.5 生成质量对比报告.md) | GLM-5、MiniMax、生成质量、Stripe、OpenSpec | 关注 AI 方案产出的架构师、产品/研发 |
 
 ## 核心理念
 
@@ -89,4 +85,3 @@ tags: [开发工具, 效率, Mac]
 - **集成**：工具链的无缝协作
 - **学习曲线**：投入学习成本换取长期收益
 - **持续优化**：定期审视和改进工作流
-

@@ -23,17 +23,17 @@ tags: [音视频, WebRTC]
   - 成本、延迟、扩展性对比
 
 **第二阶段：协议深入**
-- [RTP 实时传输协议](./RTP%20实时传输协议.md) ⭐⭐⭐⭐
+- [RTP 实时传输协议](./RTP 实时传输协议.md) ⭐⭐⭐⭐
   - 时间戳、序列号、RTCP 反馈
   - 实时性和可靠性的权衡
 
 **第三阶段：信令与连接**
-- [WebRTC 信令服务详解](./WebRTC%20信令服务详解.md) ⭐⭐⭐
+- [WebRTC 信令服务详解](./WebRTC 信令服务详解.md) ⭐⭐⭐
   - SDP、ICE、Offer/Answer 模型
   - NAT 穿透与 STUN/TURN
 
 **第四阶段：实战项目**
-- [Luckfox Pico Max P2P直播方案](./Luckfox%20Pico%20Max%20P2P直播方案.md) ⭐⭐⭐⭐
+- [Luckfox Pico Max P2P直播方案](./Luckfox Pico Max P2P直播方案.md) ⭐⭐⭐⭐
   - 嵌入式设备上的 WebRTC 实现
   - H.264 编码与 Pion 库使用
 
@@ -42,9 +42,9 @@ tags: [音视频, WebRTC]
 | 文章 | 关键词 | 难度 |
 |------|--------|------|
 | [P2P、SFU和MCU音视频通信架构](./P2P、SFU和MCU音视频通信架构.md) | 架构对比、扩展性、成本分析 | ⭐⭐⭐ |
-| [RTP 实时传输协议](./RTP%20实时传输协议.md) | 协议头、时间戳、序列号、RTCP | ⭐⭐⭐⭐ |
-| [WebRTC 信令服务详解](./WebRTC%20信令服务详解.md) | SDP、ICE、Offer/Answer、信令 | ⭐⭐⭐ |
-| [Luckfox Pico Max P2P直播方案](./Luckfox%20Pico%20Max%20P2P直播方案.md) | 嵌入式、H.264、NAT穿透、Pion | ⭐⭐⭐⭐ |
+| [RTP 实时传输协议](./RTP 实时传输协议.md) | 协议头、时间戳、序列号、RTCP | ⭐⭐⭐⭐ |
+| [WebRTC 信令服务详解](./WebRTC 信令服务详解.md) | SDP、ICE、Offer/Answer、信令 | ⭐⭐⭐ |
+| [Luckfox Pico Max P2P直播方案](./Luckfox Pico Max P2P直播方案.md) | 嵌入式、H.264、NAT穿透、Pion | ⭐⭐⭐⭐ |
 
 ## 技术栈
 
@@ -65,4 +65,3 @@ tags: [音视频, WebRTC]
 - [WebRTC for the Curious](https://webrtcforthecurious.com/)
 - [Pion WebRTC](https://github.com/pion/webrtc)
 - [High Performance Browser Networking - WebRTC](https://hpbn.co/webrtc/)
-

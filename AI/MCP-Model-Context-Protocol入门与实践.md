@@ -1,4 +1,18 @@
+---
+title: MCP：Model Context Protocol 入门与实践
+description: 从概念、配置到跨仓库协作，系统理解 MCP 在 AI 开发工作流中的作用。
+author: ga666666
+date: 2026-01-12
+updated: 2026-03-12
+keywords: MCP, Model Context Protocol, Claude Code, Cursor, AI Agent, 上下文工程
+tags: [AI, MCP, Agent, 上下文工程]
+---
+
 # MCP：Model Context Protocol 入门与实践
+
+> 发布日期：2026-01-12
+> 最后更新：2026-03-12
+> 说明：涉及 Claude Code、Cursor 与 MCP Server 的配置项时，请以各产品当期官方文档为准。
 
 本文介绍 **Model Context Protocol (MCP)** 是什么、为什么重要、如何配置与使用，以及在与 [跨仓库 AI 协作方案](./跨仓库AI协作方案-Spec与上下文工程.md) 结合时的实践建议。
 
@@ -201,7 +215,9 @@ graph LR
 
 ---
 
-**相关文档**  
+**AI 协作系列**  
+- [AI 驱动的端到端开发协作标准](./AI驱动的端到端开发协作标准.md)  
 - [跨仓库 AI 协作方案：Spec 与上下文工程](./跨仓库AI协作方案-Spec与上下文工程.md)  
 - [Agent 执行流程与规范：AGENTS.md 与规则文档](./Agent执行流程与规范-AGENTS与规则文档.md)  
-- [Agent Skill：是什么、怎么用与推荐](./Agent-Skill是什么怎么用与推荐.md)
+- [Agent Skill：是什么、怎么用与推荐](./Agent-Skill是什么怎么用与推荐.md)  
+- [如何开发 AI Agent](./如何开发AI-Agent.md)

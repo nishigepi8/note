@@ -1,4 +1,18 @@
+---
+title: 如何开发 AI Agent
+description: 从角色边界、上下文工程、MCP、Skill 到多 Agent 编排，系统说明如何构建可落地的 AI Agent。
+author: ga666666
+date: 2026-01-12
+updated: 2026-03-12
+keywords: AI Agent, 多 Agent, MCP, Skill, AGENTS.md, OpenSpec, 编排
+tags: [AI, Agent, MCP, Skill]
+---
+
 # 如何开发 AI Agent
+
+> 发布日期：2026-01-12
+> 最后更新：2026-03-12
+> 说明：本文偏架构与方法论，所提到的角色文件、规则目录和多 Agent 编排方式可按具体产品落地。
 
 本文在 [AI 驱动的端到端开发协作标准](./AI驱动的端到端开发协作标准.md)、[Agent 执行流程与规范](./Agent执行流程与规范-AGENTS与规则文档.md) 等文档的基础上，说明**如何设计、配置与扩展**可在项目中稳定工作的 AI Agent。写作时参考了 [Edict](https://github.com/cft0808/edict)（三省六部制多 Agent 编排系统）的架构思想：**分拣 → 规划 → 审核 → 派发 → 执行 → 回奏**、**制度性审核**、**权限矩阵**与**可观测可干预**，使单 Agent 与多 Agent 场景下的设计更可落地。
 
@@ -337,13 +351,13 @@ flowchart LR
 
 ---
 
-**相关文档**  
+**AI 协作系列**  
 - [AI 驱动的端到端开发协作标准](./AI驱动的端到端开发协作标准.md)  
 - [Agent 执行流程与规范：AGENTS.md 与规则文档](./Agent执行流程与规范-AGENTS与规则文档.md)  
 - [跨仓库 AI 协作方案：Spec 与上下文工程](./跨仓库AI协作方案-Spec与上下文工程.md)  
 - [MCP：Model Context Protocol 入门与实践](./MCP-Model-Context-Protocol入门与实践.md)  
 - [Agent Skill：是什么、怎么用与推荐](./Agent-Skill是什么怎么用与推荐.md)  
-- [AI Agent 时代的技术团队重塑](./AI%20Agent%20时代的技术团队重塑.md)  
+- [AI Agent 时代的技术团队重塑](./AI Agent 时代的技术团队重塑.md)  
 
 **参考实现**  
 - [Edict（三省六部制 · OpenClaw 多 Agent 编排）](https://github.com/cft0808/edict) — 制度性审核、权限矩阵、实时看板、每角色 SOUL.md 与 Skill、任务可干预的开源实现。

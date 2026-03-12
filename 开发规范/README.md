@@ -17,7 +17,7 @@ tags: [开发规范, Git, DevOps]
 
 ### 📋 Git 工作流
 
-- [Git 分支与 Commit 规范](./Git%20分支与%20Commit%20规范.md)
+- [Git 分支与 Commit 规范](./Git 分支与 Commit 规范.md)
   - 分支命名规范：`<type>/<jira-key>-<描述>`
   - Commit 规范：Conventional Commits
   - 适用于中大型研发团队（100-500人）
@@ -26,7 +26,7 @@ tags: [开发规范, Git, DevOps]
 
 | 文章 | 适用场景 |
 |------|----------|
-| [Git 分支与 Commit 规范](./Git%20分支与%20Commit%20规范.md) | 中大型研发团队（100-500人） |
+| [Git 分支与 Commit 规范](./Git 分支与 Commit 规范.md) | 中大型研发团队（100-500人） |
 
 ## Git 规范要点
 
@@ -82,4 +82,3 @@ Jira: PROJ-123
 - **自动化**：支持自动生成 Changelog
 - **团队协作**：统一的规范降低沟通成本
 - **代码质量**：Code Review 流程保证代码质量
-

@@ -656,10 +656,9 @@ GPS 轨迹存储看似简单，实则涉及**数据结构设计**、**空间索�
 ---
 
 **相关文章**：
-- [高并发缓存同步：借鉴JVM Survivor机制的RSC方案](./高并发缓存同步：借鉴JVM%20Survivor机制的RSC方案.md)
+- [高并发缓存同步 RSC方案](./高并发缓存同步 RSC方案.md)
 
 **参考资料**：
 - [PostGIS 官方文档](https://postgis.net/documentation/)
 - [MongoDB 地理空间查询](https://docs.mongodb.com/manual/geospatial-queries/)
 - [Douglas-Peucker 算法](https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm)
-

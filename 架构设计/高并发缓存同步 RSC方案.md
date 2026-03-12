@@ -443,10 +443,9 @@ RSC 方案的核心思想是：**借鉴成熟的设计模式，组合各组件�
 
 **相关文章**：
 - [P2P、SFU和MCU音视频通信架构](../音视频/P2P、SFU和MCU音视频通信架构.md)
-- [Kubernetes 滚动更新实战指南](../K8s/Kubernetes%20滚动更新实战指南.md)
+- [Kubernetes 滚动更新实战指南](../K8s/Kubernetes 滚动更新实战指南.md)
 
 **参考资料**：
 - [JVM 垃圾回收机制](https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/)
 - [Redis 官方文档](https://redis.io/documentation)
 - [MongoDB Bulk Operations](https://docs.mongodb.com/manual/core/bulk-write-operations/)
-

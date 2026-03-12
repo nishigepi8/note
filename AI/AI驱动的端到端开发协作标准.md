@@ -1,4 +1,18 @@
+---
+title: AI 驱动的端到端开发协作标准
+description: 基于 OpenSpec、AGENTS.md、MCP 与 AI Agent 的端到端开发协作方法。
+author: ga666666
+date: 2026-03-06
+updated: 2026-03-12
+keywords: AI Agent, OpenSpec, AGENTS.md, MCP, 端到端开发, 上下文工程
+tags: [AI, Agent, OpenSpec, 协作]
+---
+
 # AI 驱动的端到端开发协作标准
+
+> 发布日期：2026-03-06
+> 最后更新：2026-03-12
+> 说明：本文描述的是一套方法论；具体命令、产品入口和规则格式请以对应工具当前版本为准。
 
 基于 Spec-Driven + AI Agent 的端到端开发模式
 
@@ -478,7 +492,7 @@ npm run sync-specs  # git submodule update --remote openspec-shared
 }
 ```
 
-详细的跨仓库方案参见 [跨仓库OpenSpec协作方案](./跨仓库OpenSpec协作方案.md)。
+详细的跨仓库方案参见 [跨仓库 AI 协作方案：Spec 与上下文工程](./跨仓库AI协作方案-Spec与上下文工程.md)。
 
 ---
 
@@ -753,7 +767,7 @@ openspec init
 
 ```bash
 # 1. 设置跨仓库协作 (如前后端分离)
-# 详见《跨仓库OpenSpec协作方案》
+# 详见《跨仓库 AI 协作方案：Spec 与上下文工程》
 
 # 2. 配置 GitHub Actions 自动化
 # spec 变更自动通知、自动同步 PR
@@ -827,7 +841,13 @@ openspec init
 ---
 
 **文档版本:** 3.0.0
-**最后更新:** 2026-03-06
+**最后更新:** 2026-03-12
 **适用场景:** AI 驱动的全栈开发、单人全栈、模块化团队协作
 **核心工具:** OpenSpec + AI Agent (Cursor/Claude Code) + MCP + AGENTS.md
-**相关文档:** [跨仓库 AI 协作方案：Spec 与上下文工程](./跨仓库AI协作方案-Spec与上下文工程.md) | [AI Agent 时代的技术团队重塑](./AI Agent 时代的技术团队重塑.md)
+**AI 协作系列**
+- [跨仓库 AI 协作方案：Spec 与上下文工程](./跨仓库AI协作方案-Spec与上下文工程.md)
+- [Agent 执行流程与规范：AGENTS.md、CLAUDE.md 与规则文档](./Agent执行流程与规范-AGENTS与规则文档.md)
+- [MCP：Model Context Protocol 入门与实践](./MCP-Model-Context-Protocol入门与实践.md)
+- [Agent Skill：是什么、怎么用与推荐](./Agent-Skill是什么怎么用与推荐.md)
+- [如何开发 AI Agent](./如何开发AI-Agent.md)
+- [AI Agent 时代的技术团队重塑](./AI Agent 时代的技术团队重塑.md)

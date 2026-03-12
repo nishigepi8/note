@@ -20,28 +20,28 @@ tags: [架构设计, 系统架构]
 **数据存储与查询**
 - [图片向量存储与相似性搜索方案](./图片向量存储与相似性搜索方案.md) - AI 时代的向量数据库选型
 - [OLAP数据库选型对比](./OLAP数据库选型对比.md) - StarRocks vs ClickHouse vs InfluxDB
-- [GPS 轨迹存储方案分析](./GPS%20轨迹存储方案分析.md) - 地理位置数据的存储优化
+- [GPS 轨迹存储方案分析](./GPS 轨迹存储方案分析.md) - 地理位置数据的存储优化
 
 **高并发系统**
-- [高并发缓存同步 RSC方案](./高并发缓存同步%20RSC方案.md) - 百万设备状态同步架构
-- [Kafka Partition 规划与问题处理](./Kafka%20Partition%20规划与问题处理.md) - 消息队列性能优化
+- [高并发缓存同步 RSC方案](./高并发缓存同步 RSC方案.md) - 百万设备状态同步架构
+- [Kafka Partition 规划与问题处理](./Kafka Partition 规划与问题处理.md) - 消息队列性能优化
 
 **网络与通信**
-- [自研 P2P 服务架构设计](./自研%20P2P%20服务架构设计.md) - 10 万级并发 P2P 连接
+- [自研 P2P 服务架构设计](./自研 P2P 服务架构设计.md) - 10 万级并发 P2P 连接
 - [NAT类型详解](./NAT类型详解.md) - P2P 穿透技术实践
 
 **IoT 与设备**
-- [物模型：IoT 设备标准化实践](./物模型：IoT%20设备标准化实践.md) - 从硬件到能力的抽象设计
+- [物模型：IoT 设备标准化实践](./物模型：IoT 设备标准化实践.md) - 从硬件到能力的抽象设计
 
 ## 文章列表
 
 | 文章 | 关键词 | 亮点 |
 |------|--------|------|
 | [图片向量存储与相似性搜索方案](./图片向量存储与相似性搜索方案.md) | Milvus、CLIP、向量数据库、相似性搜索 | AI 特征提取、颜色打标、类型分类、毫秒级搜索 |
-| [高并发缓存同步 RSC方案](./高并发缓存同步%20RSC方案.md) | Redis、Kafka、MongoDB、Survivor | 百万设备状态同步，数据库负载降 90% |
-| [Kafka Partition 规划与问题处理](./Kafka%20Partition%20规划与问题处理.md) | Kafka、Partition、Consumer、性能优化 | Partition 数量规划、消费延迟、Rebalance 问题处理 |
-| [GPS 轨迹存储方案分析](./GPS%20轨迹存储方案分析.md) | PostGIS、MongoDB、时序数据库 | 从数据结构到存储选型的完整方案 |
-| [自研 P2P 服务架构设计](./自研%20P2P%20服务架构设计.md) | Pion、STUN、TURN、MQTT 信令 | 10 万级并发 P2P 连接架构 |
+| [高并发缓存同步 RSC方案](./高并发缓存同步 RSC方案.md) | Redis、Kafka、MongoDB、Survivor | 百万设备状态同步，数据库负载降 90% |
+| [Kafka Partition 规划与问题处理](./Kafka Partition 规划与问题处理.md) | Kafka、Partition、Consumer、性能优化 | Partition 数量规划、消费延迟、Rebalance 问题处理 |
+| [GPS 轨迹存储方案分析](./GPS 轨迹存储方案分析.md) | PostGIS、MongoDB、时序数据库 | 从数据结构到存储选型的完整方案 |
+| [自研 P2P 服务架构设计](./自研 P2P 服务架构设计.md) | Pion、STUN、TURN、MQTT 信令 | 10 万级并发 P2P 连接架构 |
 | [OLAP数据库选型对比](./OLAP数据库选型对比.md) | StarRocks、ClickHouse、InfluxDB | 三大数据库架构、性能、场景全面对比 |
 | [NAT类型详解](./NAT类型详解.md) | NAT类型、P2P通信、STUN、TURN、ICE | 从Full Cone到Symmetric的NAT类型详解，P2P穿透技术实践 |
 
@@ -86,4 +86,3 @@ tags: [架构设计, 系统架构]
 
 - [微服务设计模式](https://microservices.io/patterns/)
 - [系统设计入门](https://github.com/donnemartin/system-design-primer)
-

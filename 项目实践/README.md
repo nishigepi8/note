@@ -17,28 +17,28 @@ tags: [项目实践, 工程实践]
 
 ### 🚀 高性能系统
 
-- [OpenResty + Redis 短链接服务系统](./OpenResty%20+%20Redis%20短链接服务系统.md)
+- [OpenResty + Redis 短链接服务系统](./OpenResty + Redis 短链接服务系统.md)
   - 单机 10 万+ QPS，延迟 < 5ms
   - Lua 脚本优化、Redis 数据结构设计
   - 完整的业务系统实现
 
 ### 🤖 AI 与机器学习
 
-- [AI 生成训练数据增强 YOLO 检测方案](./AI生成训练数据增强YOLO检测方案.md)
+- [AI 生成训练数据增强 YOLO 检测方案](../AI/AI生成训练数据增强YOLO检测方案.md)
   - 用 AI 训练 AI，避免数据偏差
   - Stable Diffusion + SAM + CLIP 组合
   - 混合训练策略与效果对比
 
 ### 📹 音视频与物联网
 
-- [Python MQTT 实时视频传输](./Python%20MQTT%20实时视频传输.md)
+- [Python MQTT 实时视频传输](./Python MQTT 实时视频传输.md)
   - 嵌入式设备视频传输
   - 性能优化与架构简化
   - 局限性分析与改进方向
 
 ### 🛠️ 开发工具与工程化
 
-- [为什么不用IDEA的版本管理](./为什么不用IDEA的版本管理.md)
+- [为什么我选择Git命令行而不是IDEA版本管理](./为什么我选择Git命令行而不是IDEA版本管理.md)
   - 从底层命令开始学习 Git
   - 环境无关性与脚本化
   - 团队协作最佳实践
@@ -47,10 +47,10 @@ tags: [项目实践, 工程实践]
 
 | 文章 | 技术栈 | 亮点 |
 |------|--------|------|
-| [AI 生成训练数据增强 YOLO 检测方案](./AI生成训练数据增强YOLO检测方案.md) | Stable Diffusion、YOLO、SAM、CLIP | 用 AI 训练 AI，避免数据偏差，混合训练策略 |
-| [OpenResty + Redis 短链接服务系统](./OpenResty%20+%20Redis%20短链接服务系统.md) | OpenResty、Lua、Redis | 单机 10 万+ QPS，延迟 < 5ms，完整业务系统实现 |
-| [Python MQTT 实时视频传输](./Python%20MQTT%20实时视频传输.md) | Python、OpenCV、MQTT | 性能优化、架构简化、局限性分析 |
-| [为什么不用IDEA的版本管理](./为什么不用IDEA的版本管理.md) | Git、开发工具 | 从底层命令开始学习，环境无关性，脚本化和自动化 |
+| [AI 生成训练数据增强 YOLO 检测方案](../AI/AI生成训练数据增强YOLO检测方案.md) | Stable Diffusion、YOLO、SAM、CLIP | 用 AI 训练 AI，避免数据偏差，混合训练策略 |
+| [OpenResty + Redis 短链接服务系统](./OpenResty + Redis 短链接服务系统.md) | OpenResty、Lua、Redis | 单机 10 万+ QPS，延迟 < 5ms，完整业务系统实现 |
+| [Python MQTT 实时视频传输](./Python MQTT 实时视频传输.md) | Python、OpenCV、MQTT | 性能优化、架构简化、局限性分析 |
+| [为什么我选择Git命令行而不是IDEA版本管理](./为什么我选择Git命令行而不是IDEA版本管理.md) | Git、开发工具 | 从底层命令开始学习，环境无关性，脚本化和自动化 |
 
 ## 项目特点
 
@@ -89,4 +89,3 @@ tags: [项目实践, 工程实践]
 - WMS/ERP 系统开发
 
 欢迎交流项目经验！
-

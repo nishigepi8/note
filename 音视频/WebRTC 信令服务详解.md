@@ -510,11 +510,10 @@ WebRTC 信令是建立 P2P 连接的关键步骤，理解 Offer、Answer 和 ICE
 
 **相关文章**：
 - [P2P、SFU和MCU音视频通信架构](./P2P、SFU和MCU音视频通信架构.md)
-- [RTP 实时传输协议](./RTP%20实时传输协议.md)
-- [基于Luckfox Pico Max的P2P视频直播](./基于Luckfox%20Pico%20Max的P2P视频直播解决方案.md)
+- [RTP 实时传输协议](./RTP 实时传输协议.md)
+- [Luckfox Pico Max P2P直播方案](./Luckfox Pico Max P2P直播方案.md)
 
 **参考资料**：
 - [WebRTC 官方文档](https://webrtc.org/)
 - [RFC 8866 - SDP](https://tools.ietf.org/html/rfc8866)
 - [RFC 8445 - ICE](https://tools.ietf.org/html/rfc8445)
-

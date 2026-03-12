@@ -1,4 +1,18 @@
+---
+title: Agent Skill：是什么、怎么用与推荐
+description: 介绍 Skill 的定位、结构、触发方式，以及它与 AGENTS.md 和 MCP 的协作关系。
+author: ga666666
+date: 2026-01-12
+updated: 2026-03-12
+keywords: Agent Skill, SKILL.md, AGENTS.md, MCP, AI Agent, 上下文工程
+tags: [AI, Agent, Skill, 上下文工程]
+---
+
 # Agent Skill：是什么、怎么用与推荐
+
+> 发布日期：2026-01-12
+> 最后更新：2026-03-12
+> 说明：不同产品对 Skill 的目录、加载方式和命名可能不同；本文重点说明通用设计思路。
 
 本文说明 **Skill** 作为 **AI 编码 Agent 的通用能力扩展机制** 是什么、与 AGENTS.md / 规则的区别、如何编写与使用，并列举一批好用或常见的 Skill。内容**不绑定单一产品**：不同工具（Cursor、Claude Code、Windsurf、开放生态等）可能有各自的 Skill 目录与加载方式，但 **SKILL.md 的格式与设计思路** 可通用。
 
@@ -200,7 +214,9 @@ description: Helps with documents
 
 ---
 
-**相关文档**  
+**AI 协作系列**  
+- [AI 驱动的端到端开发协作标准](./AI驱动的端到端开发协作标准.md)  
 - [Agent 执行流程与规范：AGENTS.md 与规则文档](./Agent执行流程与规范-AGENTS与规则文档.md)  
 - [跨仓库 AI 协作方案：Spec 与上下文工程](./跨仓库AI协作方案-Spec与上下文工程.md)  
-- [MCP：Model Context Protocol 入门与实践](./MCP-Model-Context-Protocol入门与实践.md)
+- [MCP：Model Context Protocol 入门与实践](./MCP-Model-Context-Protocol入门与实践.md)  
+- [如何开发 AI Agent](./如何开发AI-Agent.md)

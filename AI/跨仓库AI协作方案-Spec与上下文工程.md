@@ -1,4 +1,18 @@
+---
+title: 跨仓库 AI 协作方案：Spec 与上下文工程
+description: 说明多仓库团队如何共享 OpenSpec、AGENTS.md 与外部上下文，构建统一的 AI 协作基础设施。
+author: ga666666
+date: 2026-03-06
+updated: 2026-03-12
+keywords: 跨仓库协作, OpenSpec, AGENTS.md, MCP, AI Agent, 上下文工程
+tags: [AI, OpenSpec, 协作, 上下文工程]
+---
+
 # 跨仓库 AI 协作方案：Spec 与上下文工程
+
+> 发布日期：2026-03-06
+> 最后更新：2026-03-12
+> 说明：本文给出的是跨仓库协作的推荐形态；具体仓库结构、同步方式与自动化脚本可按团队规模裁剪。
 
 ## 问题场景
 
@@ -741,8 +755,15 @@ cd openspec-shared
 ---
 
 **文档版本:** 2.0.0
-**最后更新:** 2026-03-06
-**相关文档:** [AI 驱动的端到端开发协作标准](./AI驱动的端到端开发协作标准.md) | [AI Agent 时代的技术团队重塑](./AI Agent 时代的技术团队重塑.md)
+**最后更新:** 2026-03-12
+
+**AI 协作系列**
+- [AI 驱动的端到端开发协作标准](./AI驱动的端到端开发协作标准.md)
+- [Agent 执行流程与规范：AGENTS.md 与规则文档](./Agent执行流程与规范-AGENTS与规则文档.md)
+- [MCP：Model Context Protocol 入门与实践](./MCP-Model-Context-Protocol入门与实践.md)
+- [Agent Skill：是什么、怎么用与推荐](./Agent-Skill是什么怎么用与推荐.md)
+- [如何开发 AI Agent](./如何开发AI-Agent.md)
+- [AI Agent 时代的技术团队重塑](./AI Agent 时代的技术团队重塑.md)
 
 **延伸阅读（上下文工程与工具）：**
 - [Agent 执行流程与规范：AGENTS.md 与规则文档](./Agent执行流程与规范-AGENTS与规则文档.md)

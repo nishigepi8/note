@@ -594,11 +594,10 @@ Kafka partition 数量的设置需要平衡多个因素：
 ---
 
 **相关文章**：
-- [高并发缓存同步 RSC方案](./高并发缓存同步%20RSC方案.md)
+- [高并发缓存同步 RSC方案](./高并发缓存同步 RSC方案.md)
 - [OLAP数据库选型对比](./OLAP数据库选型对比.md)
 
 **参考资料**：
 - [Kafka 官方文档 - Partitioning](https://kafka.apache.org/documentation/#partitioning)
 - [Kafka 性能调优指南](https://kafka.apache.org/documentation/#performance)
 - [Confluent - How to choose the number of topics/partitions](https://www.confluent.io/blog/how-choose-number-topics-partitions-kafka-cluster/)
-

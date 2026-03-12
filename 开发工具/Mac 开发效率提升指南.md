@@ -1,479 +1,289 @@
 ---
 title: Mac 开发者的效率工具箱
-description: 作为一个开发者，效率是我们一直追求的目标。为什么有的人开发快、有的人慢？除了技术能力，工具链的差异往往是被忽视的关键因素。
+description: 面向 macOS 开发者的效率工具与终端工作流实践，聚焦高频操作、可维护配置和安全边界。
 author: ga666666
 date: 2026-01-10
-updated: 2026-01-10
-keywords: Mac, 开发效率, 效率工具, Alfred, iTerm2, Kiro CLI, zsh, 别名, fzf
+updated: 2026-03-12
+keywords: Mac, 开发效率, Alfred, Raycast, iTerm2, zsh, fzf, direnv, Git, 别名
 tags: [开发工具, Mac, 效率, 工具]
 ---
 
-
 # Mac 开发者的效率工具箱
 
-## 前言
+> 发布日期：2026-01-10
+> 最后更新：2026-03-12
+> 说明：本文不追求“工具越多越好”，而是聚焦高频操作、长期可维护和安全边界清晰的工作流。
 
-作为一个开发者，效率是我们一直追求的目标。为什么有的人开发快、有的人慢？除了技术能力，**工具链的差异往往是被忽视的关键因素**。
+## 先说结论
 
-工欲善其事，必先利其器。
+Mac 上的开发效率，不是靠装很多软件堆出来的，而是靠把高频动作系统化。真正值得投入时间优化的，通常只有四类事情：
 
-从大学开始我就用 macOS 学习编程（学校有计科专用的 Mac 机房），到现在工作多年，我逐渐打磨出一套高效的开发工具链。这套工具链让我每天至少比用默认配置的同事**提效 10% 以上**。
+- 打开和切换
+- 搜索和定位
+- 执行和回放
+- 环境和上下文隔离
 
-本文分享我在 macOS 上的提效实践，包括必备软件、终端配置、别名系统等。这些技巧不仅适用于 Mac，很多理念在 Linux 和 Windows（WSL）上同样适用。
+如果一套工具链不能持续减少这四类成本，它大概率只是“看起来很强”。
 
-## 为什么选择 macOS 开发？
+## 我判断工具值不值得留下的标准
 
-在开始之前，先聊聊为什么我选择 macOS 作为主力开发环境：
+我现在保留工具很克制，标准只有三个：
 
-| 特性 | macOS | Windows |
-|------|-------|---------|
-| **终端体验** | 原生 Unix，命令与 Linux 90% 兼容 | 需要 WSL 或第三方工具 |
-| **包管理** | Homebrew，一行命令解决依赖 | 较为分散 |
-| **内存优化** | 相同配置表现更好 | 资源占用较高 |
-| **续航** | 优秀（M 系列芯片尤其突出） | 一般 |
-| **开发工具链** | 原生支持大多数开发工具 | 部分工具需要额外配置 |
+1. 高频：每天都会用，或者一周内会反复用
+2. 可复用：能迁移到下一台机器，最好能配置化
+3. 可控：不会把密码、路径、环境变量和习惯绑死在某个 GUI 里
 
-当然，工具只是工具，选择适合自己的最重要。下面进入正题。
+这个标准会直接过滤掉很多“演示效果很好，但长期维护很重”的工具。
 
-## 必备效率软件
+## 最值得优先打磨的 5 个环节
 
-### 1. Alfred —— 剪切板管理神器
+### 1. 启动器和剪贴板
 
-**极力推荐**。这是我使用频率最高的软件之一。
+如果你经常需要在应用、文件、代码片段和命令之间切换，启动器是最先该优化的。
 
-**核心功能**：
-- 剪切板历史（最多保存 3 个月）
-- 显示复制来源（从哪个软件复制的）
-- 快速搜索历史记录
+我通常会在 Alfred 和 Raycast 之间二选一：
 
-**使用场景**：
-- 忘记了之前复制的 GitHub Token？搜索 `ghp` 直接找到
-- 需要反复粘贴多段内容？不用来回切换
-- 代码片段临时存储？复制后随时调用
+| 工具 | 优势 | 适合谁 |
+|------|------|--------|
+| Alfred | 工作流生态成熟，剪贴板和搜索体验稳定 | 已经深度定制工作流的人 |
+| Raycast | 开箱即用更强，免费能力更多，扩展生态活跃 | 想快速完成整体替代的人 |
 
-**推荐快捷键**：`Ctrl + Command + V`
+核心用途很简单：
 
-```
-┌─────────────────────────────────────┐
-│  Alfred 剪切板历史                   │
-├─────────────────────────────────────┤
-│  🔍 搜索: ghp_                       │
-├─────────────────────────────────────┤
-│  📋 ghp_xxxxxxxxxxxx (GitHub)       │
-│  📋 ghp_yyyyyyyyyyyy (Terminal)     │
-│  📋 API Key: sk-zzzzz (Notes)       │
-└─────────────────────────────────────┘
-```
+- 全局启动应用
+- 搜索文件
+- 调历史剪贴板
+- 执行固定工作流
 
-![Alfred 剪切板管理界面](https://zfile.ga666666.cn/pd/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/screenshot-20251224-172655.png)
+这类工具的价值不在“功能多”，而在于把鼠标找入口的时间，压缩成一组肌肉记忆。
 
-### 2. Bob —— 快捷翻译
+### 2. 终端本体
 
-选中文字后直接翻译，支持多种翻译引擎。
+我更关心终端是否满足下面几个条件，而不只是主题是否好看：
 
-**为什么选 Bob？**
-- 界面简洁美观
-- 支持 OCR 截图翻译
-- 可配置多个翻译源（DeepL、Google、有道等）
-- 响应速度快
+- 分屏稳定
+- 搜索历史输出方便
+- 快速打开新会话
+- 对 SSH、tmux、Unicode 和大输出更稳
 
-**使用技巧**：设置快捷键 `Option + D`，选中英文文档直接翻译。
+iTerm2 仍然是一个稳妥选择。如果你更倾向系统自带，也可以直接用 Terminal + tmux，关键不是品牌，而是工作流是否顺手。
 
-![Bob 翻译工具界面](https://zfile.ga666666.cn/pd/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/screenshot-20251224-172827.png)
+### 3. Shell 配置
 
-### 3. iTerm2 —— 终端的终极形态
+真正能持续提效的不是主题，而是 Shell 组织方式。我的建议是：
 
-相比原生 Terminal，iTerm2 提供了更强大的功能：
+- 主题简单即可，别让 prompt 占满一整行
+- 插件控制在少量高价值项
+- 别名、函数、环境变量拆文件管理
+- 尽量让新机器一小时内恢复工作环境
 
-**核心优势**：
-- **分屏**：`Command + D` 水平分屏，`Command + Shift + D` 垂直分屏
-- **主题**：Oh My Zsh 配合 Powerlevel10k，清晰显示 Git 分支、Python 环境等
-- **搜索**：`Command + F` 搜索终端历史输出
-- **热键窗口**：设置全局快捷键，随时呼出终端
+一个可维护的 `~/.zshrc`，长期价值比花哨主题高得多。
 
-**推荐配置**：
+### 4. 搜索和跳转
 
-```bash
-# 安装 Oh My Zsh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+命令行最耗时间的不是“不会写命令”，而是“知道东西在那，但找不到”。
 
-# 安装 Powerlevel10k 主题
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+我会优先装这几类工具：
 
-# 在 ~/.zshrc 中设置主题
-ZSH_THEME="powerlevel10k/powerlevel10k"
-```
+- `fzf`：搜索历史命令、目录、文件名
+- `zoxide` 或 `z`：按使用频率跳目录
+- `rg`：搜索代码和文本
+- `fd`：更快地找文件
+- `bat`：更友好地预览文件
 
-![iTerm2 终端界面](https://zfile.ga666666.cn/pd/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/screenshot-20251224-173327.png)
+这几类工具组合起来，能显著减少目录切换和全局搜索成本。
 
-### 4. Kiro CLI —— AI 驱动的终端助手
+### 5. 环境隔离
 
-**强烈推荐**！这是我用了两年的 AI 开发助手，原来叫 Amazon Q CLI，今年改名为 Kiro CLI，但功能和使用体验完全一样。
+很多效率问题看起来像“命令太难记”，本质上是环境太乱。
 
-**核心优势**：
-- **智能代码生成**：直接在终端中生成代码片段
-- **命令行助手**：自然语言转换为复杂的 shell 命令
-- **多模型支持**：可以选择不同的 AI 模型进行对话
-- **与 iTerm2 完美配合**：无缝集成到终端工作流
+我现在更重视下面这些能力：
 
-**安装和配置**：
+- 不同项目自动切换环境变量
+- 不同语言版本自动切换
+- 本地私钥、Token、证书不硬编码进 alias
 
-```bash
-# 安装 Kiro CLI
-npm install -g @aws/kiro-cli
+这方面 `direnv`、`mise` 或 `asdf` 这类工具，比继续堆 alias 更值得投入。
 
-# 初始化配置
-kiro-cli configure
-```
+## 一个更稳的终端工具组合
 
-**使用场景**：
-- 忘记复杂的 Git 命令？直接问 Kiro
-- 需要写一个快速脚本？让 Kiro 帮你生成
-- 调试 Docker 容器？Kiro 给出最佳实践命令
+如果你不想一开始就折腾太多，我建议从下面这组最小集合开始：
 
-![Kiro CLI 官网](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/kiro%E7%BD%91%E7%AB%99.png)
+| 类别 | 推荐 | 作用 |
+|------|------|------|
+| 包管理 | Homebrew | 安装 CLI 和 GUI |
+| 终端 | iTerm2 或 Terminal + tmux | 统一命令行工作区 |
+| Shell | zsh + 少量插件 | 管理别名、补全、函数 |
+| 搜索 | fzf + rg + fd | 历史命令和文件定位 |
+| 跳转 | zoxide | 快速进入高频目录 |
+| 环境 | direnv | 项目级环境变量隔离 |
 
-![Kiro CLI 软件主页](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/kiro-cli%E8%BD%AF%E4%BB%B6%E4%B8%BB%E9%A1%B5.png)
+这套组合的特点是：每个工具都解决一个明确问题，而且替换成本低。
 
-**权限设置**：
-首次使用需要开启必要权限：
+## 别名不是越多越好
 
-![开启权限](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/%E5%BC%80%E5%90%AF%E6%9D%83%E9%99%90.png)
+很多人提效的第一反应是“多配一点 alias”。这能带来收益，但也最容易失控。
 
-**启用命令提示**：
-配置后可以获得智能的命令建议：
+我更推荐把 alias 控制在三类：
 
-![启用命令提示](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/%E5%90%AF%E7%94%A8%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA.png)
-
-**实际使用效果**：
-
-![CD命令提示](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/cd%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA.png)
-
-![Git命令提示](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/git%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA.png)
-
-**模型选择**：
-可以根据不同任务选择合适的 AI 模型：
-
-![聊天写代码选模型](https://zfile.ga666666.cn/directlink/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/%E8%81%8A%E5%A4%A9%E5%86%99%E4%BB%A3%E7%A0%81%E9%80%89%E6%A8%A1%E5%9E%8B.png)
-
-**使用技巧**：
-- 设置快捷键快速呼出 Kiro
-- 结合 iTerm2 的分屏功能，一边写代码一边咨询 AI
-- 利用 Kiro 的代码生成功能快速创建模板文件
-
-### 5. 超级右键 —— Finder 增强
-
-右键菜单增强工具，支持：
-- 在当前目录打开终端
-- 新建各种类型文件
-- 快速复制文件路径
-
-![超级右键功能展示](https://zfile.ga666666.cn/pd/1/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%9B%BE/screenshot-20251224-172917.png)
-
-## 别名系统：效率提升的核心
-
-别名（Alias）是我提效的**重头戏**。把常用的长命令缩短为几个字母，积累下来节省的时间非常可观。
-
-### 基础别名
+### 1. 真正高频且无副作用的缩写
 
 ```bash
-# 清屏 - 强迫症必备，保持终端清爽
-alias cl="clear"
-
-# 快速进入常用目录
-alias desk="cd ~/Desktop"
-alias down="cd ~/Downloads"
-alias proj="cd ~/Projects"
+alias gs='git status -sb'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias k='kubectl'
+alias dps='docker ps'
 ```
 
-### Kubernetes 别名
+这类缩写价值高，因为它们只是缩短输入，不改变行为。
 
-如果你经常操作 K8s，这套别名能让你的效率翻倍：
+### 2. 带上下文的安全函数
+
+相比把复杂逻辑塞进 alias，我更倾向写 shell function：
 
 ```bash
-# 基础命令缩写
-alias k="kubectl"
-alias kg="kubectl get"
-alias kd="kubectl describe"
-alias kl="kubectl logs"
+gco_pull() {
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
+    echo "not in a git repository"
+    return 1
+  }
 
-# 快速切换集群上下文
-alias kdev="kubectl config use-context dev-cluster"
-alias kprod="kubectl config use-context prod-cluster"
-alias klocal="kubectl config use-context docker-desktop"
-
-# 常用查询（带参数）
-alias kpod='func(){ kubectl get pods -n $1 -o wide; }; func'
-alias ksvc='func(){ kubectl get svc -n $1 -o wide; }; func'
-alias king='func(){ kubectl get ing -n $1 -o wide; }; func'
-
-# 日志和调试
-alias klog='func(){ kubectl logs -f $1 -n $2 --tail 200; }; func'
-alias kexec='func(){ kubectl exec -it $1 -n $2 -- sh; }; func'
-
-# 复杂操作用脚本
-alias kscale='~/Shell/k8s_quick_scale.sh'
-alias kstop='~/Shell/k8s_quick_stop.sh'
-alias kstart='~/Shell/k8s_quick_start.sh'
+  git switch "$1" && git pull --ff-only
+}
 ```
 
-**使用示例**：
+原因很简单：函数更容易读，也更容易加参数校验。
+
+### 3. 项目导航
 
 ```bash
-# 查看 default 命名空间的 Pod
-kpod default
-
-# 查看 Pod 日志
-klog my-app-pod-xxx default
-
-# 进入 Pod 调试
-kexec my-app-pod-xxx default
+alias proj='cd ~/Projects'
+alias svc_user='cd ~/Projects/cloud-user'
+alias svc_order='cd ~/Projects/cloud-order'
 ```
 
-### SSH 连接别名
+这类别名的价值在于稳定，而不是炫技。
 
-每次输入 `ssh -i xxx.pem user@ip` 太麻烦？用别名：
+## 我已经不建议这样做
+
+这次重写时，我把一些以前文章里“能用但不稳”的做法收掉了。主要有三类：
+
+### 1. 不要在 alias 里写密码
+
+像 `sshpass -p "password"` 这种写法，短期省事，长期非常危险。正确做法应该是：
+
+- 用 SSH Key
+- 用跳板机或堡垒机
+- 把敏感信息交给系统钥匙串或专用密钥管理
+
+### 2. 不要把生产环境动作包装得过于轻率
+
+像 `alias prod="ssh ..."`、`alias master="git checkout master && git pull"` 这类命令，输入确实短了，但也更容易误触。生产相关操作更适合保留一点“摩擦力”。
+
+### 3. 不要把一切都做成 alias
+
+只要逻辑里开始出现参数判断、分支处理、错误提示，就该从 alias 升级成函数或脚本。
+
+## 一个可维护的 `~/.zshrc` 组织方式
+
+我更推荐把 Shell 配置拆成几层，而不是把所有内容堆在一个文件里。
 
 ```bash
-# 开发服务器
-alias shdev='ssh -i ~/.ssh/dev_key.pem dev@192.168.1.100'
+# ~/.zshrc
+export ZDOTDIR="$HOME"
 
-# 生产服务器（谨慎使用）
-alias shprod='ssh -i ~/.ssh/prod_key.pem admin@10.0.0.50'
-
-# 带密码的连接（需要 sshpass）
-alias shluckfox='func(){ sshpass -p "password" ssh -o StrictHostKeyChecking=no root@$1; }; func'
+source ~/.config/shell/base.sh
+source ~/.config/shell/aliases.sh
+source ~/.config/shell/functions.sh
+source ~/.config/shell/work.sh
 ```
 
-**安全提示**：生产服务器建议使用跳板机，不要直接暴露。
-
-### Git 别名
-
-Git 操作是日常开发中最频繁的，这套别名让分支切换变得丝滑：
+例如：
 
 ```bash
-# 快速切换分支并更新
-alias master="git checkout master && git pull"
-alias dev="git checkout dev && git pull"
-alias test="git checkout test && git pull"
-alias sit="git checkout sit && git pull"
+# ~/.config/shell/base.sh
+export EDITOR='code --wait'
+export HOMEBREW_NO_AUTO_UPDATE=1
 
-# 安全版本（检查是否在 Git 仓库中）
-alias gmaster='if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then git checkout master && git pull; else echo "Not a git repository"; fi'
-
-# 常用 Git 命令缩写
-alias gs="git status"
-alias ga="git add"
-alias gc="git commit"
-alias gp="git push"
-alias gl="git pull"
-alias glog="git log --oneline -20"
-alias gdiff="git diff"
+eval "$(zoxide init zsh)"
+eval "$(direnv hook zsh)"
 ```
-
-### 项目目录别名
-
-在多个项目之间切换是家常便饭，用别名直达：
 
 ```bash
-# 微服务项目
-alias svc-user="cd ~/Projects/cloud-user"
-alias svc-order="cd ~/Projects/cloud-order"
-alias svc-device="cd ~/Projects/cloud-device"
-alias svc-gateway="cd ~/Projects/cloud-gateway"
-alias svc-common="cd ~/Projects/cloud-common"
-
-# 前端项目
-alias fe-admin="cd ~/Projects/admin-frontend"
-alias fe-app="cd ~/Projects/mobile-app"
-
-# 组合使用：进入项目 + 切换分支
-alias dev-user="cd ~/Projects/cloud-user && git checkout dev && git pull"
+# ~/.config/shell/aliases.sh
+alias gs='git status -sb'
+alias gl='git pull --ff-only'
+alias k='kubectl'
+alias v='nvim'
 ```
 
-### 实用工具别名
+这种方式的好处是：
+
+- 更容易定位问题
+- 更适合按主题维护
+- 更方便同步到 dotfiles 仓库
+
+## 进阶建议
+
+### 1. 让搜索成为默认动作
+
+与其记住一堆长路径，不如把搜索变成默认习惯：
+
+- `Ctrl + R` 用 `fzf` 搜索历史命令
+- `rg keyword` 搜全文
+- `fd name` 找文件
+- `z keyword` 跳目录
+
+很多“操作慢”的根源，不是执行慢，而是定位慢。
+
+### 2. 用 `direnv` 管项目变量
+
+这是我现在很看重的一点。与其在全局 shell 里塞一堆环境变量，不如让项目目录自动加载：
 
 ```bash
-# 查询本机 IP（告别在 ifconfig 的输出中找 IP）
-alias myip='ifconfig | grep "inet " | grep -v 127.0.0.1 | awk "{print \$2}"'
-
-# 代理下载（需要本地代理）
-alias pdown='func(){ 
-    url=$1
-    filename=$(basename "$url")
-    curl --proxy http://localhost:7890 -o "$(pwd)/$filename" "$url"
-}; func'
-
-# Docker 快捷命令
-alias dps="docker ps"
-alias dpa="docker ps -a"
-alias dlog="docker logs -f"
-alias dexec='func(){ docker exec -it $1 sh; }; func'
-
-# 快速编辑配置
-alias zshrc="code ~/.zshrc"
-alias hosts="sudo code /etc/hosts"
+# .envrc
+export APP_ENV=dev
+export AWS_PROFILE=my-project
+layout python python3
 ```
 
-## 配置文件管理
+这样切项目时，环境也跟着切，错误率会低很多。
 
-### ~/.zshrc 组织建议
+### 3. 用 dotfiles 管配置
 
-```bash
-# ============ 基础配置 ============
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(git docker kubectl zsh-autosuggestions zsh-syntax-highlighting)
-source $ZSH/oh-my-zsh.sh
+如果你已经有一套稳定终端工作流，最好尽快把配置放进一个单独仓库：
 
+- `~/.zshrc`
+- `~/.gitconfig`
+- `~/.config/*`
+- iTerm2 或 Terminal 的关键配置说明
 
+这样换机器、重装系统、同步工作环境时会轻松很多。
 
-# ============ 别名 - 基础 ============
-alias cl="clear"
-alias desk="cd ~/Desktop"
-# ... 更多别名
+## 快速起步清单
 
-# ============ 别名 - K8s ============
-alias k="kubectl"
-# ... K8s 别名
+如果你想在一小时内把 Mac 开发环境提升到“明显顺手”的程度，我建议按这个顺序来：
 
-# ============ 别名 - Git ============
-alias gs="git status"
-# ... Git 别名
-
-# ============ 别名 - 项目 ============
-alias svc-user="cd ~/Projects/cloud-user"
-# ... 项目别名
-```
-
-### 别名文件分离
-
-当别名太多时，可以分离到单独文件：
-
-```bash
-# ~/.zshrc 末尾添加
-source ~/.aliases_k8s
-source ~/.aliases_git
-source ~/.aliases_projects
-```
-
-## 效率提升的本质
-
-回顾这些技巧，效率提升的本质是：
-
-1. **减少重复输入**：别名把长命令缩短为几个字母
-2. **减少记忆负担**：常用命令不用每次回忆完整写法，Kiro CLI 更是让自然语言直接转换为命令
-3. **减少切换成本**：快捷键、目录别名减少鼠标操作
-4. **减少等待时间**：代理下载、并行操作
-5. **AI 辅助决策**：Kiro CLI 提供智能建议，减少查文档的时间
-
-**量变引起质变**：单个别名节省的时间微乎其微，但当你有 50+ 个别名，每天使用上百次时，累积效果非常显著。加上 Kiro CLI 的 AI 助手功能，效率提升更加明显。
-
-## 进阶技巧
-
-### 1. 自动补全
-
-```bash
-# 安装 zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-
-# 在 ~/.zshrc 中启用
-plugins=(... zsh-autosuggestions)
-```
-
-输入命令时会自动显示历史命令建议，按 `→` 键补全。
-
-### 2. 模糊搜索 fzf
-
-```bash
-# 安装
-brew install fzf
-
-# 启用快捷键
-$(brew --prefix)/opt/fzf/install
-```
-
-`Ctrl + R` 模糊搜索历史命令，比默认的反向搜索好用 100 倍。
-
-### 3. 快速目录跳转 z
-
-```bash
-# 安装
-brew install z
-
-# 在 ~/.zshrc 中添加
-source /usr/local/etc/profile.d/z.sh
-```
-
-根据访问频率智能跳转目录：
-
-```bash
-z proj     # 跳转到最常访问的包含 "proj" 的目录
-z cloud    # 跳转到 cloud-xxx 项目目录
-```
+1. 装 Homebrew
+2. 装 `iTerm2`、`fzf`、`rg`、`fd`、`zoxide`
+3. 把 `git`、`kubectl`、`docker` 的高频命令做少量缩写
+4. 加上 `direnv`
+5. 把 shell 配置拆文件并放进 dotfiles 仓库
 
 ## 总结
 
-工具链的打磨是一个持续的过程，不必一次配置到位。我的建议是：
+Mac 开发提效这件事，最怕两个极端：一个是什么都不配，另一个是什么都想配。真正有效的做法，是围绕自己的高频动作做最小但持续的优化。
 
-1. **从痛点出发**：哪个操作让你觉得烦？先优化它
-2. **逐步积累**：每周添加 1-2 个别名，逐渐形成自己的工具库
-3. **定期回顾**：清理不再使用的别名，保持配置简洁
-4. **备份配置**：把 dotfiles 放到 Git 仓库，换电脑时一键恢复
-5. **拥抱 AI**：像 Kiro CLI 这样的 AI 工具正在改变开发方式，早用早受益
+如果只能给一个原则，那就是：**优先优化你每天都会重复做的事情，并且优先选择可迁移、可维护、可审计的工具和配置。**
 
-记住：**最好的工具是你用得顺手的工具**。不必追求最新最炫，适合自己的才是最好的。
-
-特别推荐 Kiro CLI + iTerm2 的组合，这套工具链我已经用了两年，从 Amazon Q CLI 到现在的 Kiro CLI，体验一直很棒。AI 助手让很多原本需要查文档或搜索的问题都能在终端中直接解决。
-
----
-
-## 快速配置清单
-
-一键安装常用工具（macOS）：
-
-```bash
-# 1. 安装 Homebrew（如果没有）
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# 2. 安装必备软件
-brew install --cask alfred
-brew install --cask iterm2
-brew install --cask bob
-brew install fzf
-brew install z
-
-# 3. 安装 Oh My Zsh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-# 4. 安装 Kiro CLI
-npm install -g @aws/kiro-cli
-```
-
-**zshrc 配置速查**：
-
-```bash
-# ~/.zshrc 基础配置
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(git docker kubectl zsh-autosuggestions zsh-syntax-highlighting)
-source $ZSH/oh-my-zsh.sh
-
-# 常用别名
-alias cl="clear"
-alias k="kubectl"
-alias gs="git status"
-alias dps="docker ps"
-```
-
----
-
-**相关资源**：
-- [Kiro CLI](https://kiro.aws/) - AI 驱动的终端助手
-- [Oh My Zsh](https://ohmyz.sh/)
-- [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
-- [Alfred](https://www.alfredapp.com/)
+**相关资源**
+- [Homebrew](https://brew.sh/)
 - [iTerm2](https://iterm2.com/)
-- [Bob 翻译](https://github.com/ripperhe/Bob)
-- [fzf 模糊搜索](https://github.com/junegunn/fzf)
-
+- [Alfred](https://www.alfredapp.com/)
+- [Raycast](https://www.raycast.com/)
+- [fzf](https://github.com/junegunn/fzf)
+- [ripgrep](https://github.com/BurntSushi/ripgrep)
+- [zoxide](https://github.com/ajeetdsouza/zoxide)
+- [direnv](https://direnv.net/)

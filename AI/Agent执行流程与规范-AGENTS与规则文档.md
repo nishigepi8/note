@@ -1,4 +1,18 @@
+---
+title: Agent 执行流程与规范：AGENTS.md、CLAUDE.md 与规则文档
+description: 说明 AGENTS.md、CLAUDE.md、产品规则与 OpenSpec 如何共同约束 AI Agent 的执行流程。
+author: ga666666
+date: 2026-01-12
+updated: 2026-03-12
+keywords: AGENTS.md, CLAUDE.md, Agent, OpenSpec, 规则文档, 上下文工程
+tags: [AI, Agent, AGENTS, 规范]
+---
+
 # Agent 执行流程与规范：AGENTS.md、CLAUDE.md 与规则文档
+
+> 发布日期：2026-01-12
+> 最后更新：2026-03-12
+> 说明：本文聚焦通用原则；具体规则文件名、自动加载行为与字段格式需以当前产品文档为准。
 
 基于 [跨仓库 AI 协作方案：Spec 与上下文工程](./跨仓库AI协作方案-Spec与上下文工程.md) 的上下文工程体系，本文说明 **AI Agent 的执行流程**、**为什么通过文档来管理**，以及 **AGENTS.md、CLAUDE.md 与各产品规则文档** 的定位与用法。
 
@@ -225,7 +239,9 @@ graph LR
 
 ---
 
-**相关文档**  
+**AI 协作系列**  
+- [AI 驱动的端到端开发协作标准](./AI驱动的端到端开发协作标准.md)  
 - [跨仓库 AI 协作方案：Spec 与上下文工程](./跨仓库AI协作方案-Spec与上下文工程.md)  
 - [MCP：Model Context Protocol 入门与实践](./MCP-Model-Context-Protocol入门与实践.md)  
-- [Agent Skill：是什么、怎么用与推荐](./Agent-Skill是什么怎么用与推荐.md)
+- [Agent Skill：是什么、怎么用与推荐](./Agent-Skill是什么怎么用与推荐.md)  
+- [如何开发 AI Agent](./如何开发AI-Agent.md)

@@ -487,12 +487,11 @@ groups:
 
 **相关文章**：
 - [P2P、SFU和MCU音视频通信架构](../音视频/P2P、SFU和MCU音视频通信架构.md)
-- [WebRTC 信令服务详解](../音视频/WebRTC%20信令服务详解：Offer、Answer%20与%20ICE%20Candidate.md)
-- [RTP 实时传输协议](../音视频/RTP%20实时传输协议.md)
+- [WebRTC 信令服务详解](../音视频/WebRTC 信令服务详解.md)
+- [RTP 实时传输协议](../音视频/RTP 实时传输协议.md)
 
 **参考资料**：
 - [Pion WebRTC](https://github.com/pion/webrtc)
 - [RFC 5389 - STUN](https://tools.ietf.org/html/rfc5389)
 - [RFC 5766 - TURN](https://tools.ietf.org/html/rfc5766)
 - [Coturn 开源 TURN 服务器](https://github.com/coturn/coturn)
-
