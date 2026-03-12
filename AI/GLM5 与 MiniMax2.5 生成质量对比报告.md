@@ -28,6 +28,20 @@ tags: [AI辅助编程, 开发工具]
 
 **综合**：在本提示词下，**GLM-5 的生成质量明显高于 MiniMax 2.5**，更接近「可直接交给团队落地」的规格；MiniMax 适合做快速草案或与 GLM 互补（如用 MiniMax 出初稿再让 GLM 深化）。
 
+```mermaid
+flowchart LR
+    A[同一 Stripe 升降级提示词] --> B[GLM-5 生成 OpenSpec]
+    A --> C[MiniMax 2.5 生成 OpenSpec]
+    B --> D[完整性 / 技术正确性 / 风险 / 迁移评估]
+    C --> D
+    D --> E{任务复杂度}
+    E -->|大需求 / 架构| F[优先 GLM-5]
+    E -->|快出草案 / 小改动| G[优先 MiniMax 2.5]
+    G --> H[必要时再交给 GLM-5 深化]
+    F --> I[进入开发与验收]
+    H --> I
+```
+
 ---
 
 ## 二、结合模型对比的定位对照

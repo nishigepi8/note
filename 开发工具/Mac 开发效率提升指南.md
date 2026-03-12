@@ -25,6 +25,22 @@ Mac 上的开发效率，不是靠装很多软件堆出来的，而是靠把高�
 
 如果一套工具链不能持续减少这四类成本，它大概率只是“看起来很强”。
 
+```mermaid
+flowchart TB
+    A[开发中的高频动作] --> B[打开与切换]
+    A --> C[搜索与定位]
+    A --> D[执行与回放]
+    A --> E[环境与上下文隔离]
+    B --> F[Alfred / Raycast / iTerm2]
+    C --> G[fzf / rg / fd / zoxide]
+    D --> H[zsh / alias / function / tmux]
+    E --> I[direnv / mise / dotfiles]
+    F --> J[减少切换成本]
+    G --> J
+    H --> J
+    I --> J
+```
+
 ## 我判断工具值不值得留下的标准
 
 我现在保留工具很克制，标准只有三个：

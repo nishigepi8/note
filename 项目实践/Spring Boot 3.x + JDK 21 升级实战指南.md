@@ -15,6 +15,19 @@ tags: [项目实践, Spring Boot, Java, 升级]
 
 本文档记录了从 Spring Boot 2.x + JDK 11/17 升级到 Spring Boot 3.x + JDK 21 的完整过程，涵盖自动化工具使用、依赖升级、代码迁移、常见问题解决等各个方面。
 
+```mermaid
+flowchart LR
+    A[盘点当前版本与中间件] --> B[创建升级分支与备份]
+    B --> C[OpenRewrite dryRun]
+    C --> D[审查 patch]
+    D --> E[执行 rewrite run]
+    E --> F[处理 Jakarta / 依赖兼容问题]
+    F --> G[编译与测试]
+    G --> H{是否通过}
+    H -->|否| F
+    H -->|是| I[灰度发布与回滚预案]
+```
+
 ## 1. 升级前准备
 
 ### 1.1 环境要求
@@ -806,4 +819,3 @@ Spring Boot 3.x + JDK 21 升级是一个系统性的工程，涉及：
 - [OpenRewrite Documentation](https://docs.openrewrite.org/)
 - [Jakarta EE 9 Migration Guide](https://jakarta.ee/specifications/platform/9/)
 - [Elasticsearch Java API Client](https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/current/index.html)
-

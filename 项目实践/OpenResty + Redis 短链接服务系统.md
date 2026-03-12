@@ -34,6 +34,18 @@ OpenResty 基于 Nginx 和 LuaJIT，提供了强大的 Lua 脚本能力，结合
 
 ## 系统架构
 
+```mermaid
+flowchart LR
+    A[客户端请求] --> B{请求类型}
+    B -->|生成短链| C[OpenResty Lua 生成短码]
+    B -->|访问短链| D[OpenResty Lua 查询映射]
+    C --> E[Redis INCR + Base62]
+    E --> F[写入短链映射]
+    D --> G[读取原始链接]
+    G --> H[统计访问 + 限流]
+    H --> I[302 跳转]
+```
+
 ### 整体架构
 
 ```

@@ -14,6 +14,20 @@ tags: [架构设计, 网络协议, P2P, NAT]
 
 ## NAT基础概念
 
+```mermaid
+flowchart TB
+    A[内网主机发起连接] --> B[NAT 建立映射]
+    B --> C{NAT 类型}
+    C --> D[Full Cone]
+    C --> E[Restricted Cone]
+    C --> F[Port Restricted Cone]
+    C --> G[Symmetric NAT]
+    D --> H[P2P 穿透最容易]
+    E --> I[需双向打洞]
+    F --> J[需 IP + 端口匹配]
+    G --> K[通常需要 TURN 中继]
+```
+
 NAT（Network Address Translation）网络地址转换技术，通过修改IP数据包的源IP地址和目的IP地址，实现私有网络与公共网络之间的通信。NAT主要解决了IPv4地址空间不足的问题，同时提供了网络安全隔离。
 
 ### NAT工作原理

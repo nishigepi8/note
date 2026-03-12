@@ -37,6 +37,21 @@ WebRTC 建立 P2P 连接需要解决两个问题：
 
 ### 信令流程概览
 
+```mermaid
+sequenceDiagram
+    participant Caller as 发起方
+    participant Signal as 信令服务器
+    participant Callee as 接收方
+    Caller->>Signal: Offer
+    Signal->>Callee: 转发 Offer
+    Callee->>Signal: Answer
+    Signal->>Caller: 转发 Answer
+    Caller->>Signal: ICE Candidate
+    Callee->>Signal: ICE Candidate
+    Signal->>Caller: 转发 Candidate
+    Signal->>Callee: 转发 Candidate
+```
+
 ```
 发起方（Caller）           信令服务器           接收方（Callee）
      │                        │                     │

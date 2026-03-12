@@ -17,6 +17,18 @@ tags: [架构设计, Kafka, 消息队列, 高并发]
 
 本文从实际生产问题出发，深入分析 partition 数量与吞吐量、消费者数量、并行度的关系，并提供常见问题的处理方案。
 
+```mermaid
+flowchart LR
+    A[预估流量与消费模型] --> B[确定单 partition 吞吐上限]
+    B --> C[估算目标 partition 数量]
+    C --> D[对齐 consumer 并行度]
+    D --> E[上线观察 lag / rebalance / 资源占用]
+    E --> F{出现问题?}
+    F -->|积压严重| G[扩 partition / 扩 consumer / 优化处理逻辑]
+    F -->|资源浪费| H[新 topic 迁移或收敛并行度]
+    F -->|稳定| I[固化为容量基线]
+```
+
 ## 核心概念
 
 ### Partition 的作用

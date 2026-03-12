@@ -95,6 +95,15 @@ note/
 
 PowerWiki 的核心特性是**自动从 Git 仓库同步内容**：
 
+```mermaid
+flowchart LR
+    A[Markdown 内容写入 Git 仓库] --> B[git push]
+    B --> C[PowerWiki 定时或主动拉取]
+    C --> D[Markdown 解析与索引]
+    D --> E[前端界面渲染]
+    E --> F[读者访问最新内容]
+```
+
 ```
 Git 仓库（内容源）
     ↓
@@ -683,4 +692,3 @@ PowerWiki 是一个专注于**数据迁移、备份、管理和简洁性**的开
 **开源协议**：MIT License
 
 欢迎 Star、Fork、Issue 和 PR！
-

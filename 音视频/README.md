@@ -13,6 +13,15 @@ tags: [音视频, WebRTC]
 
 本目录包含 WebRTC 相关的技术文章，涵盖协议原理、架构设计和实践经验。
 
+```mermaid
+flowchart LR
+    A[音视频学习路径] --> B[架构理解]
+    B --> C[P2P / SFU / MCU]
+    C --> D[RTP 协议]
+    D --> E[WebRTC 信令]
+    E --> F[Luckfox P2P 实战]
+```
+
 ## 快速导航
 
 ### 📚 学习路径

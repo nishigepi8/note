@@ -17,6 +17,17 @@ tags: [架构设计, 数据库, OLAP, StarRocks, ClickHouse]
 
 本文将从**架构设计**、**性能表现**、**使用场景**、**运维成本**四个维度，深入对比这三个数据库，帮助你在实际项目中做出正确的技术选型。
 
+```mermaid
+flowchart TD
+    A[分析型数据库选型] --> B{主要数据形态}
+    B -->|通用分析 + 多表 JOIN| C[StarRocks]
+    B -->|超大规模列式查询| D[ClickHouse]
+    B -->|强时序特征指标| E[InfluxDB]
+    C --> F[统一分析引擎]
+    D --> G[极致查询吞吐]
+    E --> H[时序写入与保留策略]
+```
+
 ---
 
 ## 一、数据库定位与核心特性
@@ -537,4 +548,3 @@ GROUP BY u.user_id, u.region;
 - [ClickHouse 官方文档](https://clickhouse.com/docs)
 - [InfluxDB 官方文档](https://docs.influxdata.com/)
 - [OLAP 数据库性能对比](https://benchmark.clickhouse.com/)
-
