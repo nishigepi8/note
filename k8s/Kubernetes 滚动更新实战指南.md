@@ -21,6 +21,19 @@ Deployment 对象可以定义一个副本集（ReplicaSet），并且支持滚�
 
 ### 更新流程
 
+```mermaid
+flowchart LR
+    A[旧版本 ReplicaSet] --> B[按 maxSurge 启动新 Pod]
+    B --> C[等待 readinessProbe 通过]
+    C --> D[按 maxUnavailable 下线旧 Pod]
+    D --> E{是否全部替换完成}
+    E -->|否| B
+    E -->|是| F[新版本稳定运行]
+    F --> G{是否出现异常}
+    G -->|是| H[rollout undo 回滚]
+    G -->|否| I[发布完成]
+```
+
 ```
 旧版本 Pod (v1)         新版本 Pod (v2)
     ↓                        ↓

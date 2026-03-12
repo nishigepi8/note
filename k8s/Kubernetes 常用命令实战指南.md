@@ -15,6 +15,19 @@ tags: [K8s, Kubernetes, DevOps, 容器]
 
 Kubernetes 作为容器编排的事实标准，其命令行工具 `kubectl` 是日常运维和开发中最重要的工具。本文整理了我在实际工作中最常用的 kubectl 命令，并附上使用场景和最佳实践，希望能帮助大家提高工作效率。
 
+```mermaid
+flowchart LR
+    A[收到集群问题] --> B[看资源列表 get]
+    B --> C[看详情 describe]
+    C --> D[看日志 logs]
+    D --> E{需要进入容器吗}
+    E -->|是| F[exec / cp]
+    E -->|否| G{需要修改资源吗}
+    F --> G
+    G -->|是| H[edit / apply / delete]
+    G -->|否| I[结束排查]
+```
+
 ## 基础概念回顾
 
 在开始之前，先简单回顾一下 Kubernetes 的核心资源：

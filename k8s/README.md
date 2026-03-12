@@ -13,6 +13,14 @@ tags: [K8s, Kubernetes, 容器]
 
 本目录包含 Kubernetes 运维和开发相关的实战文章，重点是日常运维和发布上线。
 
+```mermaid
+flowchart LR
+    A[Kubernetes 实战] --> B[日常运维]
+    A --> C[发布上线]
+    B --> D[Kubernetes 常用命令实战指南]
+    C --> E[Kubernetes 滚动更新实战指南]
+```
+
 ## 快速导航
 
 ### 🚀 日常运维
