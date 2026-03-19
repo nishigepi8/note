@@ -23,14 +23,14 @@ flowchart LR
 
 ## 快速导航
 
-### 🚀 日常运维
+### 日常运维
 
 - [Kubernetes 常用命令实战指南](./Kubernetes 常用命令实战指南.md)
   - kubectl 常用命令
   - Pod、Service、Deployment 调试
   - 日常故障排查
 
-### 📦 发布上线
+### 发布上线
 
 - [Kubernetes 滚动更新实战指南](./Kubernetes 滚动更新实战指南.md)
   - Deployment 滚动更新策略

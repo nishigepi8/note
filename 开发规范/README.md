@@ -25,7 +25,7 @@ flowchart LR
 
 ## 快速导航
 
-### 📋 Git 工作流
+### Git 工作流
 
 - [Git 分支与 Commit 规范](./Git 分支与 Commit 规范.md)
   - 分支命名规范：`<type>/<jira-key>-<描述>`

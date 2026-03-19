@@ -15,7 +15,7 @@ tags: [物联网, IoT, MQTT]
 
 ## 快速导航
 
-### 📡 Matter 协议
+### Matter 协议
 
 Matter 是由 CSA（连接标准联盟）制定的智能家居统一标准，旨在解决设备互联互通的问题。
 
@@ -30,7 +30,7 @@ Matter 是由 CSA（连接标准联盟）制定的智能家居统一标准，旨
 2. Matter-1.2-Application-Cluster-Specification.pdf - 应用集群规范
 3. Application-Clusters-Door-Lock.pdf - 具体应用示例
 
-### 🔐 MQTT 安全
+### MQTT 安全
 
 - 物联网_MQTTS_安全性能架构.pdf
   - MQTT over TLS 安全传输

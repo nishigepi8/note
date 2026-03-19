@@ -24,14 +24,14 @@ flowchart LR
 
 ## 快速导航
 
-### 🖥️ macOS 开发环境
+### macOS 开发环境
 
 - [Mac 开发效率提升指南](./Mac 开发效率提升指南.md)
   - Alfred、iTerm2、Zsh 配置
   - 快捷键、别名、自动补全
   - 分屏操作与快速导航
 
-### 🤖 AI 辅助编程
+### AI 辅助编程
 
 - [Claude Code 后台重构实践报告](../AI/Claude Code 后台重构实践报告.md)
   - AI 辅助代码重构的实战经验
