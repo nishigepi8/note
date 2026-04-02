@@ -22,3 +22,11 @@ tags: [AI, Agent, 案例, 对比]
 
 - [项目版多 Agent 输出](./project-multi-agent-output.md)
 - [单 Agent 输出](./single-agent-output.md)
+
+## 结论
+
+这个对比不是为了证明“多 Agent 一定更好”，而是为了看清楚：
+
+- 单 Agent 更像完整回答
+- 项目版多 Agent 更像可控协作
+- 如果任务需要明确分工、依赖和收敛，多 Agent 更容易把结果做稳
