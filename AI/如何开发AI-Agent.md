@@ -80,7 +80,7 @@ graph LR
 | 层次 | 内容 | 对应文档 |
 |------|------|----------|
 | **角色与边界** | 职责、禁止项、与人的分工；多 Agent 时权限矩阵 | 本文第三节 |
-| **上下文工程** | AGENTS.md、OpenSpec、产品规则；多 Agent 时每角色人格/工作流 | [Agent 执行流程与规范](./Agent执行流程与规范-AGENTS与规则文档.md)、[跨仓库方案](./跨仓库AI协作方案-Spec与上下文工程.md) |
+| **上下文工程** | AGENTS.md、OpenSpec、产品规则；多 Agent 时每角色人格/工作流 | [Agent 执行流程与规范](./Agent执行流程与规范-AGENTS与规则文档.md)、[跨仓库方案](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md) |
 | **工具连接** | MCP 等 | [MCP 入门与实践](./MCP-Model-Context-Protocol入门与实践.md) |
 | **能力扩展** | Skill，可按角色配置 | [Agent Skill](./Agent-Skill是什么怎么用与推荐.md) |
 | **编排与多 Agent** | 分拣→规划→审核→派发→执行、权限矩阵、可观测可干预 | 本文第七节、[Edict](https://github.com/cft0808/edict) |
@@ -171,7 +171,7 @@ graph TB
 - **内容**：项目概述、架构约束、编码规范、测试/CI、禁忌规则（参见 [Agent 执行流程与规范](./Agent执行流程与规范-AGENTS与规则文档.md)）。
 - **原则**：简洁、可执行；优先写对产出影响最大的约束。
 
-跨仓库时可在共享仓库维护共享 AGENTS.md，各子仓库继承并补充（参见 [跨仓库 AI 协作方案](./跨仓库AI协作方案-Spec与上下文工程.md)）。
+跨仓库时可在共享仓库维护共享 AGENTS.md，各子仓库继承并补充（参见 [跨仓库 AI 协作方案](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md)）。
 
 ### 4.2 多 Agent：每角色人格与工作流
 
@@ -278,7 +278,7 @@ flowchart LR
 
 ### 7.3 同一份 Spec 与权限矩阵
 
-- **同一份 Spec**：规划、审核、执行层共读 OpenSpec（及 AGENTS.md），保证接口与行为一致；跨仓库时用共享 Spec 仓库 + 同步机制（参见 [跨仓库 AI 协作方案](./跨仓库AI协作方案-Spec与上下文工程.md)）。
+- **同一份 Spec**：规划、审核、执行层共读 OpenSpec（及 AGENTS.md），保证接口与行为一致；跨仓库时用共享 Spec 仓库 + 同步机制（参见 [跨仓库 AI 协作方案](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md)）。
 - **权限矩阵**：在编排层或 Gateway 中强制「谁可给谁发消息」，避免越权与循环调用（见第三节）。
 
 ### 7.4 参考实现：Edict（三省六部制）
@@ -354,7 +354,7 @@ flowchart LR
 **AI 协作系列**  
 - [AI 驱动的端到端开发协作标准](./AI驱动的端到端开发协作标准.md)  
 - [Agent 执行流程与规范：AGENTS.md 与规则文档](./Agent执行流程与规范-AGENTS与规则文档.md)  
-- [跨仓库 AI 协作方案：Spec 与上下文工程](./跨仓库AI协作方案-Spec与上下文工程.md)  
+- [跨仓库 AI 协作方案：Spec 与上下文工程](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md)  
 - [MCP：Model Context Protocol 入门与实践](./MCP-Model-Context-Protocol入门与实践.md)  
 - [Agent Skill：是什么、怎么用与推荐](./Agent-Skill是什么怎么用与推荐.md)  
 - [AI Agent 时代的技术团队重塑](./AI Agent 时代的技术团队重塑.md)  

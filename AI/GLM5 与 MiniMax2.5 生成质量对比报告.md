@@ -177,4 +177,4 @@ flowchart LR
 
 ---
 
-*报告基于 OpenSpec 格式的 proposal、design、tasks、spec(s) 产出，并与 [主流 AI 编程模型对比] 的模型定位结合。完整 OpenSpec 产出见本仓库 `openspec-glm5` 与 `openspec-minimax2.5` 目录。*
+*报告基于 OpenSpec 格式的 proposal、design、tasks、spec(s) 产出，并与 [主流 AI 编程模型对比] 的模型定位结合。完整 OpenSpec 产出见本仓库 `OpenSpec专题/实验/openspec-glm5` 与 `OpenSpec专题/实验/openspec-minimax2.5` 目录。*

@@ -758,14 +758,14 @@ cd openspec-shared
 **最后更新:** 2026-03-12
 
 **AI 协作系列**
-- [AI 驱动的端到端开发协作标准](./AI驱动的端到端开发协作标准.md)
-- [Agent 执行流程与规范：AGENTS.md 与规则文档](./Agent执行流程与规范-AGENTS与规则文档.md)
-- [MCP：Model Context Protocol 入门与实践](./MCP-Model-Context-Protocol入门与实践.md)
-- [Agent Skill：是什么、怎么用与推荐](./Agent-Skill是什么怎么用与推荐.md)
-- [如何开发 AI Agent](./如何开发AI-Agent.md)
-- [AI Agent 时代的技术团队重塑](./AI Agent 时代的技术团队重塑.md)
+- [AI 驱动的端到端开发协作标准](../AI驱动的端到端开发协作标准.md)
+- [Agent 执行流程与规范：AGENTS.md 与规则文档](../Agent执行流程与规范-AGENTS与规则文档.md)
+- [MCP：Model Context Protocol 入门与实践](../MCP-Model-Context-Protocol入门与实践.md)
+- [Agent Skill：是什么、怎么用与推荐](../Agent-Skill是什么怎么用与推荐.md)
+- [如何开发 AI Agent](../如何开发AI-Agent.md)
+- [AI Agent 时代的技术团队重塑](../AI Agent 时代的技术团队重塑.md)
 
 **延伸阅读（上下文工程与工具）：**
-- [Agent 执行流程与规范：AGENTS.md 与规则文档](./Agent执行流程与规范-AGENTS与规则文档.md)
-- [MCP：Model Context Protocol 入门与实践](./MCP-Model-Context-Protocol入门与实践.md)
-- [Agent Skill：是什么、怎么用与推荐](./Agent-Skill是什么怎么用与推荐.md)
+- [Agent 执行流程与规范：AGENTS.md 与规则文档](../Agent执行流程与规范-AGENTS与规则文档.md)
+- [MCP：Model Context Protocol 入门与实践](../MCP-Model-Context-Protocol入门与实践.md)
+- [Agent Skill：是什么、怎么用与推荐](../Agent-Skill是什么怎么用与推荐.md)

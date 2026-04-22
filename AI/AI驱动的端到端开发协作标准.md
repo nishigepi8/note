@@ -492,7 +492,7 @@ npm run sync-specs  # git submodule update --remote openspec-shared
 }
 ```
 
-详细的跨仓库方案参见 [跨仓库 AI 协作方案：Spec 与上下文工程](./跨仓库AI协作方案-Spec与上下文工程.md)。
+详细的跨仓库方案参见 [跨仓库 AI 协作方案：Spec 与上下文工程](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md)。
 
 ---
 
@@ -845,7 +845,7 @@ openspec init
 **适用场景:** AI 驱动的全栈开发、单人全栈、模块化团队协作
 **核心工具:** OpenSpec + AI Agent (Cursor/Claude Code) + MCP + AGENTS.md
 **AI 协作系列**
-- [跨仓库 AI 协作方案：Spec 与上下文工程](./跨仓库AI协作方案-Spec与上下文工程.md)
+- [跨仓库 AI 协作方案：Spec 与上下文工程](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md)
 - [Agent 执行流程与规范：AGENTS.md、CLAUDE.md 与规则文档](./Agent执行流程与规范-AGENTS与规则文档.md)
 - [MCP：Model Context Protocol 入门与实践](./MCP-Model-Context-Protocol入门与实践.md)
 - [Agent Skill：是什么、怎么用与推荐](./Agent-Skill是什么怎么用与推荐.md)

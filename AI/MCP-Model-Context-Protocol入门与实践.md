@@ -14,7 +14,7 @@ tags: [AI, MCP, Agent, 上下文工程]
 > 最后更新：2026-03-12
 > 说明：涉及 Claude Code、Cursor 与 MCP Server 的配置项时，请以各产品当期官方文档为准。
 
-本文介绍 **Model Context Protocol (MCP)** 是什么、为什么重要、如何配置与使用，以及在与 [跨仓库 AI 协作方案](./跨仓库AI协作方案-Spec与上下文工程.md) 结合时的实践建议。
+本文介绍 **Model Context Protocol (MCP)** 是什么、为什么重要、如何配置与使用，以及在与 [跨仓库 AI 协作方案](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md) 结合时的实践建议。
 
 ---
 
@@ -84,7 +84,7 @@ graph LR
 - **网络**：调用 HTTP API、抓取网页内容（fetch）。
 - **自定义**：内部 API、工单系统、监控告警等，通过自建 MCP Server 暴露。
 
-在 [跨仓库 AI 协作方案](./跨仓库AI协作方案-Spec与上下文工程.md) 中，MCP 的典型用法是：
+在 [跨仓库 AI 协作方案](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md) 中，MCP 的典型用法是：
 
 - 前端 Agent 通过 MCP 读取 **API 文档 / OpenAPI / specs**；
 - 后端 Agent 通过 MCP 读取 **数据库 schema** 或 **OpenSpec specs**；
@@ -167,7 +167,7 @@ Cursor 支持在设置中配置 MCP Server，从而让 Cursor Agent 使用同一
 
 ### 4.1 用 MCP 暴露「共享 Spec」
 
-在 [跨仓库 AI 协作方案](./跨仓库AI协作方案-Spec与上下文工程.md) 中，多个仓库共享同一套 OpenSpec 时：
+在 [跨仓库 AI 协作方案](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md) 中，多个仓库共享同一套 OpenSpec 时：
 
 - 可单独起一个 **MCP Server**，对外暴露 **openspec-shared** 的 `specs/`（或整个 openspec 目录）。
 - 前端仓库、后端仓库的 Agent 都连接这个 Server，实时读取最新 API/UI spec，无需手动复制或等 submodule 同步。
@@ -217,7 +217,7 @@ graph LR
 
 **AI 协作系列**  
 - [AI 驱动的端到端开发协作标准](./AI驱动的端到端开发协作标准.md)  
-- [跨仓库 AI 协作方案：Spec 与上下文工程](./跨仓库AI协作方案-Spec与上下文工程.md)  
+- [跨仓库 AI 协作方案：Spec 与上下文工程](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md)  
 - [Agent 执行流程与规范：AGENTS.md 与规则文档](./Agent执行流程与规范-AGENTS与规则文档.md)  
 - [Agent Skill：是什么、怎么用与推荐](./Agent-Skill是什么怎么用与推荐.md)  
 - [如何开发 AI Agent](./如何开发AI-Agent.md)
