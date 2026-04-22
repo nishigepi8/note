@@ -217,6 +217,6 @@ description: Helps with documents
 **AI 协作系列**  
 - [AI 驱动的端到端开发协作标准](./AI驱动的端到端开发协作标准.md)  
 - [Agent 执行流程与规范：AGENTS.md 与规则文档](./Agent执行流程与规范-AGENTS与规则文档.md)  
-- [跨仓库 AI 协作方案：Spec 与上下文工程](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md)  
+- [跨仓库 AI 协作方案：Spec 与上下文工程](../OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md)  
 - [MCP：Model Context Protocol 入门与实践](./MCP-Model-Context-Protocol入门与实践.md)  
-- [如何开发 AI Agent](./如何开发AI-Agent.md)
+- [如何开发 AI Agent](../如何开发AI-Agent.md)

@@ -232,7 +232,7 @@ Claude Code 做后端重构是有效的，但它最擅长的不是“替你决�
 如果没有任务分级、没有最小上下文、没有清晰验收标准，它带来的往往不是效率提升，而是把人工思考搬到了更早或者更晚的阶段。反过来，只要把这些基础设施补齐，它在中低风险重构里的性价比会非常高。
 
 **AI 协作系列**
-- [AI 驱动的端到端开发协作标准](./AI驱动的端到端开发协作标准.md)
-- [Agent 执行流程与规范：AGENTS.md、CLAUDE.md 与规则文档](./Agent执行流程与规范-AGENTS与规则文档.md)
-- [MCP：Model Context Protocol 入门与实践](./MCP-Model-Context-Protocol入门与实践.md)
+- [AI 驱动的端到端开发协作标准](./AI协作基础设施专题/AI驱动的端到端开发协作标准.md)
+- [Agent 执行流程与规范：AGENTS.md、CLAUDE.md 与规则文档](./AI协作基础设施专题/Agent执行流程与规范-AGENTS与规则文档.md)
+- [MCP：Model Context Protocol 入门与实践](./AI协作基础设施专题/MCP-Model-Context-Protocol入门与实践.md)
 - [如何开发 AI Agent](./如何开发AI-Agent.md)

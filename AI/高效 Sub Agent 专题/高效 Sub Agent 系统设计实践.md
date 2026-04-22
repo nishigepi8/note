@@ -146,9 +146,9 @@ review 不是为了让系统显得聪明，而是为了让系统**知道什么�
 
 为了让这套系统不只是“看起来高级”，我又单独整理了一个真实输出对比目录，把**项目版多 Agent** 和 **单 Agent** 在同一个任务上的结果放在一起看。
 
-- [案例对比目录](./高效 Sub Agent 系统设计实践-案例对比/README.md)
-- [项目版多 Agent 输出](./高效 Sub Agent 系统设计实践-案例对比/project-multi-agent-output.md)
-- [单 Agent 输出](./高效 Sub Agent 系统设计实践-案例对比/single-agent-output.md)
+- [案例对比目录](./案例对比/README.md)
+- [项目版多 Agent 输出](./案例对比/project-multi-agent-output.md)
+- [单 Agent 输出](./案例对比/single-agent-output.md)
 
 这个对比很直观：
 - 单 Agent 容易把分析、方案、风险、总结混在一起

@@ -14,7 +14,7 @@ tags: [AI, Agent, MCP, Skill]
 > 最后更新：2026-03-12
 > 说明：本文偏架构与方法论，所提到的角色文件、规则目录和多 Agent 编排方式可按具体产品落地。
 
-本文在 [AI 驱动的端到端开发协作标准](./AI驱动的端到端开发协作标准.md)、[Agent 执行流程与规范](./Agent执行流程与规范-AGENTS与规则文档.md) 等文档的基础上，说明**如何设计、配置与扩展**可在项目中稳定工作的 AI Agent。写作时参考了 [Edict](https://github.com/cft0808/edict)（三省六部制多 Agent 编排系统）的架构思想：**分拣 → 规划 → 审核 → 派发 → 执行 → 回奏**、**制度性审核**、**权限矩阵**与**可观测可干预**，使单 Agent 与多 Agent 场景下的设计更可落地。
+本文在 [AI 驱动的端到端开发协作标准](./AI协作基础设施专题/AI驱动的端到端开发协作标准.md)、[Agent 执行流程与规范](./AI协作基础设施专题/Agent执行流程与规范-AGENTS与规则文档.md) 等文档的基础上，说明**如何设计、配置与扩展**可在项目中稳定工作的 AI Agent。写作时参考了 [Edict](https://github.com/cft0808/edict)（三省六部制多 Agent 编排系统）的架构思想：**分拣 → 规划 → 审核 → 派发 → 执行 → 回奏**、**制度性审核**、**权限矩阵**与**可观测可干预**，使单 Agent 与多 Agent 场景下的设计更可落地。
 
 ---
 
@@ -80,9 +80,9 @@ graph LR
 | 层次 | 内容 | 对应文档 |
 |------|------|----------|
 | **角色与边界** | 职责、禁止项、与人的分工；多 Agent 时权限矩阵 | 本文第三节 |
-| **上下文工程** | AGENTS.md、OpenSpec、产品规则；多 Agent 时每角色人格/工作流 | [Agent 执行流程与规范](./Agent执行流程与规范-AGENTS与规则文档.md)、[跨仓库方案](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md) |
-| **工具连接** | MCP 等 | [MCP 入门与实践](./MCP-Model-Context-Protocol入门与实践.md) |
-| **能力扩展** | Skill，可按角色配置 | [Agent Skill](./Agent-Skill是什么怎么用与推荐.md) |
+| **上下文工程** | AGENTS.md、OpenSpec、产品规则；多 Agent 时每角色人格/工作流 | [Agent 执行流程与规范](./AI协作基础设施专题/Agent执行流程与规范-AGENTS与规则文档.md)、[跨仓库方案](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md) |
+| **工具连接** | MCP 等 | [MCP 入门与实践](./AI协作基础设施专题/MCP-Model-Context-Protocol入门与实践.md) |
+| **能力扩展** | Skill，可按角色配置 | [Agent Skill](./AI协作基础设施专题/Agent-Skill是什么怎么用与推荐.md) |
 | **编排与多 Agent** | 分拣→规划→审核→派发→执行、权限矩阵、可观测可干预 | 本文第七节、[Edict](https://github.com/cft0808/edict) |
 
 ---
@@ -168,7 +168,7 @@ graph TB
 ### 4.1 编写 AGENTS.md
 
 - **位置**：项目根目录。
-- **内容**：项目概述、架构约束、编码规范、测试/CI、禁忌规则（参见 [Agent 执行流程与规范](./Agent执行流程与规范-AGENTS与规则文档.md)）。
+- **内容**：项目概述、架构约束、编码规范、测试/CI、禁忌规则（参见 [Agent 执行流程与规范](./AI协作基础设施专题/Agent执行流程与规范-AGENTS与规则文档.md)）。
 - **原则**：简洁、可执行；优先写对产出影响最大的约束。
 
 跨仓库时可在共享仓库维护共享 AGENTS.md，各子仓库继承并补充（参见 [跨仓库 AI 协作方案](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md)）。
@@ -208,7 +208,7 @@ graph TB
 | Git、Issue、PR | GitHub、Git | 协作与版本信息 |
 | 暴露共享 Spec | 自建或 Filesystem 限定路径 | 跨仓库时前后端共读同一份 Spec |
 
-配置方式以当前产品文档为准，参见 [MCP 入门与实践](./MCP-Model-Context-Protocol入门与实践.md)。
+配置方式以当前产品文档为准，参见 [MCP 入门与实践](./AI协作基础设施专题/MCP-Model-Context-Protocol入门与实践.md)。
 
 ### 5.2 安全与权限
 
@@ -233,7 +233,7 @@ graph TB
 - **description** 写清「做什么 + 何时用」，便于正确触发。
 - 多 Agent 时：在编排或配置中为不同角色挂载不同 Skill 列表，支持从 URL/GitHub 拉取远程 Skill 并做版本管理。
 
-详见 [Agent Skill：是什么、怎么用与推荐](./Agent-Skill是什么怎么用与推荐.md)。参考 [Edict 技能配置与 Remote Skills](https://github.com/cft0808/edict)。
+详见 [Agent Skill：是什么、怎么用与推荐](./AI协作基础设施专题/Agent-Skill是什么怎么用与推荐.md)。参考 [Edict 技能配置与 Remote Skills](https://github.com/cft0808/edict)。
 
 ---
 
@@ -352,11 +352,11 @@ flowchart LR
 ---
 
 **AI 协作系列**  
-- [AI 驱动的端到端开发协作标准](./AI驱动的端到端开发协作标准.md)  
-- [Agent 执行流程与规范：AGENTS.md 与规则文档](./Agent执行流程与规范-AGENTS与规则文档.md)  
+- [AI 驱动的端到端开发协作标准](./AI协作基础设施专题/AI驱动的端到端开发协作标准.md)
+- [Agent 执行流程与规范：AGENTS.md 与规则文档](./AI协作基础设施专题/Agent执行流程与规范-AGENTS与规则文档.md)
 - [跨仓库 AI 协作方案：Spec 与上下文工程](./OpenSpec专题/跨仓库AI协作方案-Spec与上下文工程.md)  
-- [MCP：Model Context Protocol 入门与实践](./MCP-Model-Context-Protocol入门与实践.md)  
-- [Agent Skill：是什么、怎么用与推荐](./Agent-Skill是什么怎么用与推荐.md)  
+- [MCP：Model Context Protocol 入门与实践](./AI协作基础设施专题/MCP-Model-Context-Protocol入门与实践.md)
+- [Agent Skill：是什么、怎么用与推荐](./AI协作基础设施专题/Agent-Skill是什么怎么用与推荐.md)
 - [AI Agent 时代的技术团队重塑](./AI Agent 时代的技术团队重塑.md)  
 
 **参考实现**  
