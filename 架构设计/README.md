@@ -41,6 +41,7 @@ flowchart TB
 **网络与通信**
 - [自研 P2P 服务架构设计](./自研 P2P 服务架构设计.md) - 10 万级并发 P2P 连接
 - [NAT类型详解](./NAT类型详解.md) - P2P 穿透技术实践
+- [Iroh P2P 原理与应用](./Iroh P2P 原理与应用.md) - 用 node id 寻址的 Rust P2P 库
 
 **IoT 与设备**
 - [物模型：IoT 设备标准化实践](./物模型：IoT 设备标准化实践.md) - 从硬件到能力的抽象设计
@@ -56,6 +57,7 @@ flowchart TB
 | [自研 P2P 服务架构设计](./自研 P2P 服务架构设计.md) | Pion、STUN、TURN、MQTT 信令 | 10 万级并发 P2P 连接架构 |
 | [OLAP数据库选型对比](./OLAP数据库选型对比.md) | StarRocks、ClickHouse、InfluxDB | 三大数据库架构、性能、场景全面对比 |
 | [NAT类型详解](./NAT类型详解.md) | NAT类型、P2P通信、STUN、TURN、ICE | 从Full Cone到Symmetric的NAT类型详解，P2P穿透技术实践 |
+| [Iroh P2P 原理与应用](./Iroh P2P 原理与应用.md) | iroh、QUIC、node id、ALPN、NAT穿透、Rust | 用 node id 而非 IP 寻址，PIN 会合/文件传输/H.265 视频流三个 demo |
 
 ## 资源列表
 
