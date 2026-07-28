@@ -147,6 +147,7 @@ note/
 |------|------|
 | [Spring Boot 3.x + JDK 21 升级实战指南](./项目实践/Spring Boot 3.x + JDK 21 升级实战指南.md) | 完整升级手册 |
 | [10 万 QPS 短链接服务实战](./项目实践/OpenResty + Redis 短链接服务系统.md) | OpenResty + Redis 高性能方案 |
+| [PowerMap：用 P2P 把内网服务安全带回本地](./项目实践/PowerMap：用 P2P 把内网服务安全带回本地.md) | iroh + QUIC 的安全内网访问实践 |
 | [用 AI 训练 AI：生成式数据增强实践](./AI/AI生成训练数据增强YOLO检测方案.md) | YOLO 训练数据增强 |
 | [跨平台订阅支付架构设计](./项目实践/SaaS 订阅: Apple & Google 支付架构设计.md) | Apple & Google 支付集成 |
 

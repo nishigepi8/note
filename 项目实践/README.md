@@ -48,6 +48,13 @@ flowchart TB
   - 性能优化与架构简化
   - 局限性分析与改进方向
 
+### 网络与远程访问
+
+- [PowerMap：用 P2P 把内网服务安全带回本地](./PowerMap：用 P2P 把内网服务安全带回本地.md)
+  - iroh + QUIC 的 P2P NAT 穿透
+  - 本地端口映射、白名单与多租户权限
+  - 直连 / 中继回退、连接恢复与可观测性
+
 ### 开发工具与工程化
 
 - [为什么我选择Git命令行而不是IDEA版本管理](./为什么我选择Git命令行而不是IDEA版本管理.md)
@@ -62,6 +69,7 @@ flowchart TB
 | [AI 生成训练数据增强 YOLO 检测方案](../AI/AI生成训练数据增强YOLO检测方案.md) | Stable Diffusion、YOLO、SAM、CLIP | 用 AI 训练 AI，避免数据偏差，混合训练策略 |
 | [OpenResty + Redis 短链接服务系统](./OpenResty + Redis 短链接服务系统.md) | OpenResty、Lua、Redis | 单机 10 万+ QPS，延迟 < 5ms，完整业务系统实现 |
 | [Python MQTT 实时视频传输](./Python MQTT 实时视频传输.md) | Python、OpenCV、MQTT | 性能优化、架构简化、局限性分析 |
+| [PowerMap：用 P2P 把内网服务安全带回本地](./PowerMap：用 P2P 把内网服务安全带回本地.md) | Rust、iroh、QUIC | NAT 穿透、受控端口映射、白名单与多租户 |
 | [为什么我选择Git命令行而不是IDEA版本管理](./为什么我选择Git命令行而不是IDEA版本管理.md) | Git、开发工具 | 从底层命令开始学习，环境无关性，脚本化和自动化 |
 
 ## 项目特点
