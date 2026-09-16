@@ -1409,8 +1409,8 @@ generator.generate_dataset('car', prompts=prompts, count=300)
 ---
 
 **相关文章**：
-- [高并发缓存同步 RSC方案](../架构设计/高并发缓存同步 RSC方案.md)
-- [Kafka Partition 规划与问题处理](../架构设计/Kafka Partition 规划与问题处理.md)
+- [高并发缓存同步 RSC方案](../架构设计/缓存与性能优化/高并发缓存同步 RSC方案.md)
+- [Kafka Partition 规划与问题处理](../架构设计/消息队列与流量治理/Kafka Partition 规划与问题处理.md)
 
 **参考资料**：
 - [Stable Diffusion 官方文档](https://stability.ai/stable-diffusion)

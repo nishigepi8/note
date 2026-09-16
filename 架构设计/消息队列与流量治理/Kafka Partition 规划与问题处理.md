@@ -606,8 +606,8 @@ Kafka partition 数量的设置需要平衡多个因素：
 ---
 
 **相关文章**：
-- [高并发缓存同步 RSC方案](./高并发缓存同步 RSC方案.md)
-- [OLAP数据库选型对比](./OLAP数据库选型对比.md)
+- [高并发缓存同步 RSC方案](../缓存与性能优化/高并发缓存同步 RSC方案.md)
+- [OLAP数据库选型对比](../数据存储与查询/OLAP数据库选型对比.md)
 
 **参考资料**：
 - [Kafka 官方文档 - Partitioning](https://kafka.apache.org/documentation/#partitioning)

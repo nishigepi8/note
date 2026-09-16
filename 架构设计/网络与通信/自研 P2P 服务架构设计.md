@@ -498,9 +498,9 @@ groups:
 ---
 
 **相关文章**：
-- [P2P、SFU和MCU音视频通信架构](../音视频/P2P、SFU和MCU音视频通信架构.md)
-- [WebRTC 信令服务详解](../音视频/WebRTC 信令服务详解.md)
-- [RTP 实时传输协议](../音视频/RTP 实时传输协议.md)
+- [P2P、SFU和MCU音视频通信架构](../../音视频/P2P、SFU和MCU音视频通信架构.md)
+- [WebRTC 信令服务详解](../../音视频/WebRTC 信令服务详解.md)
+- [RTP 实时传输协议](../../音视频/RTP 实时传输协议.md)
 
 **参考资料**：
 - [Pion WebRTC](https://github.com/pion/webrtc)

@@ -969,8 +969,8 @@ OpenResty + Redis 不是银弹，但在合适的场景下，它可以提供**极
 ---
 
 **相关文章**：
-- [高并发缓存同步 RSC方案](../架构设计/高并发缓存同步 RSC方案.md)
-- [Kafka Partition 规划与问题处理](../架构设计/Kafka Partition 规划与问题处理.md)
+- [高并发缓存同步 RSC方案](../架构设计/缓存与性能优化/高并发缓存同步 RSC方案.md)
+- [Kafka Partition 规划与问题处理](../架构设计/消息队列与流量治理/Kafka Partition 规划与问题处理.md)
 
 **参考资料**：
 - [OpenResty 官方文档](https://openresty.org/cn/)
