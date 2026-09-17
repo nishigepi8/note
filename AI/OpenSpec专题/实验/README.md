@@ -44,5 +44,5 @@ tags: [AI, OpenSpec, 实验]
 
 ## 相关背景文章
 
-- [GLM5 与 MiniMax2.5 生成质量对比报告](../../GLM5 与 MiniMax2.5 生成质量对比报告.md)
+- [GLM5 与 MiniMax2.5 生成质量对比报告](../../AI编程工具评测专题/GLM5 与 MiniMax2.5 生成质量对比报告.md)
 - [OpenSpec 是什么以及怎么用](../OpenSpec 是什么以及怎么用.md)

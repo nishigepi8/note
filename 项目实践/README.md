@@ -36,7 +36,7 @@ flowchart TB
 
 ### AI 与机器学习
 
-- [AI 生成训练数据增强 YOLO 检测方案](../AI/AI生成训练数据增强YOLO检测方案.md)
+- [AI 生成训练数据增强 YOLO 检测方案](../AI/YOLO视觉AI专题/AI生成训练数据增强YOLO检测方案.md)
   - 用 AI 训练 AI，避免数据偏差
   - Stable Diffusion + SAM + CLIP 组合
   - 混合训练策略与效果对比
@@ -66,7 +66,7 @@ flowchart TB
 
 | 文章 | 技术栈 | 亮点 |
 |------|--------|------|
-| [AI 生成训练数据增强 YOLO 检测方案](../AI/AI生成训练数据增强YOLO检测方案.md) | Stable Diffusion、YOLO、SAM、CLIP | 用 AI 训练 AI，避免数据偏差，混合训练策略 |
+| [AI 生成训练数据增强 YOLO 检测方案](../AI/YOLO视觉AI专题/AI生成训练数据增强YOLO检测方案.md) | Stable Diffusion、YOLO、SAM、CLIP | 用 AI 训练 AI，避免数据偏差，混合训练策略 |
 | [OpenResty + Redis 短链接服务系统](./OpenResty + Redis 短链接服务系统.md) | OpenResty、Lua、Redis | 单机 10 万+ QPS，延迟 < 5ms，完整业务系统实现 |
 | [Python MQTT 实时视频传输](./Python MQTT 实时视频传输.md) | Python、OpenCV、MQTT | 性能优化、架构简化、局限性分析 |
 | [PowerMap 项目复盘：从 P2P 连通到可控内网访问](./PowerMap：用 P2P 把内网服务安全带回本地.md) | Rust、iroh、QUIC | 技术选型、权限边界、配置迁移与可运营性 |

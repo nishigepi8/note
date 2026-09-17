@@ -33,11 +33,11 @@ flowchart LR
 
 ### AI 辅助编程
 
-- [Claude Code 后台重构实践报告](../AI/Claude Code 后台重构实践报告.md)
+- [Claude Code 后台重构实践报告](../AI/AI编程工具评测专题/Claude Code 后台重构实践报告.md)
   - AI 辅助代码重构的实战经验
   - 成本优化与效率提升
   - 团队协作最佳实践
-- [GLM5 与 MiniMax2.5 生成质量对比报告](../AI/GLM5 与 MiniMax2.5 生成质量对比报告.md)
+- [GLM5 与 MiniMax2.5 生成质量对比报告](../AI/AI编程工具评测专题/GLM5 与 MiniMax2.5 生成质量对比报告.md)
   - 同一提示词下 proposal / design / tasks / spec 产出质量对比
   - Stripe 套餐升降级方案双模型实测与落地建议
 
@@ -46,8 +46,8 @@ flowchart LR
 | 文章 | 关键词 | 适用人群 |
 |------|--------|----------|
 | [Mac 开发效率提升指南](./Mac 开发效率提升指南.md) | Alfred、iTerm2、Alias、Zsh | macOS 开发者 |
-| [Claude Code 后台重构实践报告](../AI/Claude Code 后台重构实践报告.md) | AI辅助编程、代码重构、效率提升、成本优化 | 团队技术负责人、后端开发者 |
-| [GLM5 与 MiniMax2.5 生成质量对比报告](../AI/GLM5 与 MiniMax2.5 生成质量对比报告.md) | GLM-5、MiniMax、生成质量、Stripe、OpenSpec | 关注 AI 方案产出的架构师、产品/研发 |
+| [Claude Code 后台重构实践报告](../AI/AI编程工具评测专题/Claude Code 后台重构实践报告.md) | AI辅助编程、代码重构、效率提升、成本优化 | 团队技术负责人、后端开发者 |
+| [GLM5 与 MiniMax2.5 生成质量对比报告](../AI/AI编程工具评测专题/GLM5 与 MiniMax2.5 生成质量对比报告.md) | GLM-5、MiniMax、生成质量、Stripe、OpenSpec | 关注 AI 方案产出的架构师、产品/研发 |
 
 ## 核心理念
 
