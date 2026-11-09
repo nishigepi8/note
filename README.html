@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="powerwiki-render" content="sandbox">
+<meta name="color-scheme" content="light dark">
+<title>技术笔记与思考</title>
+<meta name="description" content="持续积累的技术笔记与思考记录：物联网、架构设计、音视频、AI Agent 与工程化实践。从「怎么做」到「为什么这样设计」。">
+<meta name="keywords" content="技术笔记,技术博客,物联网,音视频,架构设计,高并发,AI Agent,开发规范">
+<script>
+  (function () {
+    try {
+      var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+    // 只有在支持观察器且不排斥动画时才隐藏待入场元素，脚本失效时内容仍然可见
+    try {
+      var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if ('IntersectionObserver' in window && !calm) {
+        document.documentElement.classList.add('reveal-ready');
+      }
+    } catch (e) {}
+  })();
+</script>
+<style>
+  :root {
+    /* 与 Wiki 站点同一套底色，沙箱页面嵌进去不留色块边界 */
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #f5f6f7;
+    --ink: #1f2329;
+    --ink-2: #4e5361;
+    --ink-3: #8f959e;
+    --line: #e8e9eb;
+    --line-strong: #dee0e3;
+    --accent: #3370ff;
+    --accent-2: #7aa6ff;
+    --accent-soft: #e8f0ff;
+    --accent-line: rgba(51, 112, 255, .45);
+    --grid: rgba(31, 35, 41, .055);
+    --shadow: 0 1px 2px rgba(20, 23, 28, .04);
+    --shadow-hover: 0 12px 32px rgba(51, 112, 255, .12), 0 2px 6px rgba(20, 23, 28, .05);
+    --radius: 16px;
+    --ease: cubic-bezier(.2, .75, .25, 1);
+  }
+
+  html[data-theme="dark"] {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface-2: #161616;
+    --ink: #e8eaed;
+    --ink-2: #b6b9c0;
+    --ink-3: #8f959e;
+    --line: #1f1f1f;
+    --line-strong: #2a2a2a;
+    --accent: #5a8fff;
+    --accent-2: #8fb6ff;
+    --accent-soft: rgba(51, 112, 255, .15);
+    --accent-line: rgba(90, 143, 255, .5);
+    --grid: rgba(232, 234, 237, .05);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .5);
+    --shadow-hover: 0 14px 34px rgba(0, 0, 0, .55), 0 0 0 1px rgba(90, 143, 255, .12);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection { background: var(--accent-soft); color: var(--ink); }
+
+  a { color: var(--accent); text-decoration: none; }
+
+  .wrap {
+    width: 100%;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 40px);
+  }
+
+  /* ---------- 阅读进度 ---------- */
+  .progress {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    height: 2px;
+    background: transparent;
+  }
+  .progress span {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    box-shadow: 0 0 10px var(--accent);
+    transition: width .08s linear;
+  }
+
+  /* ---------- 首屏 ---------- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(56px, 8vw, 104px) 0 clamp(28px, 4vw, 44px);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: -30% -12% auto -12%;
+    height: min(640px, 130vw);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(66px);
+    opacity: .5;
+    will-change: transform;
+  }
+  .blob.a {
+    width: min(460px, 60vw);
+    height: min(460px, 60vw);
+    left: -8%;
+    top: -4%;
+    background: radial-gradient(circle at 35% 35%, rgba(51, 112, 255, .38), transparent 68%);
+    animation: drift 18s var(--ease) infinite alternate;
+  }
+  .blob.b {
+    width: min(380px, 52vw);
+    height: min(380px, 52vw);
+    right: -6%;
+    top: 12%;
+    background: radial-gradient(circle at 60% 40%, rgba(122, 166, 255, .34), transparent 68%);
+    animation: drift 24s var(--ease) infinite alternate-reverse;
+  }
+  html[data-theme="dark"] .blob { opacity: .42; }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 46px 46px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 62% at 50% 0%, #000 10%, transparent 78%);
+    mask-image: radial-gradient(ellipse 70% 62% at 50% 0%, #000 10%, transparent 78%);
+  }
+
+  .hero .wrap { position: relative; z-index: 1; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0 0 20px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 26px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-size: clamp(38px, 7vw, 64px);
+    line-height: 1.06;
+    letter-spacing: -.035em;
+    font-weight: 800;
+    margin: 0 0 22px;
+  }
+
+  h1 .grad {
+    background: linear-gradient(100deg, var(--accent) 0%, var(--accent-2) 45%, var(--accent) 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: sheen 9s linear infinite;
+  }
+
+  .deck {
+    max-width: 620px;
+    font-size: clamp(16px, 1.6vw, 18px);
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin: 0 0 30px;
+  }
+  .deck strong { color: var(--ink); font-weight: 600; }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 42px;
+    padding: 0 20px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+    transition: transform .2s var(--ease), border-color .2s, background-color .2s, box-shadow .2s;
+  }
+  .btn svg { transition: transform .25s var(--ease); }
+  .btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-line);
+    box-shadow: var(--shadow-hover);
+  }
+  .btn:hover svg { transform: translateY(2px); }
+  .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(51, 112, 255, .28);
+  }
+  .btn-primary:hover { box-shadow: 0 10px 26px rgba(51, 112, 255, .38); }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .hero-meta li {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 12.5px;
+    color: var(--ink-3);
+  }
+  .hero-meta li::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  /* ---------- 分节 ---------- */
+  section { padding: clamp(44px, 6vw, 76px) 0 0; }
+
+  .sec-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .sec-head .idx {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .sec-head h2 {
+    margin: 0;
+    font-size: clamp(21px, 2.6vw, 27px);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: 1.3;
+  }
+  .sec-head .rule {
+    flex: 1;
+    height: 1px;
+    min-width: 24px;
+    background: linear-gradient(90deg, var(--line), transparent);
+  }
+  .reveal-ready .sec-head .rule {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .9s var(--ease) .15s;
+  }
+  .reveal-ready .sec-head.is-in .rule { transform: scaleX(1); }
+
+  section[id] { scroll-margin-top: 16px; }
+
+  .lead {
+    max-width: 720px;
+    margin: 14px 0 26px;
+    font-size: 15.5px;
+    color: var(--ink-2);
+  }
+
+  /* ---------- 卡片 ---------- */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    padding: 24px 22px 22px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: transform .3s var(--ease), border-color .3s, box-shadow .3s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-line);
+    box-shadow: var(--shadow-hover);
+  }
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 0%), rgba(51, 112, 255, .1), transparent 70%);
+    opacity: 0;
+    transition: opacity .3s;
+    pointer-events: none;
+  }
+  html[data-theme="dark"] .card::after {
+    background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 0%), rgba(90, 143, 255, .16), transparent 70%);
+  }
+  .card:hover::after { opacity: 1; }
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    transition: transform .35s var(--ease);
+  }
+  .card:hover .icon { transform: translateY(-2px) scale(1.06); }
+
+  .card h3 {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+  }
+  .card p {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink-2);
+  }
+
+  .card ul {
+    position: relative;
+    z-index: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-2);
+  }
+  .card ul li {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 5px;
+  }
+  .card ul li::before {
+    content: "";
+    position: absolute;
+    left: 1px;
+    top: .76em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--line-strong);
+    transition: background-color .25s;
+  }
+  .card:hover ul li::before { background: var(--accent); }
+
+  /* ---------- 重点推荐 ---------- */
+  .picks {
+    display: grid;
+    gap: 10px;
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pick {
+    position: relative;
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) 22px;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    color: inherit;
+    overflow: hidden;
+    transition: transform .25s var(--ease), border-color .25s, box-shadow .25s;
+  }
+  .pick::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--accent-soft), transparent 60%);
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  .pick:hover {
+    transform: translateX(4px);
+    border-color: var(--accent-line);
+    box-shadow: var(--shadow-hover);
+  }
+  .pick:hover::before { opacity: 1; }
+
+  .pick .no {
+    position: relative;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+    transition: color .25s;
+  }
+  .pick:hover .no { color: var(--accent); }
+
+  .pick .body { position: relative; min-width: 0; }
+  .pick .t {
+    display: block;
+    font-size: 15.5px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    margin-bottom: 2px;
+  }
+  .pick .d {
+    display: block;
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+
+  .pick .arrow {
+    position: relative;
+    display: flex;
+    color: var(--ink-3);
+    opacity: .55;
+    transform: translateX(-4px);
+    transition: transform .25s var(--ease), opacity .25s, color .25s;
+  }
+  .pick:hover .arrow {
+    opacity: 1;
+    transform: none;
+    color: var(--accent);
+  }
+
+  /* ---------- 目录 ---------- */
+  .folders {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin: 22px 0 30px;
+  }
+  .folder {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    transition: border-color .2s, transform .2s var(--ease), background-color .2s;
+  }
+  .folder:hover {
+    border-color: var(--accent-line);
+    transform: translateY(-2px);
+    background: var(--surface-2);
+  }
+  .folder .name {
+    font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .folder .desc {
+    font-size: 12.5px;
+    color: var(--ink-3);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .stack-label {
+    margin: 0 0 12px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    padding: 6px 13px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 13px;
+    color: var(--ink-2);
+    transition: transform .2s var(--ease), border-color .2s, color .2s, background-color .2s;
+  }
+  .chip:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-line);
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  /* ---------- 关于我入口 ---------- */
+  .cta {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-top: 20px;
+    padding: 30px clamp(22px, 4vw, 36px);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background:
+      radial-gradient(120% 140% at 0% 0%, var(--accent-soft), transparent 55%),
+      var(--surface);
+  }
+  .cta::after {
+    content: "";
+    position: absolute;
+    right: -60px;
+    top: -60px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(51, 112, 255, .16), transparent 70%);
+    pointer-events: none;
+  }
+  .cta h3 {
+    margin: 0 0 6px;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+  }
+  .cta p {
+    margin: 0;
+    max-width: 560px;
+    font-size: 14.5px;
+    color: var(--ink-2);
+  }
+  .cta .btn { position: relative; z-index: 1; }
+
+  /* ---------- 页脚 ---------- */
+  footer {
+    margin-top: clamp(48px, 7vw, 84px);
+    padding: 24px 0 32px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 20px;
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+  footer a { color: var(--ink-2); transition: color .2s; }
+  footer a:hover { color: var(--accent); }
+
+  /* ---------- 动效 ---------- */
+  @keyframes drift {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to { transform: translate3d(36px, 26px, 0) scale(1.12); }
+  }
+
+  @keyframes sheen {
+    from { background-position: 0% 50%; }
+    to { background-position: 200% 50%; }
+  }
+
+  .reveal-ready [data-reveal] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .7s ease, transform .7s var(--ease);
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+  .reveal-ready [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important;
+    }
+    .reveal-ready [data-reveal] { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding-top: 44px; }
+    .pick { grid-template-columns: 30px minmax(0, 1fr) 18px; padding: 16px; }
+    .pick:hover { transform: none; }
+    .cta { align-items: flex-start; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<header class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-grid"></div>
+    <div class="blob a"></div>
+    <div class="blob b"></div>
+  </div>
+  <div class="wrap">
+    <p class="eyebrow" data-reveal style="--i:0">Technical Notes</p>
+    <h1 data-reveal style="--i:1">技术笔记<span class="grad">与思考</span></h1>
+    <p class="deck" data-reveal style="--i:2">
+      这是我持续积累的技术笔记和思考记录。最初只是零散的笔记，记录「怎么做某件事」；
+      现在更多的是对技术本质的探索——<strong>为什么这样设计？背后的思想是什么？</strong>
+    </p>
+    <div class="hero-actions" data-reveal style="--i:3">
+      <a class="btn btn-primary" href="#picks">
+        重点推荐
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M7 2.5v9M3.5 8 7 11.5 10.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a class="btn" href="/post/ABOUT.html" target="_top">
+        关于我
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+    <ul class="hero-meta" data-reveal style="--i:4">
+      <li>持续更新</li>
+      <li>物联网 · 架构 · 音视频 · AI</li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <section class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="idx">01</span>
+      <h2>我在写什么</h2>
+      <span class="rule"></span>
+    </div>
+    <p class="lead" data-reveal style="--i:1">
+      技术文档不应该只是「配方」——照着做就能成功。更重要的是记录决策的过程：
+      为什么选这个方案，遇到什么问题，如果重新设计会改什么。
+    </p>
+    <div class="cards">
+      <article class="card" data-reveal style="--i:0">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M10 6.2 12.2 10 10 13.8 7.8 10 10 6.2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>从 How 到 Why</h3>
+        <p>早期关注具体实现与操作步骤；现在更关心设计理念、架构演进和技术本质。</p>
+      </article>
+      <article class="card" data-reveal style="--i:1">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="5.5" cy="5" r="2.2" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="14.5" cy="5" r="2.2" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="10" cy="15" r="2.2" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M5.5 7.4v2.1c0 1.2 1 2.2 2.2 2.2h.8M14.5 7.4v2.1c0 1.2-1 2.2-2.2 2.2h-.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>记录决策过程</h3>
+        <p>不只给结论，还写权衡：为什么是它而不是另一个，代价落在哪里。</p>
+      </article>
+      <article class="card" data-reveal style="--i:2">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="m10 2.8 6 3.4v7.6l-6 3.4-6-3.4V6.2l6-3.4Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="m4 6.2 6 3.4 6-3.4M10 9.6v7.6" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>建立技术体系</h3>
+        <p>零散的知识点像拼图碎片，写作把脉络、模式和交叉点串成体系。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="idx">02</span>
+      <h2>核心主题</h2>
+      <span class="rule"></span>
+    </div>
+    <div class="cards" style="margin-top:22px">
+      <article class="card" data-reveal style="--i:0">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <rect x="6.2" y="6.2" width="7.6" height="7.6" rx="1.6" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M8.4 2.6v2.4M11.6 2.6v2.4M8.4 15v2.4M11.6 15v2.4M2.6 8.4h2.4M2.6 11.6h2.4M15 8.4h2.4M15 11.6h2.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>物联网与嵌入式</h3>
+        <ul>
+          <li>从硬件到云端的完整链路设计</li>
+          <li>Matter 协议、MQTT 安全架构</li>
+          <li>设备标准化与物模型设计</li>
+          <li>智能硬件的 DVT/EVT/PVT 迭代</li>
+        </ul>
+      </article>
+      <article class="card" data-reveal style="--i:1">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <rect x="2.8" y="3" width="14.4" height="5" rx="1.4" stroke="currentColor" stroke-width="1.4"/>
+            <rect x="2.8" y="12" width="14.4" height="5" rx="1.4" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="5.8" cy="5.5" r=".9" fill="currentColor"/>
+            <circle cx="5.8" cy="14.5" r=".9" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3>架构设计</h3>
+        <ul>
+          <li>高并发系统设计（缓存同步、消息队列）</li>
+          <li>存储选型：轨迹、图片向量、时序数据</li>
+          <li>从单机到分布式的演进</li>
+          <li>面向能力的抽象设计</li>
+        </ul>
+      </article>
+      <article class="card" data-reveal style="--i:2">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <rect x="2.6" y="4.2" width="14.8" height="11.6" rx="2" stroke="currentColor" stroke-width="1.4"/>
+            <path d="m8.4 7.8 3.8 2.2-3.8 2.2V7.8Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3>音视频技术</h3>
+        <ul>
+          <li>WebRTC、RTP 实时传输</li>
+          <li>P2P、SFU、MCU 架构对比</li>
+          <li>嵌入式设备的视频直播</li>
+          <li>低延迟传输优化</li>
+        </ul>
+      </article>
+      <article class="card" data-reveal style="--i:3">
+        <div class="icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M12.6 3.4a5 5 0 0 0-6.3 6.6l-2.9 2.9a1.6 1.6 0 0 0 2.3 2.3l2.9-2.9a5 5 0 0 0 6.6-6.3l-2.6 2.6-2.4-.3-.3-2.4 2.7-2.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>实践与工程化</h3>
+        <ul>
+          <li>AI 辅助开发与 Agent 工作流</li>
+          <li>高性能服务构建（OpenResty + Redis）</li>
+          <li>研发流程与规范</li>
+          <li>生产故障的排查方法</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap" id="picks">
+    <div class="sec-head" data-reveal>
+      <span class="idx">03</span>
+      <h2>重点推荐</h2>
+      <span class="rule"></span>
+    </div>
+    <p class="lead" data-reveal style="--i:1">如果你关心技术设计和架构思想，可以先看这几篇。</p>
+    <ol class="picks">
+      <li data-reveal style="--i:0">
+        <a class="pick" href="/post/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/%E7%89%A9%E6%A8%A1%E5%9E%8B%EF%BC%9AIoT%20%E8%AE%BE%E5%A4%87%E6%A0%87%E5%87%86%E5%8C%96%E5%AE%9E%E8%B7%B5.md" target="_top">
+          <span class="no">01</span>
+          <span class="body">
+            <span class="t">物模型：IoT 设备标准化实践</span>
+            <span class="d">从面向硬件到面向能力</span>
+          </span>
+          <span class="arrow">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </li>
+      <li data-reveal style="--i:1">
+        <a class="pick" href="/post/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E4%B8%8E%E6%9F%A5%E8%AF%A2/%E5%9B%BE%E7%89%87%E5%90%91%E9%87%8F%E5%AD%98%E5%82%A8%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%80%A7%E6%90%9C%E7%B4%A2%E6%96%B9%E6%A1%88.md" target="_top">
+          <span class="no">02</span>
+          <span class="body">
+            <span class="t">图片向量存储与相似性搜索方案</span>
+            <span class="d">向量数据库的选型与架构</span>
+          </span>
+          <span class="arrow">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </li>
+      <li data-reveal style="--i:2">
+        <a class="pick" href="/post/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/%E7%BC%93%E5%AD%98%E4%B8%8E%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%93%E5%AD%98%E5%90%8C%E6%AD%A5%20RSC%E6%96%B9%E6%A1%88.md" target="_top">
+          <span class="no">03</span>
+          <span class="body">
+            <span class="t">高并发缓存同步 RSC 方案</span>
+            <span class="d">借鉴 JVM GC 思想的跨领域设计</span>
+          </span>
+          <span class="arrow">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </li>
+      <li data-reveal style="--i:3">
+        <a class="pick" href="/post/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E4%B8%8E%E6%9F%A5%E8%AF%A2/OLAP%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B%E5%AF%B9%E6%AF%94.md" target="_top">
+          <span class="no">04</span>
+          <span class="body">
+            <span class="t">OLAP 数据库选型对比</span>
+            <span class="d">StarRocks、ClickHouse、InfluxDB 的存储引擎权衡</span>
+          </span>
+          <span class="arrow">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </li>
+    </ol>
+  </section>
+
+  <section class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="idx">04</span>
+      <h2>目录与技术栈</h2>
+      <span class="rule"></span>
+    </div>
+    <div class="folders">
+      <div class="folder" data-reveal style="--i:0"><span class="name">架构设计/</span><span class="desc">设计理念与系统架构</span></div>
+      <div class="folder" data-reveal style="--i:1"><span class="name">物联网/</span><span class="desc">协议、设备管理与硬件</span></div>
+      <div class="folder" data-reveal style="--i:2"><span class="name">音视频/</span><span class="desc">实时通信与流媒体</span></div>
+      <div class="folder" data-reveal style="--i:3"><span class="name">项目实践/</span><span class="desc">工程落地与性能优化</span></div>
+      <div class="folder" data-reveal style="--i:4"><span class="name">AI/</span><span class="desc">AI 协作、Agent 与组织演进</span></div>
+      <div class="folder" data-reveal style="--i:5"><span class="name">K8s/</span><span class="desc">容器编排与云原生</span></div>
+      <div class="folder" data-reveal style="--i:0"><span class="name">开发规范/</span><span class="desc">协作、工程化与流程</span></div>
+      <div class="folder" data-reveal style="--i:1"><span class="name">开发工具/</span><span class="desc">效率工具与工作流</span></div>
+    </div>
+    <p class="stack-label" data-reveal>常用技术</p>
+    <div class="chips">
+      <span class="chip" data-reveal style="--i:0">Java</span>
+      <span class="chip" data-reveal style="--i:1">Golang</span>
+      <span class="chip" data-reveal style="--i:2">Python</span>
+      <span class="chip" data-reveal style="--i:3">Matter</span>
+      <span class="chip" data-reveal style="--i:4">MQTT</span>
+      <span class="chip" data-reveal style="--i:5">嵌入式 Linux</span>
+      <span class="chip" data-reveal style="--i:6">WebRTC</span>
+      <span class="chip" data-reveal style="--i:7">RTP</span>
+      <span class="chip" data-reveal style="--i:8">Kubernetes</span>
+      <span class="chip" data-reveal style="--i:9">Docker</span>
+      <span class="chip" data-reveal style="--i:10">Redis</span>
+      <span class="chip" data-reveal style="--i:11">Kafka</span>
+      <span class="chip" data-reveal style="--i:12">PCB / RV1106</span>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="sec-head" data-reveal>
+      <span class="idx">05</span>
+      <h2>关于我</h2>
+      <span class="rule"></span>
+    </div>
+    <div class="cta" data-reveal style="--i:1">
+      <div>
+        <h3>一名长期写代码的技术人</h3>
+        <p>
+          这些文章最初发布在 <a href="https://ga666666.cn" target="_blank" rel="noopener noreferrer">ga666666.cn</a>，
+          现在以 Markdown 维护，便于持续修订和版本管理。我相信<strong>写作是最好的思考方式</strong>：
+          让技术不只是个人经验，而是可以复用的知识。
+        </p>
+      </div>
+      <a class="btn" href="/post/ABOUT.html" target="_top">
+        更多关于我
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <footer class="wrap">
+    <span>技术笔记与思考</span>
+    <span>内容以仓库中的文章为准，持续更新</span>
+  </footer>
+</main>
+
+<script>
+// 主题桥：Wiki 通过 postMessage 下发主题与语言；沙箱不共享存储，这是唯一渠道。
+(function () {
+  var root = document.documentElement;
+  var locked = false;
+
+  function apply(theme) { root.setAttribute('data-theme', theme); }
+
+  window.addEventListener('message', function (e) {
+    var d = e.data;
+    if (!d || d.type !== 'powerwiki:context' || d.version !== 1) return;
+    if (d.theme === 'dark' || d.theme === 'light') { locked = true; apply(d.theme); }
+  });
+
+  // 主动索要一次，尽量在首屏绘制前拿到主题。
+  if (window.parent && window.parent !== window) {
+    try { window.parent.postMessage({ type: 'powerwiki:request-context', version: 1 }, '*'); } catch (err) {}
+  }
+
+  // 独立打开时跟随系统主题。
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    var onSys = function (e) { if (!locked) apply(e.matches ? 'dark' : 'light'); };
+    if (mq.addEventListener) mq.addEventListener('change', onSys);
+    else if (mq.addListener) mq.addListener(onSys);
+  }
+})();
+
+// 入场动效：元素进入视口后上浮淡入，同组元素按 --i 依次出现。
+(function () {
+  var items = document.querySelectorAll('[data-reveal]');
+  if (!items.length) return;
+  if (!('IntersectionObserver' in window)) return;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-in');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+  Array.prototype.forEach.call(items, function (item) { observer.observe(item); });
+})();
+
+// 阅读进度条：只在页面自身滚动时有效（沉浸态下由 iframe 滚动）。
+(function () {
+  var bar = document.getElementById('progressBar');
+  if (!bar) return;
+  var ticking = false;
+
+  function update() {
+    ticking = false;
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - window.innerHeight;
+    var ratio = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
+    bar.style.width = (ratio * 100).toFixed(2) + '%';
+  }
+
+  window.addEventListener('scroll', function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }, { passive: true });
+
+  window.addEventListener('resize', update, { passive: true });
+  update();
+})();
+
+// 卡片跟随指针的高光：把位置写进 CSS 变量，径向渐变跟着走。
+(function () {
+  var cards = document.querySelectorAll('.card');
+  if (!cards.length || !window.matchMedia) return;
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  Array.prototype.forEach.call(cards, function (card) {
+    card.addEventListener('pointermove', function (event) {
+      var rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (event.clientX - rect.left) + 'px');
+      card.style.setProperty('--my', (event.clientY - rect.top) + 'px');
+    });
+  });
+})();
+
+// 把内容高度告诉宿主：Wiki 在非沉浸态下按内容展开 iframe，避免框内再滚一层。
+(function () {
+  var last = 0;
+  function report() {
+    var height = Math.ceil(document.body.getBoundingClientRect().height);
+    if (Math.abs(height - last) < 2) return;
+    last = height;
+    if (window.parent && window.parent !== window) {
+      try { window.parent.postMessage({ type: 'powerwiki:resize', version: 1, height: height }, '*'); } catch (err) {}
+    }
+  }
+  window.addEventListener('load', report);
+  window.addEventListener('resize', report);
+  if (window.ResizeObserver && document.body) new ResizeObserver(report).observe(document.body);
+  if (document.readyState !== 'loading') report();
+})();
+</script>
+</body>
+</html>
