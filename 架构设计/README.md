@@ -3,7 +3,7 @@ title: 架构设计
 description: 本目录包含系统架构设计相关的文档和图表，按主题分为二级目录：数据存储与查询、消息队列与流量治理、缓存与性能优化、高并发限流与保护、生产故障排查、网络与通信、安全与协议。
 author: ga666666
 date: 2026-01-10
-updated: 2026-09-16
+updated: 2026-11-09
 keywords: 架构设计, 文章列表, 资源列表, 架构设计原则, 常用架构模式, 推荐资源, 微服务架构, 事件驱动架构, 故障排查, 限流
 tags: [架构设计, 系统架构]
 ---
@@ -26,7 +26,7 @@ flowchart TB
     C --> C1[Kafka Partition / 消费排查 / 削峰架构]
     D --> D1[RSC 缓存同步 / Kryo vs JSON / Redis 往返优化]
     E --> E1[Sentinel 静态阈值到系统自适应保护]
-    F --> F1[DNS 雪崩 / Redis 宕机 / 日志治理 / Arthas 体检]
+    F --> F1[DNS 雪崩 / Redis 宕机 / 日志治理 / Arthas 体检 / 连接池静默降级]
     G --> G1[P2P 服务 / NAT / iroh]
 ```
 
@@ -61,6 +61,7 @@ flowchart TB
 - [一次"运维误操作"引发的 Redis Cluster 全局宕机：从审计日志还原真相](./生产故障排查/Redis Cluster全局宕机排查记.md)
 - [一天 300GB 日志是怎么打出来的：生产环境误开 DEBUG 的治理](./生产故障排查/一天300GB日志的治理.md)
 - [用 Arthas 四件套给线上 MQTT 服务做体检](./生产故障排查/Arthas四件套MQTT服务体检.md)
+- [连接池配了 40，为什么线上还是 10 个](./生产故障排查/连接池配置写了40为什么线上跑的是10个.html) - 属性名不匹配导致的静默降级
 
 ### 网络与通信
 
@@ -96,6 +97,7 @@ flowchart TB
 | [一次"运维误操作"引发的 Redis Cluster 全局宕机](./生产故障排查/Redis Cluster全局宕机排查记.md) | 生产故障排查 | Redis Cluster、CloudTrail、CLUSTERDOWN | 从审计日志还原真实操作链路 |
 | [一天 300GB 日志是怎么打出来的](./生产故障排查/一天300GB日志的治理.md) | 生产故障排查 | Logback、日志治理、DEBUG | 生产环境误开 DEBUG 的定位与治理 |
 | [用 Arthas 四件套给线上 MQTT 服务做体检](./生产故障排查/Arthas四件套MQTT服务体检.md) | 生产故障排查 | Arthas、CPU/内存/锁/线程 | 四件套组合诊断线上性能问题 |
+| [连接池配了 40，为什么线上还是 10 个](./生产故障排查/连接池配置写了40为什么线上跑的是10个.html) | 生产故障排查 | HikariCP、配置绑定、连接池排队 | 配置静默失效的发现路径与扩池后的三层问题 |
 | [自研 P2P 服务架构设计](./网络与通信/自研 P2P 服务架构设计.md) | 网络与通信 | Pion、STUN、TURN、MQTT 信令 | 10 万级并发 P2P 连接架构 |
 | [NAT类型详解](./网络与通信/NAT类型详解.md) | 网络与通信 | NAT类型、P2P通信、STUN、TURN、ICE | 从Full Cone到Symmetric的NAT类型详解 |
 | [Iroh P2P 原理与应用](./网络与通信/Iroh P2P 原理与应用.md) | 网络与通信 | iroh、QUIC、node id、ALPN、Rust | 用 node id 而非 IP 寻址的三个 demo |
