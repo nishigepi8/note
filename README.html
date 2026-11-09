@@ -61,7 +61,14 @@
 
   * { box-sizing: border-box; }
 
-  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    /* 外层沉浸容器已经在滚动，页面内部再出现一条滚动条会重复；保留滚动行为，只隐藏轨道 */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  html::-webkit-scrollbar { width: 0; height: 0; }
 
   body {
     margin: 0;
